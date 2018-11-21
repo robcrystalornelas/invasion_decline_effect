@@ -10,7 +10,6 @@ dim(raw_data)
 tail(raw_data)
 
 ## Analyze data ####
-
 # Calculate effect size
 head(raw_data)
 effect_sizes_richness <- escalc("SMD", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
@@ -21,36 +20,40 @@ effect_sizes_richness <- escalc("SMD", # Specify the outcome that we are measuin
                                  n2i = raw_data$sample_size_control, 
                                  sd2i = raw_data$SD_control,
                                  data = raw_data)
-effect_sizes_richness
+max(effect_sizes_richness$yi)
+min(effect_sizes_richness$yi)
 
 # Random effects model
-random_effects_model_results <- rma(yi = effect_sizes_richness$yi, # Outcome variable
-                                        vi = effect_sizes_richness$vi, # variances
-                                        method = "REML") # REML is common estimator
-
-print(random_effects_model_results, digits=5)
+head(effect_sizes_richness)
+dim(effect_sizes_richness)
+random_effects_model_results_hamman <- rma(yi=effect_sizes_richness$yi, 
+                                     vi=effect_sizes_richness$vi,
+                                     method = "REML",
+                                     #test = "knha",
+                                     weights=effect_sizes_richness$total_sample_size,
+                                     data=effect_sizes_richness)
+random_effects_model_results_hamman
 
 # Random effects model forest plot
 forest_plot_random_effects <- viz_forest(
-  x = random_effects_model_results, 
+  x = random_effects_model_results_hamman, 
   method = "REML",
-  # type = "summary_only",
-  # study_labels = random_effects_abundance_results[1:131, "unique_id"], 
-  xlab = "Hedge's d",
+  study_labels = effect_sizes_richness[1:314, "code"], # include study name label
+  xlab = "Hedge's d", # make a label along x-axis for effect size
   col = "Blues"
-  #variant = "thick"
+#  variant = "thick"
 )
 
 forest_plot_random_effects
-pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/forest_plot_random_effects.pdf")
+pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/ch_3_forest_plot_random_effects.pdf")
 forest_plot_random_effects
 dev.off()
 dev.off()
 
 # Funnel plot
-funnel(random_effects_model_results, level=c(90, 95, 99), shade=c("white", "gray", "darkgray"), refline=0)
+funnel(random_effects_model_results_hamman, level=c(90, 95, 99), shade=c("white", "gray", "darkgray"), refline=0)
 
 # Trim and fill
-tf1 <- trimfill(random_effects_model_results)
+tf1 <- trimfill(random_effects_model_results_hamman)
 print(tf1, digits = 2, comb.fixed = TRUE)
 
