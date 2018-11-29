@@ -32,7 +32,6 @@ mixed_effects_richness_type
 # Make forest plot
 forest_plot_richness_type <- viz_forest(x = mixed_effects_richness_type, 
                                      method = "REML",
-                                     # group = "Nesting Location",
                                      type = "summary_only",
                                      summary_label = c("Exotic","Native","No distinction"), 
                                      xlab = "Hedge's d",
