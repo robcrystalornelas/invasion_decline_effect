@@ -15,15 +15,9 @@ effect_sizes_richness <- escalc("SMD", # Specify the outcome that we are measuin
                                 data = raw_data)
 max(effect_sizes_richness$yi)
 min(effect_sizes_richness$yi)
-which.min(effect_sizes_richness$yi) # this is row number of the extreme minimum value
-
-# Remove row with extreme minimum
-effect_sizes_no_outlier <- effect_sizes_richness[-c(106), ]
-min(effect_sizes_no_outlier$yi)
 
 ## Build linear model
-?lm
-linear_model <- lm(yi ~ publicationyear, data=effect_sizes_no_outlier)  # build linear regression model on full data
+linear_model <- lm(yi ~ publicationyear, data=effect_sizes_richness)  # build linear regression model on full data
 print(linear_model)
 # In equation form, effect size = intercept + publication year
 
@@ -32,7 +26,7 @@ summary(linear_model)
 # it is significant
 
 # basic linear regression plot
-linear_model_gg <- ggplot(effect_sizes_no_outlier, aes(x=publicationyear, y=yi)) + 
+linear_model_gg <- ggplot(effect_sizes_richness, aes(x=publicationyear, y=yi)) + 
   # geom_point(shape=1) + 
   geom_smooth(method=lm) +
   geom_jitter(shape = 1)
@@ -43,7 +37,7 @@ linear_model_gg <- linear_model_gg + theme_bw() + theme(text = element_text(size
 linear_model_gg
 
 linear_model_gg
-pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/ch_3_linear_model_impact_publication_year.pdf")
+pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/linear_model_impact_publication_year.pdf")
 linear_model_gg
 dev.off()
 dev.off()

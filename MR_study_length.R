@@ -1,7 +1,6 @@
 ## READ IN DATA ####
 source("~/Desktop/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
 
-
 ## LOAD PACKAGES ####
 library(dplyr)
 library(ggplot2)
@@ -42,6 +41,7 @@ effect_sizes_richness <- escalc("SMD", # Specify the outcome that we are measuin
 effect_sizes_richness %>%
 group_by(studylengthbinned) %>%
   summarise(no_rows = length(studylengthbinned))
+
 # Meta-regression for study length
 mixed_effects_study_length <- rma(yi, # outcome
                                    vi, # measure of variance
@@ -51,15 +51,23 @@ mixed_effects_study_length <- rma(yi, # outcome
                                    slab = paste(lastname, publicationyear, sep = ""))
 mixed_effects_study_length
 
+sample_size_table_study_length <- effect_sizes_richness %>%
+  group_by(studylengthbinned) %>%
+  summarise(no_rows = length(studylengthbinned)) %>%
+  rename(`study length` = studylengthbinned) %>%
+  rename(`sample size` = no_rows)
+sample_size_table_study_length
+
 # Make forest plot
 forest_plot_study_length <- viz_forest(x = mixed_effects_study_length, 
                                         method = "REML",
                                         type = "summary_only",
-                                        summary_label = c("0-1","1.1-3","3.1-10",">10","NA"), 
+                                        summary_label = c("0-1 (N = 192)","1.1-3 (N = 40)","3.1-10 (N = 51)",">10 (N = 19)","NA (N = 15)"), 
                                         xlab = "Hedge's d",
                                         col = "black",
                                         variant = "thick",
+                                        summary_table = sample_size_table_study_length,
                                         text_size = 7,
-                                        annotate_CI = TRUE
-)
+                                        annotate_CI = TRUE)
 forest_plot_study_length
+

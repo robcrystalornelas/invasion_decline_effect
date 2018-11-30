@@ -20,40 +20,38 @@ effect_sizes_richness <- escalc("SMD", # Specify the outcome that we are measuin
                                  n2i = raw_data$sample_size_control, 
                                  sd2i = raw_data$SD_control,
                                  data = raw_data)
-max(effect_sizes_richness$yi)
-min(effect_sizes_richness$yi)
 
 # Random effects model
 head(effect_sizes_richness)
 dim(effect_sizes_richness)
-random_effects_model_results_hamman <- rma(yi=effect_sizes_richness$yi, 
+random_effects_model <- rma(yi=effect_sizes_richness$yi, 
                                      vi=effect_sizes_richness$vi,
                                      method = "REML",
-                                     #test = "knha",
+                                     test = "knha",
                                      weights=effect_sizes_richness$total_sample_size,
                                      data=effect_sizes_richness)
-random_effects_model_results_hamman
+random_effects_model
 
 # Random effects model forest plot
 forest_plot_random_effects <- viz_forest(
-  x = random_effects_model_results_hamman, 
+  x = random_effects_model, 
   method = "REML",
-  study_labels = effect_sizes_richness[1:314, "code"], # include study name label
+  study_labels = effect_sizes_richness[1:317, "code"], # include study name label
   xlab = "Hedge's d", # make a label along x-axis for effect size
   col = "Blues"
 #  variant = "thick"
 )
-
 forest_plot_random_effects
+
 pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/ch_3_forest_plot_random_effects.pdf")
 forest_plot_random_effects
 dev.off()
 dev.off()
 
 # Funnel plot
-funnel(random_effects_model_results_hamman, level=c(90, 95, 99), shade=c("white", "gray", "darkgray"), refline=0)
+funnel(random_effects_model, level=c(90, 95, 99), shade=c("white", "gray", "darkgray"), refline=0)
 
 # Trim and fill
-tf1 <- trimfill(random_effects_model_results_hamman)
+tf1 <- trimfill(random_effects_model)
 print(tf1, digits = 2, comb.fixed = TRUE)
 

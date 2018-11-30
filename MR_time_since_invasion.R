@@ -10,17 +10,16 @@ library(metafor)
 
 ## ORGANIZE DATA ####
 head(raw_data)
-temporal_raw <- select(raw_data,lastname,publicationyear,firstyeardetected,firstyearatsite,yearbegins,yearends,studylength,mean_control, SD_control, sample_size_control, mean_invaded,SD_invaded,sample_size_invaded)
+temporal_raw <- select(raw_data,lastname,publicationyear,firstyeardetected,firstyearatsite,firstyearoverall,yearbegins,yearends,studylength,mean_control, SD_control, sample_size_control, mean_invaded,SD_invaded,sample_size_invaded)
 
 # Make new row w/ time since introduction
-temporal_raw <- mutate(temporal_raw, time_since_invasion = yearbegins - firstyeardetected)
+temporal_raw <- mutate(temporal_raw, time_since_invasion = yearbegins - firstyearoverall)
 class(temporal_raw$time_since_invasion)
-temporal_raw <- as.numeric(temporal_raw$time_since_invasion)
 
 # Make bins so that they align with strayer categories
 temporal_raw$time_since_invasion <- cut(temporal_raw$time_since_invasion, breaks = c(0,3,10,30,100,1000), labels = c("<3","3.1-10","10.1-30","30.1-100","100+"))
 head(temporal_raw)
-
+temporal_raw
 # Make sure NAs are included in the dataset
 levels(temporal_raw$time_since_invasion)
 temporal_raw$time_since_invasion = factor(temporal_raw$time_since_invasion, levels=c(levels(temporal_raw$time_since_invasion), 00))
@@ -48,20 +47,24 @@ mixed_effects_time_since_invasion <- rma(yi, # outcome
 mixed_effects_time_since_invasion
 
 # How many case studies fall into each time category
-effect_sizes_richness %>%
+sample_size_table <- effect_sizes_richness %>%
   group_by(time_since_invasion) %>%
-  summarise(no_rows = length(time_since_invasion))
+  summarise(no_rows = length(time_since_invasion)) %>%
+  rename(`time since invasion` = time_since_invasion) %>%
+  rename(`sample size` = no_rows)
+sample_size_table
 
 # Make forest plot
 forest_plot_time_since_invasion <- viz_forest(x = mixed_effects_time_since_invasion, 
                                        method = "REML",
                                        type = "summary_only",
-                                       summary_label = c("<3","3.1-10","10.1-30","30.1-100","100+","NA"), 
+                                       summary_label = c("< 3 (N = 2)","3.1-10 (N = 13)","10.1-30 (N = 40)","30.1-100 (N = 49)","100+ (N = 63)","NA (N = 150)"), 
                                        xlab = "Hedge's d",
                                        col = "black",
                                        variant = "thick",
                                        text_size = 7,
-                                       annotate_CI = TRUE
-)
+                                       summary_table = sample_size_table,
+                                       annotate_CI = TRUE)
+
 forest_plot_time_since_invasion
 

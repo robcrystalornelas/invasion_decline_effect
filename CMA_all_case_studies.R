@@ -30,7 +30,6 @@ cma_all_studies <- viz_forest(x = ordered_by_year[, c("yi", "vi")],
            type = "cumulative")
 cma_all_studies
 
-
 pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/CMA_all_case_studies.pdf")
 cma_all_studies
 dev.off()
