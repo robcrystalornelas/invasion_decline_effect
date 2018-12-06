@@ -14,6 +14,7 @@ distinct_code_and_publication_year <- distinct(code_and_publication_year)
 
 # Make the histogram with ggplot for UNIQUE PUBLICATIONS
 binsize <- diff(range(distinct_code_and_publication_year$publicationyear))/17 #set to a total of 17 bins, one for each year
+count(distinct_code_and_publication_year, publicationyear)
 
 gg <- ggplot(distinct_code_and_publication_year, aes(publicationyear)) + 
   geom_histogram(binwidth = binsize, fill = "deepskyblue3", colour = "white")
@@ -24,8 +25,7 @@ gg <- gg + theme(axis.text.x = element_text(size=30), # Size 30 works best for p
       axis.text.y = element_text(size=30),
       axis.title = element_text(size=30))
 gg
-pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/ch_3_publications_by_year.pdf")
-png(file="~/Desktop/CH3_impacts_meta_analysis/figures/ch_3_publications_by_year.png")
+pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/barplot_publications_by_year.pdf")
 gg
 dev.off()
 dev.off()

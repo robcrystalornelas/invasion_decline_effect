@@ -11,11 +11,11 @@ richness_type <- dplyr::select(raw_data, richness_of_all_or_native)
 
 ## MAKE FIGURES ####
 gg <- ggplot(richness_type, aes(x = reorder(richness_of_all_or_native,richness_of_all_or_native, function(x)-length(x))))
-gg <-gg + geom_bar(stat="count", fill = "#1f78b4")
+gg <-gg + geom_bar(stat="count", fill = "forestgreen")
 gg
 gg <- gg + theme_tufte()
 gg <- gg + ylab("Frequency")
-gg <- gg + xlab("Species origin")
+gg <- gg + xlab("Richness origin")
 gg
 gg <- gg + theme(axis.text=element_text(size=25), # Change tick mark label size
                  axis.title=element_text(size=25,face="bold"),
@@ -25,7 +25,7 @@ gg <- gg + theme(axis.text=element_text(size=25), # Change tick mark label size
 gg
 
 gg
-pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/ch_3_richness_type_barplot.pdf")
+pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/barplot_richness_origin.pdf")
 gg
 dev.off()
 dev.off()

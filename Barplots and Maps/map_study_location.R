@@ -55,7 +55,7 @@ dim(countries_ordered)
 
 # Custom breaks for data
 outage_df$out <- cut(outage_df$count,
-                     breaks=c(0, 10, 20, 30, 100),
+                     breaks=c(0, 10, 20, 30, 120),
                      labels=c("0-10", "10-20", "20-30", "30+"))
 outage_df
 head(outage_df)
@@ -76,7 +76,7 @@ gg # add in our data with random color scheme
 # gg <- gg + scale_fill_viridis(option = "viridis", discrete = TRUE, name="Number of\ncase studies\nper country")
 # gg <- gg + scale_fill_nord(option = "aurora", discrete = TRUE, name="Number of\ncase studies\nper country")
 gg <- gg + scale_fill_brewer(type="seq", palette="YlGnBu",
-                             name="Number of\ncase studies\nper country") # Better color theme
+                             name="Number of\nresponses\nper country") # Better color theme
 gg
 gg <- gg + coord_equal(ratio=1) # flatten out map
 gg
