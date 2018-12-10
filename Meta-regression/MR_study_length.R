@@ -30,7 +30,7 @@ temporal_raw$studylengthbinned[is.na(temporal_raw$studylengthbinned)] = 00
 levels(temporal_raw$studylengthbinned)
 
 # Calculate effect sizes
-effect_sizes_richness <- escalc("SMD", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
+effect_sizes_richness <- escalc("ROM", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
                                 m1i = temporal_raw$mean_invaded,       
                                 n1i = temporal_raw$sample_size_invaded, # Then, follow with all of the columns needed to compute SMD
                                 sd1i = temporal_raw$SD_invaded, 
@@ -56,18 +56,25 @@ sample_size_table_study_length <- effect_sizes_richness %>%
   summarise(no_rows = length(studylengthbinned)) %>%
   rename(`study length` = studylengthbinned) %>%
   rename(`sample size` = no_rows)
-sample_size_table_study_length
+
+# Replace 00 (the na placeholder), with NA as a label
+levels(sample_size_table_study_length$`study length`)[levels(sample_size_table_study_length$`study length`)=="0"] <- "NA"
 
 # Make forest plot
 forest_plot_study_length <- viz_forest(x = mixed_effects_study_length, 
                                         method = "REML",
                                         type = "summary_only",
-                                        summary_label = c("0-1 (N = 192)","1.1-3 (N = 40)","3.1-10 (N = 51)",">10 (N = 19)","NA (N = 15)"), 
-                                        xlab = "Hedge's d",
+                                        xlab = "ratio of means",
                                         col = "black",
                                         variant = "thick",
                                         summary_table = sample_size_table_study_length,
+                                        table_headers = c("study length","sample size"),
                                         text_size = 7,
                                         annotate_CI = TRUE)
+
 forest_plot_study_length
+pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/forest_plot_MR_study_length.pdf", width = 20, height = 8)
+forest_plot_study_length
+dev.off()
+dev.off()
 

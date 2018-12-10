@@ -9,7 +9,7 @@ library(metaviz)
 library(metafor)
 
 # Calculate effect size
-effect_sizes_richness <- escalc("SMD", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
+effect_sizes_richness <- escalc("ROM", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
                                 m1i = raw_data$mean_invaded,       
                                 n1i = raw_data$sample_size_invaded, # Then, follow with all of the columns needed to compute SMD
                                 sd1i = raw_data$SD_invaded, 
@@ -19,18 +19,29 @@ effect_sizes_richness <- escalc("SMD", # Specify the outcome that we are measuin
                                 data = raw_data)
 
 ## Run a cumulative MA
+## first, order studies by year
 ordered_by_year <- arrange(effect_sizes_richness, publicationyear)
 head(ordered_by_year)
 
-cma_all_studies <- viz_forest(x = ordered_by_year[, c("yi", "vi")], 
-           #group = effect_sizes_richness[, "invasivespeciestaxa"], 
-           study_labels = ordered_by_year[, "code"], 
-           xlab = "Hedge's d",
-           variant = "thick",
-           type = "cumulative")
-cma_all_studies
+# Random effects model
+random_effects_model_ordered <- rma(yi=ordered_by_year$yi, 
+                            vi=ordered_by_year$vi,
+                            method = "REML",
+                            test = "knha",
+                            weights=ordered_by_year$total_sample_size,
+                            data=ordered_by_year)
+random_effects_model_ordered
 
+forest_plot_CMA <- viz_forest(
+  x = random_effects_model_ordered, 
+  method = "REML",
+  study_labels = ordered_by_year[1:328, "code"], # include study name label
+  xlab = "Ratio of Means", # make a label along x-axis for effect size
+  col = "Blues",
+  type = "cumulative")
+
+forest_plot_CMA
 pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/CMA_all_case_studies.pdf")
-cma_all_studies
+forest_plot_CMA
 dev.off()
 dev.off()

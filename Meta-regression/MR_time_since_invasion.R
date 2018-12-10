@@ -27,7 +27,7 @@ temporal_raw$time_since_invasion[is.na(temporal_raw$time_since_invasion)] = 00
 levels(temporal_raw$time_since_invasion)
 
 # Calculate effect sizes
-effect_sizes_richness <- escalc("SMD", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
+effect_sizes_richness <- escalc("ROM", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
                                 m1i = temporal_raw$mean_invaded,       
                                 n1i = temporal_raw$sample_size_invaded, # Then, follow with all of the columns needed to compute SMD
                                 sd1i = temporal_raw$SD_invaded, 
@@ -53,18 +53,23 @@ sample_size_table <- effect_sizes_richness %>%
   rename(`time since invasion` = time_since_invasion) %>%
   rename(`sample size` = no_rows)
 sample_size_table
+levels(sample_size_table$`time since invasion`)[levels(sample_size_table$`time since invasion`)=="0"] <- "NA"
 
 # Make forest plot
 forest_plot_time_since_invasion <- viz_forest(x = mixed_effects_time_since_invasion, 
                                        method = "REML",
                                        type = "summary_only",
                                        summary_label = c("< 3 (N = 2)","3.1-10 (N = 13)","10.1-30 (N = 40)","30.1-100 (N = 49)","100+ (N = 63)","NA (N = 150)"), 
-                                       xlab = "Hedge's d",
+                                       xlab = "ratio of means",
                                        col = "black",
                                        variant = "thick",
+                                       table_headers = c("time since invasion","sample size"),
                                        text_size = 7,
                                        summary_table = sample_size_table,
                                        annotate_CI = TRUE)
 
 forest_plot_time_since_invasion
-
+pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/forest_plot_MR_time_since_invasion.pdf", width = 20, height = 8)
+forest_plot_time_since_invasion
+dev.off()
+dev.off()
