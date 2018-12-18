@@ -28,7 +28,6 @@ random_effects_model_ordered <- rma(yi=ordered_by_year$yi,
                             vi=ordered_by_year$vi,
                             method = "REML",
                             test = "knha",
-                            weights=ordered_by_year$total_sample_size,
                             data=ordered_by_year)
 random_effects_model_ordered
 
@@ -39,8 +38,8 @@ forest_plot_CMA <- viz_forest(
   xlab = "Ratio of Means", # make a label along x-axis for effect size
   col = "Blues",
   type = "cumulative")
-forest_plot_CMA
 
+forest_plot_CMA
 pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/CMA_all_case_studies.pdf")
 forest_plot_CMA
 dev.off()

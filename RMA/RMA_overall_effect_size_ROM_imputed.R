@@ -27,12 +27,19 @@ random_effects_model_imputed <- rma(yi=effect_sizes_richness_imputed$yi,
                             vi=effect_sizes_richness_imputed$vi,
                             method = "REML",
                             test = "knha",
-                            weights=effect_sizes_richness_imputed$total_sample_size,
                             data=effect_sizes_richness_imputed)
 random_effects_model_imputed
 
+head(effect_sizes_richness_imputed)
+random_effects_model_multilevel <- rma.mv(yi, 
+                                    vi,
+                                    random = ~ 1 | code, # This term adds random effects at the study level
+                                    method = "REML",
+                                    test = "knha",
+                                    data=effect_sizes_richness_imputed)
+random_effects_model_multilevel
+
 # Random effects model forest plot
-dim(effect_sizes_richness_imputed)
 forest_plot_random_effects_imputed <- viz_forest(
   x = random_effects_model_imputed, 
   method = "REML",
