@@ -9,8 +9,7 @@ library(metaviz)
 library(metafor)
 
 ## ORGANIZE DATA ####
-head(raw_data)
-temporal_raw <- select(raw_data,lastname,publicationyear,firstyeardetected,firstyearatsite,yearbegins,yearends,studylength,mean_control, SD_control, sample_size_control, mean_invaded,SD_invaded,sample_size_invaded)
+temporal_raw <- select(raw_data_imputed,lastname,publicationyear,firstyeardetected,firstyearatsite,yearbegins,yearends,studylength,mean_control, SD_control, sample_size_control, mean_invaded,SD_invaded,sample_size_invaded)
 
 # R doesn't know what to do with <1 factor, so replace with numerical placeholder
 temporal_raw$studylength <- as.character(temporal_raw$studylength) # first make it a character vector
@@ -77,4 +76,5 @@ pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/forest_plot_MR_study_lengt
 forest_plot_study_length
 dev.off()
 dev.off()
+
 

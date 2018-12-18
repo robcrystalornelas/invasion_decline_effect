@@ -1,14 +1,13 @@
 ## LOAD PACKAGES ####
 library(dplyr)
+library(lattice)
+library(mice)
 
 ## READ IN DATA ####
 raw_data <- read.csv("~/Desktop/CH3_impacts_meta_analysis/diversity_cases_working_file_v7.csv", header=TRUE)
 
 ## Imputation for missing values, adds approx 15 case studies ####
 raw_data_with_na <- read.csv("~/Desktop/CH3_impacts_meta_analysis/diversity_cases_working_file_v7_with_missing_data.csv", header=TRUE)
-library(lattice)
-library(mice)
-library(dplyr) 
 
 head(raw_data_with_na)
 imputation_subset_with_na <- dplyr::select(raw_data_with_na, code, mean_control, SD_control,sample_size_control,mean_invaded,SD_invaded,sample_size_invaded)
@@ -47,10 +46,10 @@ meth[c("SD_control","SD_invaded")]="norm"
 # Now it's time to run the multiple imputation
 imputed_sds <- mice(imputation_subset_with_na, method="pmm", predictorMatrix=predM, m=5, seed = 100)
 # impute data with probable means
-
+class(imputed_sds)
 
 # Create a dataset after the imputation
-imputed_sds <- complete(imputed_sds)
+imputed_sds <- mice::complete(imputed_sds)
 
 # Do we still havy missing values? Hopefully not!
 sapply(imputed_sds, function(x) sum(is.na(x)))

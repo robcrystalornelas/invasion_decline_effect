@@ -9,7 +9,7 @@ library(ggthemes)
 ## MAKE FIGURES ####
 # Barplot for number of publications by year for ARTICLES
 # Fist, get the two rows that will show use unique publications
-code_and_publication_year <- dplyr::select(raw_data, code, publicationyear)
+code_and_publication_year <- dplyr::select(raw_data_imputed, code, publicationyear)
 distinct_code_and_publication_year <- distinct(code_and_publication_year)
 
 # Make the histogram with ggplot for UNIQUE PUBLICATIONS

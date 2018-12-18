@@ -10,7 +10,7 @@ library(metafor)
 
 ## ORGANIZE DATA ####
 head(raw_data)
-temporal_raw <- select(raw_data,lastname,publicationyear,firstyeardetected,firstyearatsite,firstyearoverall,yearbegins,yearends,studylength,mean_control, SD_control, sample_size_control, mean_invaded,SD_invaded,sample_size_invaded)
+temporal_raw <- select(raw_data_imputed,lastname,publicationyear,firstyeardetected,firstyearatsite,firstyearoverall,yearbegins,yearends,studylength,mean_control, SD_control, sample_size_control, mean_invaded,SD_invaded,sample_size_invaded)
 
 # Make new row w/ time since introduction
 temporal_raw <- mutate(temporal_raw, time_since_invasion = yearbegins - firstyearoverall)

@@ -10,13 +10,13 @@ library(metafor)
 
 # Calculate effect size
 effect_sizes_richness <- escalc("ROM", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
-                                m1i = raw_data$mean_invaded,       
-                                n1i = raw_data$sample_size_invaded, # Then, follow with all of the columns needed to compute SMD
-                                sd1i = raw_data$SD_invaded, 
-                                m2i = raw_data$mean_control,
-                                n2i = raw_data$sample_size_control, 
-                                sd2i = raw_data$SD_control,
-                                data = raw_data)
+                                m1i = raw_data_imputed$mean_invaded,       
+                                n1i = raw_data_imputed$sample_size_invaded, # Then, follow with all of the columns needed to compute SMD
+                                sd1i = raw_data_imputed$SD_invaded, 
+                                m2i = raw_data_imputed$mean_control,
+                                n2i = raw_data_imputed$sample_size_control, 
+                                sd2i = raw_data_imputed$SD_control,
+                                data = raw_data_imputed)
 
 ## Run a cumulative MA
 ## first, order studies by year
@@ -35,12 +35,12 @@ random_effects_model_ordered
 forest_plot_CMA <- viz_forest(
   x = random_effects_model_ordered, 
   method = "REML",
-  study_labels = ordered_by_year[1:328, "code"], # include study name label
+  study_labels = ordered_by_year[1:342, "code"], # include study name label
   xlab = "Ratio of Means", # make a label along x-axis for effect size
   col = "Blues",
   type = "cumulative")
-
 forest_plot_CMA
+
 pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/CMA_all_case_studies.pdf")
 forest_plot_CMA
 dev.off()

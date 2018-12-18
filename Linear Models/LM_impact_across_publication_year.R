@@ -1,4 +1,7 @@
 ## Load libraries ####
+library(metafor)
+library(metaviz)
+library(ggplot)
 
 ## Load data ####
 source("~/Desktop/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
