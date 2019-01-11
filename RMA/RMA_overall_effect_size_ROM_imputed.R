@@ -7,7 +7,7 @@ source("~/Desktop/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
 
 ## Clean data ####
 dim(raw_data_imputed)
-
+unique(raw_data_imputed$code)
 ## Analyze data ####
 # Effect size is Log transformed ratio of means
 effect_sizes_richness_imputed <- escalc("ROM", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
@@ -29,15 +29,6 @@ random_effects_model_imputed <- rma(yi=effect_sizes_richness_imputed$yi,
                             test = "knha",
                             data=effect_sizes_richness_imputed)
 random_effects_model_imputed
-
-head(effect_sizes_richness_imputed)
-random_effects_model_multilevel <- rma.mv(yi, 
-                                    vi,
-                                    random = ~ 1 | code, # This term adds random effects at the study level
-                                    method = "REML",
-                                    test = "knha",
-                                    data=effect_sizes_richness_imputed)
-random_effects_model_multilevel
 
 # Random effects model forest plot
 forest_plot_random_effects_imputed <- viz_forest(
