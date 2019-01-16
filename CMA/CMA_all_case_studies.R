@@ -34,7 +34,7 @@ random_effects_model_ordered
 forest_plot_CMA <- viz_forest(
   x = random_effects_model_ordered, 
   method = "REML",
-  study_labels = ordered_by_year[1:342, "code"], # include study name label
+  study_labels = ordered_by_year[1:335, "code"], # include study name label
   xlab = "Ratio of Means", # make a label along x-axis for effect size
   col = "Blues",
   type = "cumulative")

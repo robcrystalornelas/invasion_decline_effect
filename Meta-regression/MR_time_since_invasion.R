@@ -9,7 +9,6 @@ library(metaviz)
 library(metafor)
 
 ## ORGANIZE DATA ####
-head(raw_data)
 temporal_raw <- select(raw_data_imputed,lastname,publicationyear,firstyeardetected,firstyearatsite,firstyearoverall,yearbegins,yearends,studylength,mean_control, SD_control, sample_size_control, mean_invaded,SD_invaded,sample_size_invaded)
 
 # Make new row w/ time since introduction
@@ -40,7 +39,7 @@ effect_sizes_richness <- escalc("ROM", # Specify the outcome that we are measuin
 # Meta-regression for study length
 mixed_effects_time_since_invasion <- rma(yi, # outcome
                                   vi, # measure of variance
-                                  mods = ~ time_since_invasion - 1, # multiple moderating variables modeled as main effects
+                                  mods = ~ time_since_invasion - 1,
                                   method = "REML",
                                   data = effect_sizes_richness,
                                   slab = paste(lastname, publicationyear, sep = ""))

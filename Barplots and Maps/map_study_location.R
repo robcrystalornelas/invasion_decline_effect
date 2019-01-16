@@ -9,10 +9,6 @@ library(sp)
 
 # Read in data with ISO numbers
 raw_with_iso <- read.csv("/Users/rpecchia/Desktop/CH3_impacts_meta_analysis/scripts/raw_data_with_ISO.csv", header = T)
-#world countries
-# sp::plot(ne_countries())
-# nord <- read_palette("nord.ase")
-# show_palette(nord)
 
 # Make the map
 # world <- ne_download(scale = 50, type = "countries")
@@ -74,9 +70,9 @@ gg <- gg + geom_map(data=outage_df, map=map, aes(fill=out),
                     colour="#0e0e0e", size=0.05)
 gg # add in our data with random color scheme
 # gg <- gg + scale_fill_viridis(option = "viridis", discrete = TRUE, name="Number of\ncase studies\nper country")
-# gg <- gg + scale_fill_nord(option = "aurora", discrete = TRUE, name="Number of\ncase studies\nper country")
+
 gg <- gg + scale_fill_brewer(type="seq", palette="YlGnBu",
-                             name="Number of\nresponses\nper country") # Better color theme
+                             name="Number of\nmeasurements\nper country") # Better color theme
 gg
 gg <- gg + coord_equal(ratio=1) # flatten out map
 gg

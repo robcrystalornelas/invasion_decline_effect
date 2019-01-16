@@ -46,6 +46,27 @@ cma_algae <- viz_forest(x = rma_algae,
                         theme(plot.title = element_text(hjust=0.5))
 cma_algae
   
+# aquatic plants
+effects_aquatic_plants <- filter(ordered_by_year, invasivespeciestaxa == "aquatic plant")
+effects_aquatic_plants
+
+rma_aquatic_plants <- rma(yi=effects_aquatic_plants$yi, 
+                 vi=effects_aquatic_plants$vi,
+                 method = "REML",
+                 test = "knha",
+                 data=effects_aquatic_plants)
+rma_aquatic_plants
+
+cma_aquatic_plants <- viz_forest(x = rma_aquatic_plants, 
+                        study_labels = effects_aquatic_plants[, "publicationyear"], 
+                        method = "REML",
+                        xlab = "Response Ratio",
+                        variant = "thick",
+                        type = "cumulative") +
+  ggtitle("Aquatic plants") +
+  theme(plot.title = element_text(hjust=0.5))
+cma_aquatic_plants
+
 # crustacean
 effects_crust <- filter(ordered_by_year, invasivespeciestaxa == "crustacean")
 effects_crust
@@ -162,6 +183,25 @@ cma_mammal <- viz_forest(x = rma_mammal,
                         theme(plot.title = element_text(hjust=0.5))
 cma_mammal
 
+# molluscs
+effects_molluscs <- filter(ordered_by_year, invasivespeciestaxa == "molluscs")
+rma_molluscs <- rma(yi=effects_molluscs$yi, 
+                  vi=effects_molluscs$vi,
+                  method = "REML",
+                  test = "knha",
+                  data=effects_molluscs)
+rma_molluscs
+
+cma_molluscs <- viz_forest(x = rma_molluscs, 
+                           study_labels = effects_molluscs[, "publicationyear"], 
+                           xlab = "Response Ratio",
+                           method = "REML",
+                           variant = "thick",
+                           type = "cumulative") +
+  ggtitle("Mollusks") +
+  theme(plot.title = element_text(hjust=0.5))
+cma_molluscs
+
 # tree
 effects_tree <- filter(ordered_by_year, invasivespeciestaxa == "tree")
 rma_tree <- rma(yi=effects_tree$yi, 
@@ -171,7 +211,6 @@ rma_tree <- rma(yi=effects_tree$yi,
                   data=effects_tree)
 rma_tree
 
-head(effects_fish)
 cma_tree <- viz_forest(x = rma_tree,
                                      study_labels = effects_tree[, c("publicationyear")], 
                                      xlab = "Response Ratio",
@@ -183,9 +222,9 @@ cma_tree <- viz_forest(x = rma_tree,
 cma_tree
 
 # Combine all CMAs with more than 10 studies
-grid.arrange(cma_algae,cma_crust,cma_fish,cma_grass,cma_herb,cma_insect,cma_mammal,cma_tree,ncol=4)
+grid.arrange(cma_algae,cma_aquatic_plants,cma_crust,cma_fish,cma_grass,cma_herb,cma_insect,cma_mammal,cma_molluscs, cma_tree,ncol=5)
 
-
+dev.off()
 
 # Less than 10 cases ####
 
@@ -197,15 +236,6 @@ cma_amphib <- viz_forest(x = effects_amphib[, c("yi", "vi")],
                          variant = "thick",
                          type = "cumulative")
 cma_amphib
-
-# Aquatic plant
-effects_aquatic_plant <- filter(ordered_by_year, invasivespeciestaxa == "aquatic plant")
-cma_ap <- viz_forest(x = effects_aquatic_plant[, c("yi", "vi")], 
-                     study_labels = effects_aquatic_plant[, "publicationyear"], 
-                     xlab = "Response Ratio",
-                     variant = "thick",
-                     type = "cumulative")
-cma_ap
 
 # Avian CMA
 effects_avian <- filter(ordered_by_year, invasivespeciestaxa == "avian")
@@ -225,15 +255,6 @@ cma_marine_invert <- viz_forest(x = effects_marine_invert[, c("yi", "vi")],
                                 variant = "thick",
                                 type = "cumulative")
 cma_marine_invert
-
-# molluscs
-effects_molluscs <- filter(ordered_by_year, invasivespeciestaxa == "molluscs")
-cma_molluscs <- viz_forest(x = effects_molluscs[, c("yi", "vi")], 
-                           study_labels = effects_molluscs[, "publicationyear"], 
-                           xlab = "Response Ratio",
-                           variant = "thick",
-                           type = "cumulative")
-cma_molluscs
 
 # terrestrial invert
 effects_terrestrial_invert <- filter(ordered_by_year, invasivespeciestaxa == "terrestrial invert")

@@ -29,3 +29,7 @@ fixed_effect_model_results <- rma(yi, # outcome
                                   data = effect_sizes_richness,
                                   slab = paste(lastname, publicationyear, sep = ""))
 fixed_effect_model_results
+
+# To calculate I-squared for the FMA plug in values for df and Q
+100*((3457.6560-334)/3457.6560)
+    

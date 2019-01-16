@@ -63,7 +63,7 @@ levels(sample_size_table_study_length$`study length`)[levels(sample_size_table_s
 forest_plot_study_length <- viz_forest(x = mixed_effects_study_length, 
                                         method = "REML",
                                         type = "summary_only",
-                                        xlab = "ratio of means",
+                                        xlab = "response ratio",
                                         col = "black",
                                         variant = "thick",
                                         summary_table = sample_size_table_study_length,

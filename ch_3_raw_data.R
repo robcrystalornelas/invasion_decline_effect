@@ -4,10 +4,8 @@ library(lattice)
 library(mice)
 
 ## READ IN DATA ####
-raw_data <- read.csv("~/Desktop/CH3_impacts_meta_analysis/diversity_cases_working_file_v7.csv", header=TRUE)
-
 ## Imputation for missing values, adds approx 15 case studies ####
-raw_data_with_na <- read.csv("~/Desktop/CH3_impacts_meta_analysis/diversity_cases_working_file_v7_missing_data_AND_no_duplicates.csv", header=TRUE)
+raw_data_with_na <- read.csv("~/Desktop/CH3_impacts_meta_analysis/diversity_cases_working_file_v8.csv", header=TRUE)
 
 head(raw_data_with_na)
 imputation_subset_with_na <- dplyr::select(raw_data_with_na, code, mean_control, SD_control,sample_size_control,mean_invaded,SD_invaded,sample_size_invaded)
@@ -62,3 +60,6 @@ raw_data_with_na$SD_invaded <- imputed_sds$SD_invaded
 
 raw_data_imputed <- raw_data_with_na
 tail(raw_data_imputed)
+dim(raw_data_imputed) # This is number of case studies
+unique(raw_data_imputed$code)
+
