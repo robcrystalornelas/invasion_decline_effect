@@ -18,7 +18,6 @@ effect_sizes_richness_imputed <- escalc("ROM", # Specify the outcome that we are
                                 n2i = raw_data_imputed$sample_size_control, 
                                 sd2i = raw_data_imputed$SD_control,
                                 data = raw_data_imputed)
-?escalc()
 
 # Random effects model
 head(effect_sizes_richness_imputed)
@@ -54,7 +53,6 @@ head(effect_sizes_richness_imputed)
 min(effect_sizes_richness_imputed$log_rr_se)
 
 # Funnel plot
-
 funnel(random_effects_model_imputed)
 
 # trim and fill
@@ -63,3 +61,6 @@ print(tf1, digits = 2, comb.fixed = TRUE)
 
 # Eggers regression
 regtest.rma(random_effects_model_imputed, model = "rma", predictor = "vi")
+
+# fail safe number
+fsn(yi, vi, data = effect_sizes_richness_imputed)

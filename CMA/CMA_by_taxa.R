@@ -40,11 +40,12 @@ cma_algae <- viz_forest(x = rma_algae,
                         study_labels = effects_algae[, "publicationyear"], 
                         method = "REML",
                         xlab = "Response Ratio",
-                        variant = "thick",
+                        #variant = "thick",
                         type = "cumulative") +
                         ggtitle("Algae") +
                         theme(plot.title = element_text(hjust=0.5))
 cma_algae
+
   
 # aquatic plants
 effects_aquatic_plants <- filter(ordered_by_year, invasivespeciestaxa == "aquatic plant")
@@ -57,8 +58,10 @@ rma_aquatic_plants <- rma(yi=effects_aquatic_plants$yi,
                  data=effects_aquatic_plants)
 rma_aquatic_plants
 
+aquatic_labels<- c("1999","2010","2011","","","2012","2014","")
 cma_aquatic_plants <- viz_forest(x = rma_aquatic_plants, 
                         study_labels = effects_aquatic_plants[, "publicationyear"], 
+                        #study_labels = aquatic_labels
                         method = "REML",
                         xlab = "Response Ratio",
                         variant = "thick",
