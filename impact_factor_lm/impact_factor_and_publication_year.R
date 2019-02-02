@@ -26,7 +26,7 @@ gg_impact_factor <- ggplot(impact_factor_model, aes(x=publicationyear, y=impactf
   geom_jitter(shape = 1)
 gg_impact_factor
 gg_impact_factor <- gg_impact_factor + scale_x_continuous(name = "Publication Year") +
-  scale_y_continuous(name = "Effect size")
+  scale_y_continuous(name = "impact factor")
 gg_impact_factor <- gg_impact_factor + theme_bw() + theme(text = element_text(size = 20))
 gg_impact_factor
 

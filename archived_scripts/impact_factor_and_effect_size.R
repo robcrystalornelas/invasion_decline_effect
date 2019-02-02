@@ -9,7 +9,7 @@ library(metafor)
 library(gridExtra)
 
 head(raw_data_imputed)
-
+length(unique(raw_data_imputed$code))
 # Calculate effect size
 effect_sizes_richness <- escalc("ROM", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
                                 m1i = raw_data_imputed$mean_invaded,       
@@ -35,7 +35,7 @@ dim(effect_size_and_impact_factor_no_na)
 head(effect_size_and_impact_factor_no_na)
 length(effect_size_and_impact_factor_no_na$yi)
 
-gg_impact_factor_and_effect <- ggplot(effect_size_and_impact_factor_no_na, aes(x=abs(yi), y=impactfactor)) + 
+gg_impact_factor_and_effect <- ggplot(effect_size_and_impact_factor_no_na, aes(x=impactfactor, y=abs(yi))) + 
   # geom_point(shape=1) + 
   geom_smooth(method=lm) +
   geom_jitter(shape = 1)

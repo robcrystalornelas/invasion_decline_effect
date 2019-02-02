@@ -10,7 +10,6 @@ library(tidyverse)
 library(viridis)
 # Count up how many case studies were produced each year
 cases_and_publication_year <- dplyr::select(raw_data_imputed, code, publicationyear)
-viridis(2)
 
 counted_cases <- cases_and_publication_year %>%
   count(publicationyear) %>%

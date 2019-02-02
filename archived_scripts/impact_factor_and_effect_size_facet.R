@@ -75,3 +75,4 @@ plot(abs(molluscs$yi),molluscs$impactfactor)
 tree <- filter(impact_factor_and_effect_facet, invasivespeciestaxa == "tree")
 linear_model_if_effect_tree <- lm(abs(yi) ~ impactfactor, data=tree)  # build linear regression model on full data
 summary(linear_model_if_effect_tree)
+
