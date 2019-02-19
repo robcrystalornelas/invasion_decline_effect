@@ -24,22 +24,26 @@ counted_cases_per_year
 
 # count up species per year
 # count up how many species were studied each year
-count_species_by_year <- dplyr::select(raw_data_imputed, code, publicationyear, invasivespecies)
-counted_species_for_cases <- count_species_by_year %>%
+count_ecosystems_by_year <- dplyr::select(raw_data_imputed, code, publicationyear, invasivespecies,ecosystemforheatmap)
+counted_ecosystems_for_cases <- count_ecosystems_by_year %>%
   group_by(publicationyear) %>%
-  summarise(n_distinct(invasivespecies)) %>%
-  add_column("group" = rep("species"))
-counted_species_by_year <- rename(counted_species_for_cases, n = `n_distinct(invasivespecies)`)
-counted_species_by_year
+  summarise(n_distinct(ecosystemforheatmap)) %>%
+  add_column("group" = rep("ecosystem"))
+counted_ecosystems_by_year <- rename(counted_ecosystems_for_cases, n = `n_distinct(ecosystemforheatmap)`)
+counted_ecosystems_by_year
+counted_ecosystems_by_year <- mutate(counted_ecosystems_by_year, div_by_ten = n/10)
+counted_ecosystems_by_year
 
-# join
-joined_species_and_cases <- left_join(counted_cases_per_year,counted_species_by_year, by = "publicationyear")
-joined_species_and_cases
+# Join
+joined_eco_and_cases <- left_join(counted_cases_per_year,counted_ecosystems_by_year, by = "publicationyear")
+joined_eco_and_cases
 
-species_divided_by_cases <- mutate(joined_species_and_cases, spec_by_cases = n.y / n.x)
-species_divided_by_cases
+eco_divided_by_cases <- mutate(joined_eco_and_cases, eco_div_by_cases = n.y / n.x)
+eco_divided_by_cases
 
+# Summarize effect sizes
 # summarize effect sizes by year
+
 effect_sizes_richness_imputed <- escalc("ROM", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
                                         m1i = raw_data_imputed$mean_invaded,       
                                         n1i = raw_data_imputed$sample_size_invaded, # Then, follow with all of the columns needed to compute SMD
@@ -58,27 +62,23 @@ average_effect_by_year <- ordered_by_year %>%
 average_effect_by_year
 
 # Now, add this new effect size data frame to species number data frame
-species_and_effect_size_by_year <- right_join(species_divided_by_cases, average_effect_by_year)
+eco_and_effect_size_by_year <- right_join(eco_divided_by_cases, average_effect_by_year)
 
-# Make model either regular lm or 
-# Note however: it's not standard to make a linear model for a fraction; 
-#more common is a generalized linear model, which is a linear model along 
-#with an invertible, nonlinear 'link' function that controls the range of the 
-#desired model (here [0,1]).
-# generalized linear model (glm) with a logit link and the binomial family
-lm_effect_and_species <- lm(mean ~ spec_by_cases, data=species_and_effect_size_by_year)  # build linear regression model on full data
-summary(lm_effect_and_species)
-species_and_effect_size_by_year
+# Run a couple of models
+eco_and_effect_size_by_year
+lm_effect_and_eco <- lm(mean ~ eco_div_by_cases, data=eco_and_effect_size_by_year)  # build linear regression model on full data
+summary(lm_effect_and_eco)
 
-glm_effect_and_species <- glm(mean ~ spec_by_cases, data = species_and_effect_size_by_year, family=quasibinomial(link="logit"))
-summary(glm_effect_and_species)
+glm_effect_and_eco <- glm(mean ~ eco_div_by_cases, data = eco_and_effect_size_by_year, family=quasibinomial(link="logit"))
+summary(glm_effect_and_eco)
 
-gg_impact_factor <- ggplot(species_and_effect_size_by_year, aes(x=spec_by_cases, y=mean)) + 
+#
+gg_impact_factor <- ggplot(eco_and_effect_size_by_year, aes(x=eco_div_by_cases, y=mean)) + 
   # geom_point(shape=1) + 
   geom_smooth(method=lm) +
   geom_jitter(shape = 1)
 gg_impact_factor
-gg_impact_factor <- gg_impact_factor + scale_x_continuous(name = "species/cases") +
+gg_impact_factor <- gg_impact_factor + scale_x_continuous(name = "ecosystems/cases") +
   scale_y_continuous(name = "effect size")
 gg_impact_factor <- gg_impact_factor + theme_bw() + theme(text = element_text(size = 20))
 gg_impact_factor

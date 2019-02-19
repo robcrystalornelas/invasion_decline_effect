@@ -1,42 +1,77 @@
-## READ IN DATA ####
-source("~/Desktop/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
+---
+title: "CMA_all_case_studies"
+author: "Rob Crystal-Ornelas"
+date: "2/15/2019"
+output: 
+ html_document:
+    toc: true
+    toc_float: true
+---
 
-## LOAD PACKAGES ####
+First, read in all of the source data
+
+```{r, results = 'hide', message=FALSE}
+source("~/Desktop/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
+```
+
+Then, load all the packages we need
+
+```{r, message=FALSE, warning=FALSE}
+library(tinytex)
 library(dplyr)
 library(ggplot2)
 library(ggthemes)
 library(metaviz)
 library(metafor)
+```
 
-# Calculate effect size
-effect_sizes_richness <- escalc("ROM", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
+Calculate effect sizes for each study in the database
+
+```{r}
+effect_sizes_richness <- escalc("ROM", # effect size for the meta analysis 
+                                #(e.g., RD, RR, OR, SMD)
                                 m1i = raw_data_imputed$mean_invaded,       
-                                n1i = raw_data_imputed$sample_size_invaded, # Then, follow with all of the columns needed to compute SMD
+                                n1i = raw_data_imputed$sample_size_invaded, # Then,
+                                #follow with all of the columns needed to compute SMD
                                 sd1i = raw_data_imputed$SD_invaded, 
                                 m2i = raw_data_imputed$mean_control,
                                 n2i = raw_data_imputed$sample_size_control, 
                                 sd2i = raw_data_imputed$SD_control,
                                 data = raw_data_imputed)
-head(effect_sizes_richness)
 
-## Run a cumulative MA
-## first, order studies by year
+```
+
+
+Look through the first few effect sizes
+
+```{r, results='hide'}
+head(effect_sizes_richness)
+```
+
+#### Run a cumulative meta-analysis for all of the data
+Order the studies by year
+```{r, results='hide'}
 ordered_by_year <- arrange(effect_sizes_richness, publicationyear)
-head(ordered_by_year, N = 5)
-ordered_by_year
+head(ordered_by_year)
 dim(ordered_by_year)
-# Random effects model
+
+```
+
+Run the random effects model using all data
+
+```{r}
 random_effects_model_ordered <- rma(yi=ordered_by_year$yi, 
                             vi=ordered_by_year$vi,
                             method = "REML",
                             test = "knha",
                             data=ordered_by_year)
 random_effects_model_ordered
+```
 
-# Make study labels
-counted_all_pubs <- plyr::count(ordered_by_year$publicationyear)
-counted_all_pubs
-soverall_CMA_study_labels <- c(1999, 
+Create study labels for the CMA plots
+```{r, results='hide'}
+plyr::count(ordered_by_year$publicationyear)
+overall_CMA_study_labels <- c(1999, 
                               strrep("", 1:4), 
                               2000, 
                               strrep("",1),
@@ -73,28 +108,37 @@ soverall_CMA_study_labels <- c(1999,
                               2016,
                               strrep("",1:42))
 
-#make forest plot
+```
+
+
+Make the overall cumulative meta-analysis
+```{r}
 forest_plot_CMA <- viz_forest(
   x = random_effects_model_ordered, 
   method = "REML",
   #study_labels = ordered_by_year[1:334, "code"], # include study name label
-  study_labels = overall_CMA_study_labels, # include custom study labels that skip any repeated years
+  study_labels = overall_CMA_study_labels, # include custom study labels that skip 
+  #any repeated years
   xlab = "Ratio of Means", # make a label along x-axis for effect size
   col = "Blues",
   type = "cumulative",
   text_size = 3)
 forest_plot_CMA
 
+```
+
+Print the file to a PDF
+```{r, message=FALSE}
 pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/CMA_all_case_studies.pdf")
 forest_plot_CMA
 dev.off()
 dev.off()
 
+```
 
 
-# data for first 5 effects
-
-# can look at exact data that forest plot is made with
+If we want to summarize the data from the first five studies, we can use this code
+```{r, results='hide'}
 forest_plot_CMA$data
 first_five_effect <- c(-1.04112114,-1.0883960,-1.1379484,-0.9699270,-0.7790654)
 first_five_low_ci <- c(-1.5198541,-1.5157978,-1.5438819,-1.3795680,-1.2429049)
@@ -108,5 +152,5 @@ mean(first_five_high_ci)
 -1.003292 - 1.440401
 -1.003292 + 0.5661819
 
-##
-cumul(random_effects_model_ordered)
+```
+
