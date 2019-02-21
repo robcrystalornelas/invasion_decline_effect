@@ -100,6 +100,7 @@ first_five_effect <- c(-1.04112114,-1.0883960,-1.1379484,-0.9699270,-0.7790654)
 first_five_low_ci <- c(-1.5198541,-1.5157978,-1.5438819,-1.3795680,-1.2429049)
 first_five_high_ci <- c(-0.56238815,-0.66099414,-0.73201492,-0.56028606,-0.31522604)
 mean(first_five_effect)
+sd(first_five_effect)
 exp(-1.003292)
 1-0.3666704 # this is richness decline
 mean(first_five_low_ci)

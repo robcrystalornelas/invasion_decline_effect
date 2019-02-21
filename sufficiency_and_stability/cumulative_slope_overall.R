@@ -61,29 +61,28 @@ ordered_by_year$order <- seq(1:334)
 ordered_by_year
 
 # Stabilization plot
-gg <- ggplot(ordered_by_year, aes(x = cumulative_slope, y = order)) + geom_point()
-gg
+gg <- ggplot(ordered_by_year, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
+gg <- gg + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg <- gg + scale_y_continuous(trans = "reverse")
 gg
 gg <- gg + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
+gg <- gg + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
+gg <- gg + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
 gg <- gg + xlab("Cumulative slopes") +
   ylab("Publication order")
 gg <- gg + theme_bw()
 gg <- gg + theme(
   panel.grid.major.y = element_blank(),
-  panel.grid.minor.y = element_blank())
+  panel.grid.minor.y = element_blank(),
+  legend.position = "none")
 gg
 
 
 # Examples
-
 linear_model_first_five <- lm(x ~ labels, data =forest_plot_CMA$data[1:5,])
 linear_model_first_five$coefficients[2]
-
 linear_model_all_studies <- lm(x ~ labels, data = forest_plot_CMA$data)
 linear_model_all_studies$coefficients
-
-
 first_five <- ggplot(forest_plot_CMA$data, aes(x=labels, y=x)) + 
   # geom_point(shape=1) + 
   geom_smooth(method=lm) +

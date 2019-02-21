@@ -7,6 +7,7 @@ library(ggplot2)
 library(ggthemes)
 library(metaviz)
 library(metafor)
+
 # Calculate effect size
 effect_sizes_richness <- escalc("ROM", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
                                 m1i = raw_data_imputed$mean_invaded,       
@@ -58,11 +59,9 @@ for(i in 1:334)
 
 ordered_by_year$order <- seq(1:334)
 head(ordered_by_year)
-length(counted_all_pubs)
-counted_all_pubs$x
 
-gg <- ggplot(ordered_by_year, aes(x = failsaferatio, y = order)) + geom_point()
-gg
+gg <- ggplot(ordered_by_year, aes(x = failsaferatio, y = order)) + geom_point(aes(colour = failsaferatio > 1))
+gg <- gg + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg <- gg + scale_y_continuous(trans = "reverse")
 gg <- gg + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg <- gg + xlab("Failsafe ratio") +
@@ -70,7 +69,8 @@ gg <- gg + xlab("Failsafe ratio") +
 gg <- gg + theme_bw()
 gg <- gg + theme(
   panel.grid.major.y = element_blank(),
-  panel.grid.minor.y = element_blank())
+  panel.grid.minor.y = element_blank(),
+  legend.position = "none")
 gg
 
 # Having trouble with adding axes

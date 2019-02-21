@@ -261,6 +261,7 @@ effects_coastal <- filter(ordered_by_year, ecosystemforheatmap == "coastal")
 
 effects_coastal$fsr <- rep(NA, length(effects_coastal$code))
 effects_coastal
+
 for(i in 1:length(effects_coastal$code))
 {
   temp_df <- fsn(effects_coastal[1:i,]$yi, effects_coastal[1:i,]$vi, type = "Rosenthal")

@@ -57,6 +57,14 @@ rma_algae <- rma(yi=effects_algae$yi,
                  data=effects_algae)
 rma_algae
 
+rma_algae_five <- rma(
+  yi=effects_algae[1:12,]$yi, 
+                 vi=effects_algae[1:12,]$vi,
+                 method = "REML",
+                 test = "knha",
+                 data=effects_algae[1:12,])
+rma_algae
+
 fsn(yi, vi, data=effects_algae)
 
 cma_algae <- viz_forest(x = rma_algae, 
@@ -69,7 +77,6 @@ cma_algae <- viz_forest(x = rma_algae,
                         ggtitle("Algae (N = 22)") +
                         theme(plot.title = element_text(hjust=0.5))
 cma_algae
-
   
 # aquatic plants
 effects_aquatic_plants <- filter(ordered_by_year, invasivespeciestaxa == "aquatic plant")
@@ -281,14 +288,20 @@ cma_herb
 
 # insect
 effects_insect <- filter(ordered_by_year, invasivespeciestaxa == "insect")
-fsn(yi, vi, data=effects_insect)
-
+effects_insect
 rma_insect <- rma(yi=effects_insect$yi, 
                 vi=effects_insect$vi,
                 method = "REML",
                 test = "knha",
                 data=effects_insect)
 rma_insect
+
+rma_insect_five <-rma(yi=effects_insect[1:5,]$yi, 
+  vi=effects_insect[1:5,]$vi,
+method = "REML",
+test = "knha",
+data=effects_insect[1:5,])
+rma_insect_five
 
 plyr::count(effects_insect$publicationyear)
 insect_labels <- c(1999,
@@ -401,6 +414,14 @@ rma_tree <- rma(yi=effects_tree$yi,
                   test = "knha",
                   data=effects_tree)
 rma_tree
+
+# tree first five
+rma_tree_first_five <- rma(yi=effects_tree[1:5,]$yi, 
+                           vi=effects_tree[1:5,]$vi,
+                           method = "REML",
+                           test = "knha",
+                           data=effects_tree[1:5,])
+rma_tree_first_five
 
 plyr::count(effects_tree$publicationyear)
 tree_labels <- c(2000,
