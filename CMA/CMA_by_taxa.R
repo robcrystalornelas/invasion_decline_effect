@@ -66,7 +66,8 @@ rma_algae_five <- rma(
 rma_algae
 
 fsn(yi, vi, data=effects_algae)
-
+counted_all_algae <-plyr::count(effects_algae)
+counted_all_algae
 cma_algae <- viz_forest(x = rma_algae, 
                         #study_labels = effects_algae[, "publicationyear"],
                         study_labels = algae_labels,

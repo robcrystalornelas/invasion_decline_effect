@@ -56,13 +56,19 @@ for(i in 1:334)
   ordered_by_year$failsaferatio[i] <- failsafe_one_run
   
 }
-
+?scale_y_continuous
 ordered_by_year$order <- seq(1:334)
 head(ordered_by_year)
-
+counted_all_pubs$x
+counted_all_pubs$freq
+counted_all_pubs
+overall_CMA_study_labels
 gg <- ggplot(ordered_by_year, aes(x = failsaferatio, y = order)) + geom_point(aes(colour = failsaferatio > 1))
+gg
 gg <- gg + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
-gg <- gg + scale_y_continuous(trans = "reverse")
+gg
+gg <- gg + scale_y_continuous(trans = "reverse", labels = counted_all_pubs$x, breaks = c(1,6,8,15,20,30,46,56,69,90,110,145,165,184,211,233,270,292))
+gg
 gg <- gg + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg <- gg + xlab("Failsafe ratio") +
   ylab("Publication order")
@@ -74,4 +80,3 @@ gg <- gg + theme(
 gg
 
 # Having trouble with adding axes
-gg <- gg + scale_y_continuous(trans = "reverse", labels = counted_all_pubs$x, breaks = c(0,6,8, 16,22, 33, 5,7,14,19,29,35,45,58,79,99,134,154,173,200,222,259,281,324))

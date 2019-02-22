@@ -63,17 +63,19 @@ summary(all_forest)
 
 # Stable plot Alge
 effects_forest$order <- seq(1:75)
+counted_forest <- plyr::count(effects_forest$publicationyear)
+
 stable_forest <- ggplot(effects_forest, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_forest
 stable_forest <- stable_forest + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_forest
-stable_forest <- stable_forest + scale_y_continuous(trans = "reverse")
+stable_forest <- stable_forest + scale_y_continuous(trans = "reverse", labels = counted_forest$x, breaks = which(forest_labels != ""))
 stable_forest
 stable_forest <- stable_forest + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_forest <- stable_forest + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
 stable_forest <- stable_forest +
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Forest (N = 75)")
 stable_forest <- stable_forest + theme_bw()
 stable_forest <- stable_forest + theme(
@@ -116,17 +118,19 @@ summary(all_lotic)
 
 # Stable plot Alge
 effects_lotic$order <- seq(1:46)
+counted_lotic <- plyr::count(effects_lotic$publicationyear)
+
 stable_lotic <- ggplot(effects_lotic, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_lotic
 stable_lotic <- stable_lotic + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_lotic
-stable_lotic <- stable_lotic + scale_y_continuous(trans = "reverse")
+stable_lotic <- stable_lotic + scale_y_continuous(trans = "reverse", labels = counted_lotic$x, breaks = which(lotic_labels != ""))
 stable_lotic
 stable_lotic <- stable_lotic + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_lotic <- stable_lotic + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
 stable_lotic <- stable_lotic +
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Lotic (N = 46)")
 stable_lotic <- stable_lotic + theme_bw()
 stable_lotic <- stable_lotic + theme(
@@ -169,17 +173,18 @@ summary(all_grassland)
 
 # Stable plot Alge
 effects_grassland$order <- seq(1:43)
+counted_grassland <- plyr::count(effects_grassland$publicationyear)
 stable_grassland <- ggplot(effects_grassland, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_grassland
 stable_grassland <- stable_grassland + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_grassland
-stable_grassland <- stable_grassland + scale_y_continuous(trans = "reverse")
+stable_grassland <- stable_grassland + scale_y_continuous(trans = "reverse", labels = counted_grassland$x, breaks = which(grassland_labels != ""))
 stable_grassland
 stable_grassland <- stable_grassland + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_grassland <- stable_grassland + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
 stable_grassland <- stable_grassland +
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Grassland (N = 43)")
 stable_grassland <- stable_grassland + theme_bw()
 stable_grassland <- stable_grassland + theme(
@@ -221,17 +226,18 @@ summary(all_island)
 
 # Stable plot Alge
 effects_island$order <- seq(1:35)
+counted_island <- plyr::count(effects_island$publicationyear)
 stable_island <- ggplot(effects_island, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_island
 stable_island <- stable_island + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_island
-stable_island <- stable_island + scale_y_continuous(trans = "reverse")
+stable_island <- stable_island + scale_y_continuous(trans = "reverse", labels = counted_island$x, breaks = which(island_labels != ""))
 stable_island
 stable_island <- stable_island + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_island <- stable_island + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
 stable_island <- stable_island +
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Island (N = 35)")
 stable_island <- stable_island + theme_bw()
 stable_island <- stable_island + theme(
@@ -273,17 +279,18 @@ summary(all_estuarine)
 
 # Stable plot Alge
 effects_estuarine$order <- seq(1:34)
+counted_estuarine <- plyr::count(effects_estuarine$publicationyear)
 stable_estuarine <- ggplot(effects_estuarine, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_estuarine
 stable_estuarine <- stable_estuarine + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_estuarine
-stable_estuarine <- stable_estuarine + scale_y_continuous(trans = "reverse")
+stable_estuarine <- stable_estuarine + scale_y_continuous(trans = "reverse", labels = counted_estuarine$x, breaks = which(estuarine_labels != ""))
 stable_estuarine
 stable_estuarine <- stable_estuarine + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_estuarine <- stable_estuarine + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
 stable_estuarine <- stable_estuarine +
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Estuarine (N = 34)")
 stable_estuarine <- stable_estuarine + theme_bw()
 stable_estuarine <- stable_estuarine + theme(
@@ -325,17 +332,18 @@ summary(all_lentic)
 
 # Stable plot Alge
 effects_lentic$order <- seq(1:30)
+counted_lentic <- plyr::count(effects_lentic$publicationyear)
 stable_lentic <- ggplot(effects_lentic, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_lentic
 stable_lentic <- stable_lentic + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_lentic
-stable_lentic <- stable_lentic + scale_y_continuous(trans = "reverse")
+stable_lentic <- stable_lentic + scale_y_continuous(trans = "reverse", labels = counted_lentic$x, breaks = which(lentic_labels != ""))
 stable_lentic
 stable_lentic <- stable_lentic + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_lentic <- stable_lentic + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
 stable_lentic <- stable_lentic +
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Lentic (N = 30)")
 stable_lentic <- stable_lentic + theme_bw()
 stable_lentic <- stable_lentic + theme(
@@ -377,17 +385,18 @@ summary(all_coastal)
 
 # Stable plot Alge
 effects_coastal$order <- seq(1:16)
+coastal_count <- plyr::count(effects_coastal$publicationyear)
 stable_coastal <- ggplot(effects_coastal, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_coastal
 stable_coastal <- stable_coastal + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_coastal
-stable_coastal <- stable_coastal + scale_y_continuous(trans = "reverse")
+stable_coastal <- stable_coastal + scale_y_continuous(trans = "reverse", labels = coastal_count$x, breaks = which(coastal_labels != ""))
 stable_coastal
 stable_coastal <- stable_coastal + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_coastal <- stable_coastal + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
 stable_coastal <- stable_coastal +
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Coastal (N = 16)")
 stable_coastal <- stable_coastal + theme_bw()
 stable_coastal <- stable_coastal + theme(
@@ -431,17 +440,18 @@ summary(all_intertidal)
 
 # Stable plot Alge
 effects_intertidal$order <- seq(1:14)
+count_intertidal <- plyr::count(effects_intertidal$publicationyear)
 stable_intertidal <- ggplot(effects_intertidal, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_intertidal
 stable_intertidal <- stable_intertidal + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_intertidal
-stable_intertidal <- stable_intertidal + scale_y_continuous(trans = "reverse")
+stable_intertidal <- stable_intertidal + scale_y_continuous(trans = "reverse", labels = count_intertidal$x, breaks = which(intertidal_labels != ""))
 stable_intertidal
 stable_intertidal <- stable_intertidal + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_intertidal <- stable_intertidal + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
 stable_intertidal <- stable_intertidal +
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Intertidal (N = 14)")
 stable_intertidal <- stable_intertidal + theme_bw()
 stable_intertidal <- stable_intertidal + theme(
@@ -483,17 +493,18 @@ summary(all_urban)
 
 # Stable plot Alge
 effects_urban$order <- seq(1:11)
+count_urban <- plyr::count(effects_urban$publicationyear)
 stable_urban <- ggplot(effects_urban, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_urban
 stable_urban <- stable_urban + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_urban
-stable_urban <- stable_urban + scale_y_continuous(trans = "reverse")
+stable_urban <- stable_urban + scale_y_continuous(trans = "reverse", labels = count_urban$x, breaks = which(urban_labels != ""))
 stable_urban
 stable_urban <- stable_urban + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_urban <- stable_urban + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
 stable_urban <- stable_urban +
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Urban (N = 11)")
 stable_urban <- stable_urban + theme_bw()
 stable_urban <- stable_urban + theme(
@@ -537,17 +548,18 @@ summary(all_shrubland)
 
 # Stable plot Alge
 effects_shrubland$order <- seq(1:10)
-stable_shrubland <- ggplot(effects_urban, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
+shrub_count <- plyr::count(effects_shrubland$publicationyear)
+stable_shrubland <- ggplot(effects_shrubland, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_shrubland
 stable_shrubland <- stable_shrubland + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_shrubland
-stable_shrubland <- stable_shrubland + scale_y_continuous(trans = "reverse")
+stable_shrubland <- stable_shrubland + scale_y_continuous(trans = "reverse", labels = shrub_count$x, breaks = which(shrubland_labels != ""))
 stable_shrubland
 stable_shrubland <- stable_shrubland + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_shrubland <- stable_shrubland + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
 stable_shrubland <- stable_shrubland +
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Shrubland (N = 10)")
 stable_shrubland <- stable_shrubland + theme_bw()
 stable_shrubland <- stable_shrubland + theme(

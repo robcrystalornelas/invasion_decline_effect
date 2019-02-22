@@ -49,12 +49,12 @@ gg_forest <- ggplot(effects_forest, aes(x = failsaferatio, y = order)) + geom_po
 gg_forest
 gg_forest <- gg_forest + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_forest
-gg_forest <- gg_forest + scale_y_continuous(trans = "reverse")
+gg_forest <- gg_forest + scale_y_continuous(trans = "reverse", labels = counted_forest$x, breaks = which(forest_labels != ""))
 gg_forest
 gg_forest <- gg_forest + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_forest
 gg_forest <- gg_forest + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Forest (N = 75)")
 gg_forest
 gg_forest <- gg_forest + theme_bw()
@@ -87,12 +87,12 @@ gg_lotic <- ggplot(effects_lotic, aes(x = failsaferatio, y = order)) + geom_poin
 gg_lotic
 gg_lotic <- gg_lotic + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_lotic
-gg_lotic <- gg_lotic + scale_y_continuous(trans = "reverse")
+gg_lotic <- gg_lotic + scale_y_continuous(trans = "reverse", labels = counted_lotic$x, breaks = which(lotic_labels != ""))
 gg_lotic
 gg_lotic <- gg_lotic + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_lotic
 gg_lotic <- gg_lotic + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Lotic (N = 46)")
 gg_lotic
 gg_lotic <- gg_lotic + theme_bw()
@@ -125,12 +125,12 @@ gg_grass <- ggplot(effects_grassland, aes(x = failsaferatio, y = order)) + geom_
 gg_grass
 gg_grass <- gg_grass + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_grass
-gg_grass <- gg_grass + scale_y_continuous(trans = "reverse")
+gg_grass <- gg_grass + scale_y_continuous(trans = "reverse", labels = counted_grassland$x, breaks = which(grassland_labels != ""))
 gg_grass
 gg_grass <- gg_grass + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_grass
 gg_grass <- gg_grass + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Grassland (N = 43)")
 gg_grass
 gg_grass <- gg_grass + theme_bw()
@@ -163,12 +163,12 @@ gg_island <- ggplot(effects_island, aes(x = failsaferatio, y = order)) + geom_po
 gg_island
 gg_island <- gg_island + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_island
-gg_island <- gg_island + scale_y_continuous(trans = "reverse")
+gg_island <- gg_island + scale_y_continuous(trans = "reverse", labels = counted_island$x, breaks = which(island_labels != ""))
 gg_island
 gg_island <- gg_island + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_island
 gg_island <- gg_island + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Island (N = 35)")
 gg_island
 gg_island <- gg_island + theme_bw()
@@ -197,17 +197,16 @@ effects_estuarine$failsaferatio
 effects_estuarine$order <- seq(1:34)
 
 # Algae graph
-
 gg_estuarine <- ggplot(effects_estuarine, aes(x = failsaferatio, y = order)) + geom_point(aes(colour = failsaferatio > 1))
 gg_estuarine
 gg_estuarine <- gg_estuarine + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_estuarine
-gg_estuarine <- gg_estuarine + scale_y_continuous(trans = "reverse")
+gg_estuarine <- gg_estuarine + scale_y_continuous(trans = "reverse", labels = counted_estuarine$x, breaks = which(estuarine_labels != ""))
 gg_estuarine
 gg_estuarine <- gg_estuarine + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_estuarine
 gg_estuarine <- gg_estuarine + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Estuarine (N = 34)")
 gg_estuarine
 gg_estuarine <- gg_estuarine + theme_bw()
@@ -240,12 +239,12 @@ gg_lentic <- ggplot(effects_lentic, aes(x = failsaferatio, y = order)) + geom_po
 gg_lentic
 gg_lentic <- gg_lentic + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_lentic
-gg_lentic <- gg_lentic + scale_y_continuous(trans = "reverse")
+gg_lentic <- gg_lentic + scale_y_continuous(trans = "reverse", labels = counted_lentic$x, breaks = which(lentic_labels != ""))
 gg_lentic
 gg_lentic <- gg_lentic + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_lentic
 gg_lentic <- gg_lentic + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Lentic (N = 30)")
 gg_lentic
 gg_lentic <- gg_lentic + theme_bw()
@@ -279,12 +278,12 @@ gg_coastal <- ggplot(effects_coastal, aes(x = failsaferatio, y = order)) + geom_
 gg_coastal
 gg_coastal <- gg_coastal + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_coastal
-gg_coastal <- gg_coastal + scale_y_continuous(trans = "reverse")
+gg_coastal <- gg_coastal + scale_y_continuous(trans = "reverse", labels = coastal_count$x, breaks = which(coastal_labels != ""))
 gg_coastal
 gg_coastal <- gg_coastal + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_coastal
 gg_coastal <- gg_coastal + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Coastal (N = 16)")
 gg_coastal
 gg_coastal <- gg_coastal + theme_bw()
@@ -317,12 +316,12 @@ gg_intertidal <- ggplot(effects_intertidal, aes(x = failsaferatio, y = order)) +
 gg_intertidal
 gg_intertidal <- gg_intertidal + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_intertidal
-gg_intertidal <- gg_intertidal + scale_y_continuous(trans = "reverse")
+gg_intertidal <- gg_intertidal + scale_y_continuous(trans = "reverse", labels = count_intertidal$x, breaks = which(intertidal_labels != ""))
 gg_intertidal
 gg_intertidal <- gg_intertidal + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_intertidal
 gg_intertidal <- gg_intertidal + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Intertidal (N = 14)")
 gg_intertidal
 gg_intertidal <- gg_intertidal + theme_bw()
@@ -355,12 +354,12 @@ gg_urban <- ggplot(effects_urban, aes(x = failsaferatio, y = order)) + geom_poin
 gg_urban
 gg_urban <- gg_urban + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_urban
-gg_urban <- gg_urban + scale_y_continuous(trans = "reverse")
+gg_urban <- gg_urban + scale_y_continuous(trans = "reverse", labels = count_urban$x, breaks = which(urban_labels != ""))
 gg_urban
 gg_urban <- gg_urban + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_urban
 gg_urban <- gg_urban + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Urban (N = 11)")
 gg_urban
 gg_urban <- gg_urban + theme_bw()
@@ -393,12 +392,12 @@ gg_shrub <- ggplot(effects_shrub, aes(x = failsaferatio, y = order)) + geom_poin
 gg_shrub
 gg_shrub <- gg_shrub + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_shrub
-gg_shrub <- gg_shrub + scale_y_continuous(trans = "reverse")
+gg_shrub <- gg_shrub + scale_y_continuous(trans = "reverse", labels = shrub_count$x, breaks = which(shrubland_labels != ""))
 gg_shrub
 gg_shrub <- gg_shrub + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_shrub
 gg_shrub <- gg_shrub + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("publication year") +
   ggtitle("Shrubland (N = 10)")
 gg_shrub
 gg_shrub <- gg_shrub + theme_bw()

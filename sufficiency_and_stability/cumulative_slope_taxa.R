@@ -53,18 +53,22 @@ all_algae <- lm(x ~ order, data= cma_algae$data)
 summary(all_algae)
 
 # Stable plot Alge
+c(1,2,3,5,9,10,12,15,16,20)
 effects_algae$order <- seq(1:22)
+counted_all_algae <- plyr::count(effects_algae$publicationyear)
 stable_algae <- ggplot(effects_algae, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
+stable_algae
+stable_algae <- stable_algae + scale_y_continuous(trans = "reverse", labels = counted_all_algae$x, breaks = which(algae_labels != ""))
 stable_algae
 stable_algae <- stable_algae + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_algae
-stable_algae <- stable_algae + scale_y_continuous(trans = "reverse")
+stable_algae <- stable_algae + scale_y_continuous(trans = "reverse", labels = counted_all_algae$x, breaks = which(counted_all_algae != ""))
 stable_algae
 stable_algae <- stable_algae + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_algae <- stable_algae + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
 stable_algae <- stable_algae +
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("Publication year") +
    ggtitle("Algae (N = 22)")
  stable_algae <- stable_algae + theme_bw()
  stable_algae <- stable_algae + theme(
@@ -106,17 +110,17 @@ summary(all_aquatic)
 
 # Stable plot Alge
 effects_aquatic_plants$order <- seq(1:8)
+counted_aquatic <- plyr::count(effects_aquatic_plants$publicationyear)
 stable_aquatic <- ggplot(effects_aquatic_plants, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_aquatic
+stable_aquatic <- stable_aquatic + scale_y_continuous(trans = "reverse", labels = counted_aquatic$x, breaks = which(aquatic_labels != ""))
 stable_aquatic <- stable_aquatic + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
-stable_aquatic
-stable_aquatic <- stable_aquatic + scale_y_continuous(trans = "reverse")
 stable_aquatic
 stable_aquatic <- stable_aquatic + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_aquatic <- stable_aquatic + geom_vline(xintercept = -0.005, colour = "red", size = .5, linetype = 2)
 stable_aquatic <- stable_aquatic + 
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Aquatic plants (N = 8)")
 stable_aquatic <- stable_aquatic + theme_bw()
 stable_aquatic <- stable_aquatic + theme(
@@ -159,17 +163,18 @@ summary(all_crust)
 
 # Stable plot Alge
 effects_crust$order <- seq(1:23)
+crust_counted <- plyr::count(effects_crust$publicationyear)
 stable_crust <- ggplot(effects_crust, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
+stable_crust <-  stable_crust + scale_y_continuous(trans = "reverse", labels = crust_counted$x, breaks = which(crust_labels != ""))
 stable_crust
 stable_crust <- stable_crust + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_crust
-stable_crust <- stable_crust + scale_y_continuous(trans = "reverse")
 stable_crust
 stable_crust <- stable_crust + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_crust <- stable_crust + geom_vline(xintercept = -0.005, colour = "red", size = .5, linetype = 2)
 stable_crust <- stable_crust + 
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Crustacean (N = 23)")
 stable_crust <- stable_crust + theme_bw()
 stable_crust <- stable_crust + theme(
@@ -211,17 +216,18 @@ summary(all_fish)
 
 # Stable plot Alge
 effects_fish$order <- seq(1:19)
+counted_fish <- plyr::count(effects_fish$publicationyear)
 stable_fish <- ggplot(effects_fish, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_fish
 stable_fish <- stable_fish + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_fish
-stable_fish <- stable_fish + scale_y_continuous(trans = "reverse")
+stable_fish <-  stable_fish + scale_y_continuous(trans = "reverse", labels = counted_fish$x, breaks = which(fish_labels != ""))
 stable_fish
 stable_fish <- stable_fish + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_fish <- stable_fish + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
 stable_fish <- stable_fish + 
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Fish (N = 19)")
 stable_fish <- stable_fish + theme_bw()
 stable_fish <- stable_fish + theme(
@@ -264,16 +270,17 @@ all_grasses <- lm(x ~ order, data= cma_grass$data)
 summary(all_grasses)
 
 # Stable plot Alge
+
 effects_grasses$order <- seq(1:38)
+counted_grass <- plyr::count(effects_grasses$publicationyear)
 stable_grass <- ggplot(effects_grasses, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_grass
 stable_grass <- stable_grass + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_grass
-stable_grass <- stable_grass + scale_y_continuous(trans = "reverse")
+stable_grass <- stable_grass + scale_y_continuous(trans = "reverse", labels = counted_grass$x, breaks = which(grass_labels != ""))
 stable_grass
 stable_grass <- stable_grass + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_grass <- stable_grass + geom_vline(xintercept = -0.005, colour = "red", size = .5, linetype = 2)
-
 stable_grass <- stable_grass + 
   xlab("Cumulative slopes") +
   ylab("Publication order") +
@@ -318,17 +325,18 @@ summary(all_herb)
 
 # Stable plot Alge
 effects_herb$order <- seq(1:79)
+counted_herb <- plyr::count(effects_herb$publicationyear)
 stable_herb <- ggplot(effects_herb, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_herb <- stable_herb + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_herb
-stable_herb <- stable_herb + scale_y_continuous(trans = "reverse")
+stable_herb <- stable_herb + scale_y_continuous(trans = "reverse", labels = counted_herb$x, breaks = which(herb_labels != ""))
 stable_herb
 stable_herb <- stable_herb + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_herb <- stable_herb + geom_vline(xintercept = -0.005, colour = "red", size = .5, linetype = 2)
 
 stable_herb <- stable_herb + 
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Herbaceous plants (N = 79)")
 stable_herb <- stable_herb + theme_bw()
 stable_herb <- stable_herb + theme(
@@ -372,17 +380,18 @@ summary(all_insect)
 
 # Stable plot Alge
 effects_insect$order <- seq(1:27)
+counted_instect <- plyr::count(effects_insect$publicationyear)
 stable_insect <- ggplot(effects_insect, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_insect
 stable_insect <- stable_insect + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_insect
-stable_insect <- stable_insect + scale_y_continuous(trans = "reverse")
+stable_insect <- stable_insect + scale_y_continuous(trans = "reverse", labels = counted_instect$x, breaks = which(insect_labels != ""))
 stable_insect
 stable_insect <- stable_insect + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_insect <- stable_insect + geom_vline(xintercept = -0.005, colour = "red", size = .5, linetype = 2)
 stable_insect <- stable_insect + 
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Insects (N = 27)")
 stable_insect <- stable_insect + theme_bw()
 stable_insect <- stable_insect + theme(
@@ -424,17 +433,18 @@ summary(all_mammal)
 
 # Stable plot Alge
 effects_mammal$order <- seq(1:16)
+counted_mammals <- plyr::count(effects_mammal$publicationyear)
 stable_mammal <- ggplot(effects_mammal, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_mammal
 stable_mammal <- stable_mammal + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_mammal
-stable_mammal <- stable_mammal + scale_y_continuous(trans = "reverse")
+stable_mammal <- stable_mammal + scale_y_continuous(trans = "reverse", labels = counted_mammals$x, breaks = which(mammal_labels != ""))
 stable_mammal
 stable_mammal <- stable_mammal + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_mammal <- stable_mammal + geom_vline(xintercept = -0.005, colour = "red", size = .5, linetype = 2)
 stable_mammal <- stable_mammal + 
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Mammals (N = 16)")
 stable_mammal <- stable_mammal + theme_bw()
 stable_mammal <- stable_mammal + theme(
@@ -476,18 +486,19 @@ summary(all_molluscs)
 
 # Stable plot Alge
 effects_molluscs$order <- seq(1:7)
+counted_mollusks <- plyr::count(effects_molluscs$publicationyear)
 stable_mollusks <- ggplot(effects_molluscs, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_mollusks
 stable_mollusks <- stable_mollusks + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_mollusks
-stable_mollusks <- stable_mollusks + scale_y_continuous(trans = "reverse")
+stable_mollusks <- stable_mollusks + scale_y_continuous(trans = "reverse", labels = counted_mollusks$x, breaks = which(moll_labels != ""))
 stable_mollusks
 stable_mollusks <- stable_mollusks + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_mollusks <- stable_mollusks + geom_vline(xintercept = -0.005, colour = "red", size = .5, linetype = 2)
 
 stable_mollusks <- stable_mollusks + 
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Mollusks (N = 7)")
 stable_mollusks <- stable_mollusks + theme_bw()
 stable_mollusks <- stable_mollusks + theme(
@@ -529,17 +540,18 @@ summary(all_tree)
 
 # Stable plot Alge
 effects_tree$order <- seq(1:88)
+counted_tree <- plyr::count(effects_tree$publicationyear)
 stable_tree <- ggplot(effects_tree, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_tree
 stable_tree <- stable_tree + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_tree
-stable_tree <- stable_tree + scale_y_continuous(trans = "reverse")
+stable_tree <- stable_tree + scale_y_continuous(trans = "reverse", labels = counted_tree$x, breaks = which(tree_labels != ""))
 stable_tree
 stable_tree <- stable_tree + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_tree <- stable_tree + geom_vline(xintercept = -0.005, colour = "red", size = .5, linetype = 2)
 stable_tree <- stable_tree + 
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Trees (N = 88)")
 stable_tree <- stable_tree + theme_bw()
 stable_tree <- stable_tree + theme(

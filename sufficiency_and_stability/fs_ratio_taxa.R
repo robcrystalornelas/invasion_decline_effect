@@ -46,12 +46,12 @@ gg_algae <- ggplot(effects_algae, aes(x = failsaferatio, y = order)) + geom_poin
 gg_algae
 gg_algae <- gg_algae + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_algae
-gg_algae <- gg_algae + scale_y_continuous(trans = "reverse")
+gg_algae <-  gg_algae + scale_y_continuous(trans = "reverse", labels = counted_all_algae$x, breaks = which(algae_labels != ""))
 gg_algae
 gg_algae <- gg_algae + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_algae
 gg_algae <- gg_algae + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Algae (N = 22)")
 gg_algae
 gg_algae <- gg_algae + theme_bw()
@@ -87,12 +87,12 @@ gg_aquatic <- ggplot(effects_aquatic_plants, aes(x = failsaferatio, y = order)) 
 gg_aquatic
 gg_aquatic <- gg_aquatic + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_aquatic
-gg_aquatic <- gg_aquatic + scale_y_continuous(trans = "reverse")
+gg_aquatic <- gg_aquatic + scale_y_continuous(trans = "reverse", labels = counted_aquatic$x, breaks = which(aquatic_labels != ""))
 gg_aquatic
 gg_aquatic <- gg_aquatic + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_aquatic
 gg_aquatic <- gg_aquatic + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Aquatic plants (N = 8)")
 gg_aquatic
 gg_aquatic <- gg_aquatic + theme_bw()
@@ -126,12 +126,12 @@ gg_crust <- ggplot(effects_crust, aes(x = failsaferatio, y = order)) + geom_poin
 gg_crust
 gg_crust <- gg_crust + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_crust
-gg_crust <- gg_crust + scale_y_continuous(trans = "reverse")
+gg_crust <-  gg_crust + scale_y_continuous(trans = "reverse", labels = crust_counted$x, breaks = which(crust_labels != ""))
 gg_crust
 gg_crust <- gg_crust + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_crust
 gg_crust <- gg_crust + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Crustacean (N = 23)")
 gg_crust
 gg_crust <- gg_crust + theme_bw()
@@ -166,12 +166,12 @@ gg_fish <- ggplot(effects_fish, aes(x = failsaferatio, y = order)) + geom_point(
 gg_fish
 gg_fish <- gg_fish + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_fish
-gg_fish <- gg_fish + scale_y_continuous(trans = "reverse")
+gg_fish <-  gg_fish + scale_y_continuous(trans = "reverse", labels = counted_fish$x, breaks = which(fish_labels != ""))
 gg_fish
 gg_fish <- gg_fish + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_fish
 gg_fish <- gg_fish + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Fish (N = 19)")
 gg_fish
 gg_fish <- gg_fish + theme_bw()
@@ -205,12 +205,12 @@ gg_grass <- ggplot(effects_grass, aes(x = failsaferatio, y = order)) + geom_poin
 gg_grass
 gg_grass <- gg_grass + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_grass
-gg_grass <- gg_grass + scale_y_continuous(trans = "reverse")
+gg_grass <-  gg_grass + scale_y_continuous(trans = "reverse", labels = counted_grass$x, breaks = which(grass_labels != ""))
 gg_grass
 gg_grass <- gg_grass + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_grass
 gg_grass <- gg_grass + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Grasses (N = 38)")
 gg_grass
 gg_grass <- gg_grass + theme_bw()
@@ -244,12 +244,12 @@ gg_herb <- ggplot(effects_herb, aes(x = failsaferatio, y = order)) + geom_point(
 gg_herb
 gg_herb <- gg_herb + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_herb
-gg_herb <- gg_herb + scale_y_continuous(trans = "reverse")
+gg_herb <-  gg_herb + scale_y_continuous(trans = "reverse", labels = counted_herb$x, breaks = which(herb_labels != ""))
 gg_herb
 gg_herb <- gg_herb + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_herb
 gg_herb <- gg_herb + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Heabaceous plants (N = 79)")
 gg_herb
 gg_herb <- gg_herb + theme_bw()
@@ -282,12 +282,12 @@ gg_insect <- ggplot(effects_insect, aes(x = failsaferatio, y = order)) + geom_po
 gg_insect
 gg_insect <- gg_insect + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_insect
-gg_insect <- gg_insect + scale_y_continuous(trans = "reverse")
+gg_insect <-  gg_insect + scale_y_continuous(trans = "reverse", labels = counted_instect$x, breaks = which(insect_labels != ""))
 gg_insect
 gg_insect <- gg_insect + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_insect
 gg_insect <- gg_insect + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Insects (N = 27)")
 gg_insect
 gg_insect <- gg_insect + theme_bw()
@@ -320,12 +320,12 @@ gg_mammal <- ggplot(effects_mammal, aes(x = failsaferatio, y = order)) + geom_po
 gg_mammal
 gg_mammal <- gg_mammal + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_mammal
-gg_mammal <- gg_mammal + scale_y_continuous(trans = "reverse")
+gg_mammal <-  gg_mammal + scale_y_continuous(trans = "reverse", labels = counted_mammals$x, breaks = which(mammal_labels != ""))
 gg_mammal
 gg_mammal <- gg_mammal + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_mammal
 gg_mammal <- gg_mammal + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Mammals (N = 16)")
 gg_mammal
 gg_mammal <- gg_mammal + theme_bw()
@@ -358,12 +358,12 @@ gg_moll <- ggplot(effects_molluscs, aes(x = failsaferatio, y = order)) + geom_po
 gg_moll
 gg_moll <- gg_moll + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_moll
-gg_moll <- gg_moll + scale_y_continuous(trans = "reverse")
+gg_moll <-  gg_moll + scale_y_continuous(trans = "reverse", labels = counted_mollusks$x, breaks = which(moll_labels != ""))
 gg_moll
 gg_moll <- gg_moll + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_moll
 gg_moll <- gg_moll + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Mollusks (N = 7)")
 gg_moll
 gg_moll <- gg_moll + theme_bw()
@@ -396,12 +396,12 @@ gg_tree <- ggplot(effects_tree, aes(x = failsaferatio, y = order)) + geom_point(
 gg_tree
 gg_tree <- gg_tree + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_tree
-gg_tree <- gg_tree + scale_y_continuous(trans = "reverse")
+gg_tree <-  gg_tree + scale_y_continuous(trans = "reverse", labels = counted_tree$x, breaks = which(tree_labels != ""))
 gg_tree
 gg_tree <- gg_tree + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_tree
 gg_tree <- gg_tree + xlab("Failsafe ratio") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Trees (N = 88)")
 gg_tree
 gg_tree <- gg_tree + theme_bw()

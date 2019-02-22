@@ -36,7 +36,7 @@ random_effects_model_ordered
 # Make study labels
 counted_all_pubs <- plyr::count(ordered_by_year$publicationyear)
 counted_all_pubs
-soverall_CMA_study_labels <- c(1999, 
+overall_CMA_study_labels <- c(1999, 
                               strrep("", 1:4), 
                               2000, 
                               strrep("",1),
@@ -72,7 +72,7 @@ soverall_CMA_study_labels <- c(1999,
                               strrep("",1:21),
                               2016,
                               strrep("",1:42))
-
+overall_CMA_study_labels
 #make forest plot
 forest_plot_CMA <- viz_forest(
   x = random_effects_model_ordered, 

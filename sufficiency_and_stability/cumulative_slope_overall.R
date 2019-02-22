@@ -63,13 +63,13 @@ ordered_by_year
 # Stabilization plot
 gg <- ggplot(ordered_by_year, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 gg <- gg + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
-gg <- gg + scale_y_continuous(trans = "reverse")
+gg <- gg + scale_y_continuous(trans = "reverse", labels = counted_all_pubs$x, breaks = c(1,6,8,15,20,30,46,56,69,90,110,145,165,184,211,233,270,292))
 gg
 gg <- gg + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 gg <- gg + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 gg <- gg + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
 gg <- gg + xlab("Cumulative slopes") +
-  ylab("Publication order")
+  ylab("Publication year")
 gg <- gg + theme_bw()
 gg <- gg + theme(
   panel.grid.major.y = element_blank(),
