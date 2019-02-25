@@ -59,7 +59,9 @@ gg_algae <- gg_algae + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_algae
 
 
@@ -100,7 +102,9 @@ gg_aquatic <- gg_aquatic + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_aquatic
 
 # Crustacean Failsafe
@@ -139,9 +143,10 @@ gg_crust <- gg_crust + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_crust
-
 
 # FSR fish
 effects_fish <- filter(ordered_by_year, invasivespeciestaxa == "fish")
@@ -179,7 +184,9 @@ gg_fish <- gg_fish + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_fish
 
 # FSN grasses
@@ -205,7 +212,7 @@ gg_grass <- ggplot(effects_grass, aes(x = failsaferatio, y = order)) + geom_poin
 gg_grass
 gg_grass <- gg_grass + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_grass
-gg_grass <-  gg_grass + scale_y_continuous(trans = "reverse", labels = counted_grass$x, breaks = which(grass_labels != ""))
+gg_grass <-  gg_grass + scale_y_continuous(trans = "reverse", labels = counted_grass_legible$x, breaks = which(grasses_legible != ""))
 gg_grass
 gg_grass <- gg_grass + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_grass
@@ -218,7 +225,9 @@ gg_grass <- gg_grass + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_grass
 
 
@@ -257,7 +266,9 @@ gg_herb <- gg_herb + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_herb
 
 # FSN insect
@@ -295,7 +306,9 @@ gg_insect <- gg_insect + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_insect
 
 # FSN mammals
@@ -333,7 +346,9 @@ gg_mammal <- gg_mammal + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_mammal
 
 # FSN molluscs
@@ -371,7 +386,9 @@ gg_moll <- gg_moll + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_moll
 
 #FSN Trees
@@ -396,7 +413,7 @@ gg_tree <- ggplot(effects_tree, aes(x = failsaferatio, y = order)) + geom_point(
 gg_tree
 gg_tree <- gg_tree + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_tree
-gg_tree <-  gg_tree + scale_y_continuous(trans = "reverse", labels = counted_tree$x, breaks = which(tree_labels != ""))
+gg_tree <-  gg_tree + scale_y_continuous(trans = "reverse", labels = counted_tree_legible$x, breaks = which(tree_legible != ""))
 gg_tree
 gg_tree <- gg_tree + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_tree
@@ -409,9 +426,12 @@ gg_tree <- gg_tree + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_tree
 
+herb_legible
 ### Make full plot
 grid.arrange(gg_tree, gg_herb, gg_grass, gg_insect, gg_crust, gg_algae, gg_fish, gg_mammal, gg_aquatic, gg_moll, ncol=5)
 

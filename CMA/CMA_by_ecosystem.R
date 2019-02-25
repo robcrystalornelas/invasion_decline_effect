@@ -69,15 +69,47 @@ forest_labels <- c(1999,
                  2016,
                  strrep("",1:4))
 
+forest_label_legible <- c(1999,
+                          strrep("", 1),
+                          2003,
+                          strrep("", 1:4),
+                          2004,
+                          strrep("", 1:4),
+                          2005,
+                          strrep("",1:2),
+                          2007,
+                          strrep("", 1:4),
+                          2008,
+                          strrep("", 1:4),
+                          2009,
+                          strrep("", 1),
+                          2010,
+                          strrep("",1:4),
+                          2011,
+                          strrep("",1:4),
+                          2012,
+                          strrep("",1:8),
+                          2013,
+                          strrep("",1:5),
+                          2014,
+                          strrep("",1:13),
+                          2015,
+                          strrep("",1:3),
+                          2016,
+                          strrep("",1:4))
+
 cma_forest <- viz_forest(x = rma_forest, 
                         #study_labels = effects_forest[, "publicationyear"], 
-                        study_labels = forest_labels,
+                        study_labels = forest_label_legible,
                         method = "REML",
                         xlab = "Response Ratio",
                         # variant = "thick",
                         type = "cumulative") +
                         ggtitle("Forest (N = 75)") +
-  theme(plot.title = element_text(hjust=0.5))
+  ylab("publication year") +
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_forest
 
 cma_forest$data
@@ -126,15 +158,44 @@ lotic_labels <- c(1999,
                    2016,
                    strrep("",1:9))
 
+lotic_labels_legible <- c(1999,
+                  strrep("",1:3),
+                  2002,
+                  strrep("",1),
+                  2003,
+                  strrep("", 1:2),
+                  2004,
+                  strrep("", 1),
+                  2006,
+                  strrep("", 1:2),
+                  2007,
+                  strrep("", 1),
+                  2008,
+                  strrep("", 1),
+                  2010,
+                  strrep("",1:2),
+                  2012,
+                  strrep("",1:4),
+                  2013,
+                  strrep("",1:4),
+                  2014,
+                  strrep("",1),
+                  2015,
+                  strrep("",1:2),
+                  2016,
+                  strrep("",1:9))
+
 cma_lotic <- viz_forest(x = rma_lotic, 
                          #study_labels = effects_lotic[, "publicationyear"], 
-                        study_labels = lotic_labels,
+                        study_labels = lotic_labels_legible,
                         method = "REML",
                          xlab = "Response Ratio",
-                        # variant = "thick",
                          type = "cumulative") +
                           ggtitle("Lotic (N = 46)") +
-                         theme(plot.title = element_text(hjust=0.5))
+  ylab("publication year") +
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+axis.title = element_text(size = 14, colour = "black"),
+axis.text = element_text(size = 14, colour = "black"))
 cma_lotic
 cma_lotic$data
 
@@ -177,16 +238,45 @@ grassland_labels <- c(1999,
                    strrep("",1:3),
                    2016,
                    strrep("",1:2))
+grassland_labels_legible <- c(1999,
+                              strrep("", 1),
+                      2004,
+                      strrep("", 1),
+                      2005,
+                      strrep("", 1:3),
+                      2006,
+                      strrep("", 1),
+                      2008,
+                      strrep("", 1:4),
+                      2009,
+                      strrep("", 1:5),
+                      2010,
+                      strrep("", 1:2),
+                      2011,
+                      strrep("",1:3),
+                      2012,
+                      strrep("",1),
+                      2013,
+                      strrep("",1:2),
+                      2014,
+                      strrep("",1:2),
+                      2015,
+                      strrep("",1:3),
+                      2016,
+                      strrep("",1:2))
 
 cma_grassland <- viz_forest(x = rma_grassland, 
                          #study_labels = effects_grassland[, "publicationyear"], 
-                         study_labels = grassland_labels,
+                         study_labels = grassland_labels_legible,
                          method = "REML",
                          xlab = "Response Ratio",
                          #variant = "thick",
                          type = "cumulative") +
   ggtitle("Grassland (N = 43)") +
-  theme(plot.title = element_text(hjust=0.5))
+  ylab("publication year") +
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_grassland
 
 # CMA island
@@ -230,7 +320,10 @@ cma_island <- viz_forest(x = rma_island,
                          #variant = "thick",
                          type = "cumulative") +
   ggtitle("Island (N = 35)") +
-  theme(plot.title = element_text(hjust=0.5))
+  ylab("publication year") +
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_island
 
 # CMA estuarine
@@ -277,7 +370,10 @@ cma_estuarine <- viz_forest(x = rma_estuarine,
                          #variant = "thick",
                          type = "cumulative") +
   ggtitle("Estuarine (N = 34)") +
-  theme(plot.title = element_text(hjust=0.5))
+  ylab("publication year") +
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_estuarine
 cma_estuarine$data
 
@@ -321,7 +417,10 @@ cma_lentic <- viz_forest(x = rma_lentic,
                          #variant = "thick",
                          type = "cumulative") +
   ggtitle("Lentic (N = 30)") +
-  theme(plot.title = element_text(hjust=0.5))
+  ylab("publication year") +
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_lentic
 
 # CMA coastal
@@ -359,7 +458,10 @@ cma_coastal <- viz_forest(x = rma_coastal,
                          #variant = "thick",
                          type = "cumulative") +
   ggtitle("Coastal (N = 16)") +
-  theme(plot.title = element_text(hjust=0.5))
+  ylab("publication year") +
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_coastal
 
 # CMA interidal
@@ -395,7 +497,10 @@ cma_intertidal <- viz_forest(x = rma_intertidal,
                          #variant = "thick",
                          type = "cumulative") +
   ggtitle("Intertidal (N = 14)") +
-  theme(plot.title = element_text(hjust=0.5))
+  ylab("publication year") +
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_intertidal
 
 # CMA urban
@@ -428,7 +533,10 @@ cma_urban <- viz_forest(x = rma_urban,
                          #variant = "thick",
                          type = "cumulative") +
   ggtitle("Urban (N = 11)") +
-  theme(plot.title = element_text(hjust=0.5))
+  ylab("publication year") +
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_urban
 
 # CMA shrubland
@@ -462,7 +570,10 @@ cma_shrubland <- viz_forest(x = rma_shrubland,
                          #variant = "thick",
                          type = "cumulative") +
   ggtitle("Shrubland (N = 10)") +
-  theme(plot.title = element_text(hjust=0.5))
+  ylab("publication year") +
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_shrubland
 cma_shrubland$data
 # Combine all CMAs with more than 10 studies

@@ -49,7 +49,7 @@ gg_forest <- ggplot(effects_forest, aes(x = failsaferatio, y = order)) + geom_po
 gg_forest
 gg_forest <- gg_forest + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_forest
-gg_forest <- gg_forest + scale_y_continuous(trans = "reverse", labels = counted_forest$x, breaks = which(forest_labels != ""))
+gg_forest <- gg_forest + scale_y_continuous(trans = "reverse", labels = counted_forest_legible$x, breaks = which(forest_label_legible != ""))
 gg_forest
 gg_forest <- gg_forest + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_forest
@@ -62,7 +62,9 @@ gg_forest <- gg_forest + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_forest
 
 ################
@@ -87,7 +89,7 @@ gg_lotic <- ggplot(effects_lotic, aes(x = failsaferatio, y = order)) + geom_poin
 gg_lotic
 gg_lotic <- gg_lotic + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_lotic
-gg_lotic <- gg_lotic + scale_y_continuous(trans = "reverse", labels = counted_lotic$x, breaks = which(lotic_labels != ""))
+gg_lotic <- gg_lotic + scale_y_continuous(trans = "reverse", labels = counted_lotic_legible$x, breaks = which(lotic_labels_legible != ""))
 gg_lotic
 gg_lotic <- gg_lotic + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_lotic
@@ -100,7 +102,9 @@ gg_lotic <- gg_lotic + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_lotic
 
 ################
@@ -125,7 +129,7 @@ gg_grass <- ggplot(effects_grassland, aes(x = failsaferatio, y = order)) + geom_
 gg_grass
 gg_grass <- gg_grass + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 gg_grass
-gg_grass <- gg_grass + scale_y_continuous(trans = "reverse", labels = counted_grassland$x, breaks = which(grassland_labels != ""))
+gg_grass <- gg_grass + scale_y_continuous(trans = "reverse", labels = counted_grassland_legible$x, breaks = which(grassland_labels_legible != ""))
 gg_grass
 gg_grass <- gg_grass + geom_vline(xintercept = 1, colour = "red", size = .5, linetype = 2)
 gg_grass
@@ -138,7 +142,9 @@ gg_grass <- gg_grass + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_grass
 
 ################
@@ -176,7 +182,9 @@ gg_island <- gg_island + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_island
 
 ################
@@ -214,7 +222,9 @@ gg_estuarine <- gg_estuarine + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_estuarine
 
 ################
@@ -252,7 +262,9 @@ gg_lentic <- gg_lentic + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_lentic
 
 ################
@@ -291,7 +303,9 @@ gg_coastal <- gg_coastal + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_coastal
 
 ################
@@ -329,7 +343,9 @@ gg_intertidal <- gg_intertidal + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_intertidal
 
 ################
@@ -367,7 +383,9 @@ gg_urban <- gg_urban + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_urban
 
 ################
@@ -405,7 +423,9 @@ gg_shrub <- gg_shrub + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 gg_shrub
 
 grid.arrange(gg_forest,gg_lotic,gg_grass,gg_island,gg_estuarine,gg_lentic,gg_coastal,gg_intertidal,gg_urban,gg_shrub,ncol=5)

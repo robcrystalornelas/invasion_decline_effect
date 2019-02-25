@@ -65,11 +65,14 @@ summary(all_forest)
 effects_forest$order <- seq(1:75)
 counted_forest <- plyr::count(effects_forest$publicationyear)
 
+counted_forest
+counted_forest_legible <- counted_forest[-c(2,6),]
+
 stable_forest <- ggplot(effects_forest, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_forest
 stable_forest <- stable_forest + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_forest
-stable_forest <- stable_forest + scale_y_continuous(trans = "reverse", labels = counted_forest$x, breaks = which(forest_labels != ""))
+stable_forest <- stable_forest + scale_y_continuous(trans = "reverse", labels = counted_forest_legible$x, breaks = which(forest_label_legible != ""))
 stable_forest
 stable_forest <- stable_forest + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_forest <- stable_forest + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
@@ -82,7 +85,9 @@ stable_forest <- stable_forest + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_forest
 
 ############ LOTIC
@@ -120,11 +125,13 @@ summary(all_lotic)
 effects_lotic$order <- seq(1:46)
 counted_lotic <- plyr::count(effects_lotic$publicationyear)
 
+counted_lotic
+counted_lotic_legible <- counted_lotic[-c(2,3),]
 stable_lotic <- ggplot(effects_lotic, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_lotic
 stable_lotic <- stable_lotic + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_lotic
-stable_lotic <- stable_lotic + scale_y_continuous(trans = "reverse", labels = counted_lotic$x, breaks = which(lotic_labels != ""))
+stable_lotic <- stable_lotic + scale_y_continuous(trans = "reverse", labels = counted_lotic_legible$x, breaks = which(lotic_labels_legible != ""))
 stable_lotic
 stable_lotic <- stable_lotic + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_lotic <- stable_lotic + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
@@ -137,7 +144,9 @@ stable_lotic <- stable_lotic + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_lotic
 
 ############# Grassland
@@ -173,12 +182,18 @@ summary(all_grassland)
 
 # Stable plot Alge
 effects_grassland$order <- seq(1:43)
+
 counted_grassland <- plyr::count(effects_grassland$publicationyear)
+counted_grassland
+counted_grassland_legible <- counted_grassland[-c(2,6),]
+counted_grassland_legible
+
+grassland_labels_legible
 stable_grassland <- ggplot(effects_grassland, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_grassland
 stable_grassland <- stable_grassland + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_grassland
-stable_grassland <- stable_grassland + scale_y_continuous(trans = "reverse", labels = counted_grassland$x, breaks = which(grassland_labels != ""))
+stable_grassland <- stable_grassland + scale_y_continuous(trans = "reverse", labels = counted_grassland_legible$x, breaks = which(grassland_labels_legible != ""))
 stable_grassland
 stable_grassland <- stable_grassland + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_grassland <- stable_grassland + geom_vline(xintercept = -.005, colour = "red", size = .5, linetype = 2)
@@ -191,8 +206,11 @@ stable_grassland <- stable_grassland + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_grassland
+
 
 ########### ISLAND
 effects_island <- filter(ordered_by_year, ecosystemforheatmap == "island")
@@ -244,7 +262,9 @@ stable_island <- stable_island + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_island
 
 ############# ESTUARY
@@ -297,7 +317,9 @@ stable_estuarine <- stable_estuarine + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_estuarine
 
 ###########  LENTIC
@@ -350,7 +372,9 @@ stable_lentic <- stable_lentic + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_lentic
 
 ########### COASTAL
@@ -403,7 +427,9 @@ stable_coastal <- stable_coastal + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_coastal
 
 
@@ -458,7 +484,9 @@ stable_intertidal <- stable_intertidal + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_intertidal
 
 ############ URBAN
@@ -511,7 +539,9 @@ stable_urban <- stable_urban + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_urban
 
 
@@ -566,7 +596,9 @@ stable_shrubland <- stable_shrubland + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_shrubland
 
 ### Put them all together

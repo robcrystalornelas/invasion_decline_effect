@@ -72,10 +72,12 @@ stable_algae <- stable_algae +
    ggtitle("Algae (N = 22)")
  stable_algae <- stable_algae + theme_bw()
  stable_algae <- stable_algae + theme(
-   panel.grid.major.y = element_blank(),
-   panel.grid.minor.y = element_blank(),
-   legend.position = "none",
-   plot.title = element_text(hjust = 0.5))
+     panel.grid.major.y = element_blank(),
+     panel.grid.minor.y = element_blank(),
+     legend.position = "none",
+     plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+     axis.title = element_text(size = 14, colour = "black"),
+     axis.text = element_text(size = 14, colour = "black"))
 stable_algae
 
 # Aquatic plants
@@ -127,7 +129,9 @@ stable_aquatic <- stable_aquatic + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_aquatic
 
 #################
@@ -181,7 +185,9 @@ stable_crust <- stable_crust + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_crust
 
 ############ FISH
@@ -234,7 +240,9 @@ stable_fish <- stable_fish + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_fish
 
 ############
@@ -266,6 +274,7 @@ for (i in 1:38)
 }
 effects_grasses
 which(abs(effects_grasses$cumulative_slope)< .005)
+effects_grasses[35,]
 all_grasses <- lm(x ~ order, data= cma_grass$data)
 summary(all_grasses)
 
@@ -273,24 +282,32 @@ summary(all_grasses)
 
 effects_grasses$order <- seq(1:38)
 counted_grass <- plyr::count(effects_grasses$publicationyear)
+counted_grass
+
+grasses_legible
+counted_grass_legible <- counted_grass[-c(2,6,8,13),]
+counted_grass_legible
+
 stable_grass <- ggplot(effects_grasses, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_grass
 stable_grass <- stable_grass + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_grass
-stable_grass <- stable_grass + scale_y_continuous(trans = "reverse", labels = counted_grass$x, breaks = which(grass_labels != ""))
+stable_grass <- stable_grass + scale_y_continuous(trans = "reverse", labels = counted_grass_legible$x, breaks = which(grasses_legible != ""))
 stable_grass
 stable_grass <- stable_grass + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_grass <- stable_grass + geom_vline(xintercept = -0.005, colour = "red", size = .5, linetype = 2)
 stable_grass <- stable_grass + 
   xlab("Cumulative slopes") +
-  ylab("Publication order") +
+  ylab("Publication year") +
   ggtitle("Grasses (N = 38)")
 stable_grass <- stable_grass + theme_bw()
 stable_grass <- stable_grass + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_grass
 
 #############
@@ -326,6 +343,7 @@ summary(all_herb)
 # Stable plot Alge
 effects_herb$order <- seq(1:79)
 counted_herb <- plyr::count(effects_herb$publicationyear)
+
 stable_herb <- ggplot(effects_herb, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_herb <- stable_herb + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_herb
@@ -343,7 +361,9 @@ stable_herb <- stable_herb + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_herb
 
 ###############
@@ -398,7 +418,9 @@ stable_insect <- stable_insect + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_insect
 
 ###########
@@ -451,7 +473,9 @@ stable_mammal <- stable_mammal + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_mammal
 
 ###############
@@ -505,7 +529,9 @@ stable_mollusks <- stable_mollusks + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+  axis.title = element_text(size = 14, colour = "black"),
+  axis.text = element_text(size = 14, colour = "black"))
 stable_mollusks
 
 #############
@@ -541,11 +567,18 @@ summary(all_tree)
 # Stable plot Alge
 effects_tree$order <- seq(1:88)
 counted_tree <- plyr::count(effects_tree$publicationyear)
+
+counted_tree
+tree_legible
+counted_tree_legible <- counted_tree[-c(2, 3, 7), ]
+counted_tree_legible
+tree_legible
+
 stable_tree <- ggplot(effects_tree, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_tree
 stable_tree <- stable_tree + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
 stable_tree
-stable_tree <- stable_tree + scale_y_continuous(trans = "reverse", labels = counted_tree$x, breaks = which(tree_labels != ""))
+stable_tree <- stable_tree + scale_y_continuous(trans = "reverse", labels = counted_tree_legible$x, breaks = which(tree_legible != ""))
 stable_tree
 stable_tree <- stable_tree + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 stable_tree <- stable_tree + geom_vline(xintercept = -0.005, colour = "red", size = .5, linetype = 2)
@@ -558,7 +591,9 @@ stable_tree <- stable_tree + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
   legend.position = "none",
-  plot.title = element_text(hjust = 0.5))
+  plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 stable_tree
 
 grid.arrange(stable_tree, stable_herb, stable_grass, stable_insect,stable_crust,stable_algae, stable_fish,stable_mammal, stable_aquatic, stable_mollusks, ncol=5)

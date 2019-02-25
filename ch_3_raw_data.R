@@ -8,6 +8,7 @@ library(mice)
 raw_data_with_na <- read.csv("~/Desktop/CH3_impacts_meta_analysis/diversity_cases_working_file_v8.csv", header=TRUE)
 
 head(raw_data_with_na)
+tail(raw_data_with_na)
 imputation_subset_with_na <- dplyr::select(raw_data_with_na, code, mean_control, SD_control,sample_size_control,mean_invaded,SD_invaded,sample_size_invaded)
 imputation_subset_with_na
 dim(imputation_subset_with_na)
@@ -48,7 +49,7 @@ class(imputed_sds)
 
 # Create a dataset after the imputation
 imputed_sds <- mice::complete(imputed_sds)
-
+imputed_sds
 # Do we still havy missing values? Hopefully not!
 sapply(imputed_sds, function(x) sum(is.na(x)))
 

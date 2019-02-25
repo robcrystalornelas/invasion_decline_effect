@@ -61,9 +61,15 @@ ordered_by_year$order <- seq(1:334)
 ordered_by_year
 
 # Stabilization plot
+counted_all_pubs
+overall_CMA_study_labels_legible
+
+counted_all_pubs
+counted_all_pubs_legible <- counted_all_pubs[-c(2),]
+counted_all_pubs_legible
 gg <- ggplot(ordered_by_year, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 gg <- gg + scale_colour_manual(values = setNames(c('red','black'),c(T, F)))
-gg <- gg + scale_y_continuous(trans = "reverse", labels = counted_all_pubs$x, breaks = c(1,6,8,15,20,30,46,56,69,90,110,145,165,184,211,233,270,292))
+gg <- gg + scale_y_continuous(trans = "reverse", labels = counted_all_pubs_legible$x, breaks = which(overall_CMA_study_labels_legible != ""))
 gg
 gg <- gg + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
 gg <- gg + geom_vline(xintercept = 0.005, colour = "red", size = .5, linetype = 2)
@@ -74,7 +80,10 @@ gg <- gg + theme_bw()
 gg <- gg + theme(
   panel.grid.major.y = element_blank(),
   panel.grid.minor.y = element_blank(),
-  legend.position = "none")
+  legend.position = "none",
+  plot.title = element_text(hjust=0.5, size = 14),
+  axis.title = element_text(size = 14),
+  axis.text = element_text(size = 14))
 gg
 
 

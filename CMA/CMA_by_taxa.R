@@ -72,11 +72,12 @@ cma_algae <- viz_forest(x = rma_algae,
                         #study_labels = effects_algae[, "publicationyear"],
                         study_labels = algae_labels,
                         method = "REML",
-                        xlab = "ln(Response Ratio)",
-                        # variant = "thick",
+                        xlab = "Response Ratio",
                         type = "cumulative") +
                         ggtitle("Algae (N = 22)") +
-                        theme(plot.title = element_text(hjust=0.5))
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_algae
   
 # aquatic plants
@@ -96,11 +97,12 @@ cma_aquatic_plants <- viz_forest(x = rma_aquatic_plants,
                         #study_labels = effects_aquatic_plants[, "publicationyear"], 
                         study_labels = aquatic_labels,
                         method = "REML",
-                        xlab = "ln(Response Ratio)",
-                      # variant = "thick",
+                        xlab = "Response Ratio",
                         type = "cumulative") +
   ggtitle("Aquatic plants (N = 8)") +
-  theme(plot.title = element_text(hjust=0.5))
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_aquatic_plants
 
 # crustacean
@@ -138,12 +140,13 @@ crust_labels <- c(2003,
 cma_crust <- viz_forest(x = rma_crust, 
                         #study_labels = effects_crust[, "publicationyear"], 
                         study_labels = crust_labels,
-                        xlab = "ln(Response Ratio)",
+                        xlab = "Response Ratio",
                         method = "REML",
-                       # variant = "thick",
                         type = "cumulative") +
                         ggtitle("Crustacean (N = 23)") +
-                        theme(plot.title = element_text(hjust=0.5))
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_crust
 
 mean(cma_crust$data$x[1:2])
@@ -182,12 +185,13 @@ fish_labels <- c(1999,
 cma_fish <- viz_forest(x = rma_fish, 
                         #study_labels = effects_fish[, "publicationyear"], 
                        study_labels = fish_labels,
-                        xlab = "ln(Response Ratio)",
+                        xlab = "Response Ratio",
                         method = "REML",
-                       # variant = "thick",
                         type = "cumulative") +
                         ggtitle("Fish (N = 19)") +
-                        theme(plot.title = element_text(hjust=0.5))
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_fish
 
 # grasses
@@ -228,15 +232,40 @@ grass_labels <- c(1999,
                  2016,
                  strrep("",1:2))
 
+grasses_legible <- c(1999,
+                     strrep("", 1:2), 
+                     2003,
+                     strrep("", 1),
+                     2005,
+                     strrep("", 1:4), 
+                     2006,
+                     strrep("", 1),
+                     2008,
+                     strrep("", 1),
+                     strrep("",1:3),
+                     2010,
+                     strrep("",1:3),
+                     2011,
+                     strrep("",1),
+                     2012,
+                     strrep("",1:3),
+                     2013,
+                     strrep("",1:2),
+                     2015,
+                     strrep("",1:4),
+                     2016,
+                     strrep("",1:2))
+
 cma_grass <- viz_forest(x = rma_grass, 
                        #study_labels = effects_grass[, "publicationyear"], 
-                       study_labels = grass_labels,
-                       xlab = "ln(Response Ratio)",
+                       study_labels = grasses_legible,
+                       xlab = "Response Ratio",
                        method = "REML",
-                      # variant = "thick",
                        type = "cumulative") +
                       ggtitle("Grasses (N = 38)") +
-                      theme(plot.title = element_text(hjust=0.5))
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_grass
 
 # herbaceous plant
@@ -276,15 +305,44 @@ herb_labels <- c(2001,
                   strrep("",1:4),
                   2016,
                   strrep("",1:9))
+
+herb_legible <- c(2001,
+                 strrep("", 1:3), 
+                 2003,
+                 strrep("", 1:3),
+                 2004,
+                 strrep("", 1:5),
+                 2006,
+                 strrep("", 1:3), 
+                 2007,
+                 strrep("", 1:7),
+                 2008,
+                 strrep("", 1:2),
+                 2009,
+                 strrep("", 1:16),
+                 2010,
+                 strrep("",1:2),
+                 2011,
+                 strrep("",1:4),
+                 2012,
+                 strrep("",1:2),
+                 2013,
+                 strrep("",1:6),
+                 2014,
+                 strrep("",1:4),
+                 2016,
+                 strrep("",1:9))
+
 cma_herb <- viz_forest(x = rma_herb, 
                       #study_labels = effects_herb[, "publicationyear"], 
-                      study_labels = herb_labels,
-                       xlab = "ln(Response Ratio)",
+                      study_labels = herb_legible,
+                       xlab = "Response Ratio",
                        method = "REML",
-                       # variant = "thick",
                         type = "cumulative") +
                         ggtitle("Herbaceous Plants (N = 79)") +
-                        theme(plot.title = element_text(hjust=0.5))
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_herb
 
 # insect
@@ -329,12 +387,13 @@ insect_labels <- c(1999,
 cma_insect <- viz_forest(x = rma_insect, 
                        #study_labels = effects_insect[, "publicationyear"], 
                        study_labels = insect_labels,
-                       xlab = "ln(Response Ratio)",
+                       xlab = "Response Ratio",
                        method = "REML",
-                     #  variant = "thick",
                        type = "cumulative") +
                       ggtitle("Insects (N = 27)") +
-                      theme(plot.title = element_text(hjust=0.5))
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_insect
 cma_insect$data
 #mean effect
@@ -367,12 +426,13 @@ mammal_labels <- c(2004,
 cma_mammal <- viz_forest(x = rma_mammal, 
                          #study_labels = effects_mammal[, "publicationyear"], 
                          study_labels = mammal_labels,
-                         xlab = "ln(Response Ratio)",
+                         xlab = "Respone Ratio",
                          method = "REML",
-                         #variant = "thick",
                          type = "cumulative") +
                         ggtitle("Mammals (N = 16)") +
-                        theme(plot.title = element_text(hjust=0.5))
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_mammal
 
 # molluscs
@@ -397,12 +457,13 @@ moll_labels <- c(2008,
 cma_molluscs <- viz_forest(x = rma_molluscs, 
                            #study_labels = effects_molluscs[, "publicationyear"], 
                            study_labels = moll_labels,
-                           xlab = "ln(Response Ratio)",
+                           xlab = "Response Ratio",
                            method = "REML",
-                           #variant = "thick",
                            type = "cumulative") +
                           ggtitle("Mollusks (N = 7)") +
-                          theme(plot.title = element_text(hjust=0.5))
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_molluscs
 
 # tree
@@ -456,60 +517,50 @@ tree_labels <- c(2000,
                  2016,
                  strrep("",1:4))
 
+tree_labels
+tree_legible <- c(2000,
+                 strrep("", 1),
+                 strrep("", 1),
+                 2003,
+                 strrep("", 1:2),
+                 2004,
+                 strrep("", 1:2),
+                 2005,
+                 strrep("",1:2),
+                 2007,
+                 strrep("", 1:7),
+                 2008,
+                 strrep("", 1:9),
+                 2009,
+                 strrep("", 1:5),
+                 2010,
+                 strrep("",1:2),
+                 2011,
+                 strrep("",1:2),
+                 2012,
+                 strrep("",1:6),
+                 2013,
+                 strrep("",1:6),
+                 2014,
+                 strrep("",1:19),
+                 2015,
+                 strrep("",1:6),
+                 2016,
+                 strrep("",1:4))
+
 cma_tree <- viz_forest(x = rma_tree,
                       #study_labels = effects_tree[, c("publicationyear")], 
-                      study_labels = tree_labels,
-                      xlab = "ln(Response Ratio)",
-                      #variant = "thick",
+                      study_labels = tree_legible,
+                      xlab = "Response Ratio",
                       method = "REML",
                       type = "cumulative") +
                       ggtitle("Trees (N = 88)") +
-                      theme(plot.title = element_text(hjust=0.5))
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
 cma_tree
 
 # Combine all CMAs with more than 10 studies
 grid.arrange(cma_tree,cma_herb,cma_grass,cma_insect,cma_crust,cma_algae,cma_fish,cma_mammal,cma_aquatic_plants,cma_molluscs,ncol=5)
 
 dev.off()
-
-# Less than 10 cases ####
-
-# amphibians and reptiles
-effects_amphib <- filter(ordered_by_year, invasivespeciestaxa == "amphibians and reptiles")
-cma_amphib <- viz_forest(x = effects_amphib[, c("yi", "vi")], 
-                         study_labels = effects_amphib[, "publicationyear"], 
-                         xlab = "Response Ratio",
-                         #variant = "thick",
-                         type = "cumulative")
-cma_amphib
-
-# Avian CMA
-effects_avian <- filter(ordered_by_year, invasivespeciestaxa == "avian")
-effects_avian
-cma_avian <- viz_forest(x = effects_avian[, c("yi", "vi")], 
-                        study_labels = effects_avian[, "publicationyear"], 
-                        xlab = "Response Ratio",
-                        #variant = "thick",
-                        type = "cumulative")
-cma_avian
-
-# marine invert
-effects_marine_invert <- filter(ordered_by_year, invasivespeciestaxa == "marine invert")
-cma_marine_invert <- viz_forest(x = effects_marine_invert[, c("yi", "vi")], 
-                                study_labels = effects_marine_invert[, "publicationyear"], 
-                                xlab = "Response Ratio",
-                                #variant = "thick",
-                                type = "cumulative")
-cma_marine_invert
-
-# terrestrial invert
-effects_terrestrial_invert <- filter(ordered_by_year, invasivespeciestaxa == "terrestrial invert")
-cma_terrestrial_invert <- viz_forest(x = effects_terrestrial_invert[, c("yi", "vi")], 
-                                     study_labels = effects_terrestrial_invert[, "publicationyear"], 
-                                     xlab = "Response Ratio",
-                                     #variant = "thick",
-                                     type = "cumulative")
-cma_terrestrial_invert
-
-
-

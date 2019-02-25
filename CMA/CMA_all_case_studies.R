@@ -31,6 +31,7 @@ random_effects_model_ordered <- rma(yi=ordered_by_year$yi,
                             method = "REML",
                             test = "knha",
                             data=ordered_by_year)
+?rma
 random_effects_model_ordered
 
 # Make study labels
@@ -72,17 +73,57 @@ overall_CMA_study_labels <- c(1999,
                               strrep("",1:21),
                               2016,
                               strrep("",1:42))
+
 overall_CMA_study_labels
+overall_CMA_study_labels_legible <- c(1999, 
+                                      strrep("", 1:6), 
+                                      2001,
+                                      strrep("",1:6),
+                                      2002,
+                                      strrep("",1:4),
+                                      2003,
+                                      strrep("",1:9),
+                                      2004,
+                                      strrep("",1:15),
+                                      2005,
+                                      strrep("",1:9),
+                                      2006,
+                                      strrep("",1:12),
+                                      2007,
+                                      strrep("",1:20),
+                                      2008,
+                                      strrep("",1:19),
+                                      2009,
+                                      strrep("",1:34),
+                                      2010,
+                                      strrep("",1:19),
+                                      2011,
+                                      strrep("",1:18),
+                                      2012,
+                                      strrep("",1:26),
+                                      2013,
+                                      strrep("",1:21),
+                                      2014,
+                                      strrep("",1:36),
+                                      2015,
+                                      strrep("",1:21),
+                                      2016,
+                                      strrep("",1:42))
+
+
+length(overall_CMA_study_labels_legible)
+
 #make forest plot
 forest_plot_CMA <- viz_forest(
   x = random_effects_model_ordered, 
   method = "REML",
-  #study_labels = ordered_by_year[1:334, "code"], # include study name label
-  study_labels = overall_CMA_study_labels, # include custom study labels that skip any repeated years
-  xlab = "Ratio of Means", # make a label along x-axis for effect size
-  col = "Blues",
-  type = "cumulative",
-  text_size = 3)
+  study_labels = overall_CMA_study_labels_legible, # include custom study labels that skip any repeated years
+  xlab = "Response Ratio", # make a label along x-axis for effect size
+  col = "Reds",
+  type = "cumulative") +
+  theme(plot.title = element_text(hjust=0.5, size = 14),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 14))
 forest_plot_CMA
 
 pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/CMA_all_case_studies.pdf")
