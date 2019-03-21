@@ -284,10 +284,10 @@ cma_estuarine
 
 # Prep the for loop
 effects_estuarine$cumulative_slope <- rep(NA, length(effects_estuarine$code))
-cma_estuarine$data$order <- seq(1:34)
+cma_estuarine$data$order <- seq(1:35)
 cma_estuarine$data
 
-for (i in 1:34)
+for (i in 1:35)
 {
   temp_df <- lm(x ~ order, data = cma_estuarine$data[1:i,])
   effects_estuarine$cumulative_slope[i] <- temp_df$coefficients[2]
@@ -298,7 +298,7 @@ all_estuarine <- lm(x ~ order, data= cma_estuarine$data)
 summary(all_estuarine)
 
 # Stable plot Alge
-effects_estuarine$order <- seq(1:34)
+effects_estuarine$order <- seq(1:35)
 counted_estuarine <- plyr::count(effects_estuarine$publicationyear)
 stable_estuarine <- ggplot(effects_estuarine, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_estuarine
@@ -311,7 +311,7 @@ stable_estuarine <- stable_estuarine + geom_vline(xintercept = -.005, colour = "
 stable_estuarine <- stable_estuarine +
   xlab("Cumulative slopes") +
   ylab("publication year") +
-  ggtitle("Estuarine (N = 34)")
+  ggtitle("Estuarine (N = 35)")
 stable_estuarine <- stable_estuarine + theme_bw()
 stable_estuarine <- stable_estuarine + theme(
   panel.grid.major.y = element_blank(),
@@ -432,9 +432,8 @@ stable_coastal <- stable_coastal + theme(
   axis.text = element_text(size = 14, colour = "black"))
 stable_coastal
 
-
 #############  INTERTIDAL
-effects_intertidal <- filter(ordered_by_year, ecosystemforheatmap == "intertidal")
+effects_intertidal <- filter(ordered_by_year, ecosystemforheatmap == "rocky intertidal")
 effects_intertidal
 rma_intertidal <- rma(yi=effects_intertidal$yi,
                  vi=effects_intertidal$vi,
@@ -451,10 +450,10 @@ cma_intertidal
 
 # Prep the for loop
 effects_intertidal$cumulative_slope <- rep(NA, length(effects_intertidal$code))
-cma_intertidal$data$order <- seq(1:14)
+cma_intertidal$data$order <- seq(1:10)
 cma_intertidal$data
 
-for (i in 1:14)
+for (i in 1:10)
 {
   temp_df <- lm(x ~ order, data = cma_intertidal$data[1:i,])
   effects_intertidal$cumulative_slope[i] <- temp_df$coefficients[2]
@@ -465,7 +464,7 @@ all_intertidal <- lm(x ~ order, data= cma_intertidal$data)
 summary(all_intertidal)
 
 # Stable plot Alge
-effects_intertidal$order <- seq(1:14)
+effects_intertidal$order <- seq(1:10)
 count_intertidal <- plyr::count(effects_intertidal$publicationyear)
 stable_intertidal <- ggplot(effects_intertidal, aes(x = cumulative_slope, y = order)) + geom_point(aes(colour = cumulative_slope < .005 & cumulative_slope > -.005))
 stable_intertidal
@@ -478,7 +477,7 @@ stable_intertidal <- stable_intertidal + geom_vline(xintercept = -.005, colour =
 stable_intertidal <- stable_intertidal +
   xlab("Cumulative slopes") +
   ylab("publication year") +
-  ggtitle("Intertidal (N = 14)")
+  ggtitle("Rocky intertidal (N = 10)")
 stable_intertidal <- stable_intertidal + theme_bw()
 stable_intertidal <- stable_intertidal + theme(
   panel.grid.major.y = element_blank(),
@@ -602,4 +601,5 @@ stable_shrubland <- stable_shrubland + theme(
 stable_shrubland
 
 ### Put them all together
-grid.arrange(stable_forest, stable_lotic, stable_grassland, stable_island,stable_estuarine,stable_lentic,stable_coastal,stable_intertidal,stable_urban,stable_shrubland, ncol=5)
+grid.arrange(stable_forest, stable_lotic, stable_grassland, stable_island,stable_estuarine,stable_lentic,stable_coastal,stable_urban,stable_intertidal,stable_shrubland, ncol=5)
+

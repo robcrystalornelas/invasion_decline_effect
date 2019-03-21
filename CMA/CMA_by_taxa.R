@@ -119,6 +119,7 @@ rma_crust
 
 exp(-0.2247)
 1-0.7987558
+
 # study labels
 plyr::count(effects_crust$publicationyear)
 crust_labels <- c(2003,
@@ -149,9 +150,10 @@ cma_crust <- viz_forest(x = rma_crust,
         axis.text = element_text(size = 14, colour = "black"))
 cma_crust
 
-mean(cma_crust$data$x[1:2])
-mean(cma_crust$data$x_min[1:2])
-mean(cma_crust$data$x_max[1:2])
+
+mean(cma_crust$data$x[1:5])
+mean(cma_crust$data$x_min[1:5])
+mean(cma_crust$data$x_max[1:5])
 
 # fish
 effects_fish <- filter(ordered_by_year, invasivespeciestaxa == "fish")
@@ -354,6 +356,13 @@ rma_insect <- rma(yi=effects_insect$yi,
                 test = "knha",
                 data=effects_insect)
 rma_insect
+1-exp(-0.5216)
+1-(exp(-0.5216)*((sigma(rma_insect)^2)/2))
+1.8*.59
+1-(exp(-0.2086)*((sigma(rma_tree)^2)/2))
+
+sigma(rma_tree)
+sigma(rma_insect)
 
 rma_insect_five <-rma(yi=effects_insect[1:5,]$yi, 
   vi=effects_insect[1:5,]$vi,
@@ -394,6 +403,7 @@ cma_insect <- viz_forest(x = rma_insect,
   theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
         axis.title = element_text(size = 14, colour = "black"),
         axis.text = element_text(size = 14, colour = "black"))
+
 cma_insect
 cma_insect$data
 #mean effect
@@ -476,14 +486,20 @@ rma_tree <- rma(yi=effects_tree$yi,
                   test = "knha",
                   data=effects_tree)
 rma_tree
-
+1-(exp(-0.2086)*((sigma(rma_tree)^2)/2))
+1-exp(-.2086)
 # tree first five
 rma_tree_first_five <- rma(yi=effects_tree[1:5,]$yi, 
                            vi=effects_tree[1:5,]$vi,
                            method = "REML",
                            test = "knha",
                            data=effects_tree[1:5,])
-rma_tree_first_five
+rma_tree_first_five$b
+1-exp(-.3885)
+
+1-(exp(-.3885)*((sigma(rma_tree_first_five)^2)/2))
+
+1-exp(-.3885)*((sigma(rma_tree_first_five)^2)/2)
 
 plyr::count(effects_tree$publicationyear)
 tree_labels <- c(2000,

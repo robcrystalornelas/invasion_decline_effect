@@ -25,14 +25,16 @@ ordered_by_year <- arrange(effect_sizes_richness, publicationyear)
 head(ordered_by_year, N = 5)
 ordered_by_year
 dim(ordered_by_year)
+
 # Random effects model
 random_effects_model_ordered <- rma(yi=ordered_by_year$yi, 
                             vi=ordered_by_year$vi,
                             method = "REML",
                             test = "knha",
                             data=ordered_by_year)
-?rma
 random_effects_model_ordered
+
+1-exp(-.2316)
 
 # Make study labels
 counted_all_pubs <- plyr::count(ordered_by_year$publicationyear)
@@ -137,18 +139,13 @@ dev.off()
 
 # can look at exact data that forest plot is made with
 forest_plot_CMA$data
-first_five_effect <- c(-1.04112114,-1.0883960,-1.1379484,-0.9699270,-0.7790654)
-first_five_low_ci <- c(-1.5198541,-1.5157978,-1.5438819,-1.3795680,-1.2429049)
-first_five_high_ci <- c(-0.56238815,-0.66099414,-0.73201492,-0.56028606,-0.31522604)
-mean(first_five_effect)
-sd(first_five_effect)
-exp(-1.003292)
-1-0.3666704 # this is richness decline
-mean(first_five_low_ci)
-mean(first_five_high_ci)
 
--1.003292 - 1.440401
--1.003292 + 0.5661819
+ordered_by_year[1:5,]
+random_effects_model_ordered_first_five <- rma(yi=ordered_by_year[1:5,]$yi, 
+                                    vi=ordered_by_year[1:5,]$vi,
+                                    method = "REML",
+                                    test = "knha",
+                                    data=ordered_by_year[1:5,])
+random_effects_model_ordered_first_five
 
-##
-cumul(random_effects_model_ordered)
+1-exp(-.7791)*((sigma(random_effects_model_ordered_first_five)^2)/2)

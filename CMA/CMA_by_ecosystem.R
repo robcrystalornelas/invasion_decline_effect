@@ -9,6 +9,7 @@ library(metaviz)
 library(metafor)
 library(gridExtra)
 
+
 # Calculate effect size
 effect_sizes_richness_imputed <- escalc("ROM", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
                                         m1i = raw_data_imputed$mean_invaded,       
@@ -38,6 +39,18 @@ rma_forest <- rma(yi=effects_forest$yi,
 rma_forest
 exp(-.2078)
 1-.8123
+1-(exp(-.2078)*((sigma(rma_forest)^2)/2))
+
+effects_forest[1:15,]
+
+rma_forest_five <-rma(yi=effects_forest[1:15,]$yi, 
+                      vi=effects_forest[1:15,]$vi,
+                      method = "REML",
+                      test = "knha",
+                      data=effects_forest[1:15,]) 
+rma_forest_five
+1-(exp(-.5811)*((sigma(rma_forest_five)^2)/2))
+1-exp(-.5811)
 plyr::count(effects_forest$publicationyear)
 forest_labels <- c(1999,
                    2001,
@@ -127,6 +140,15 @@ rma_lotic <- rma(yi=effects_lotic$yi,
 rma_lotic
 exp(-.2585)
 1-.772209
+1-(exp(-.2585)*((sigma(rma_lotic)^2)/2))
+
+rma_lotic_five <- rma(
+  yi=effects_lotic[1:5,]$yi, 
+  vi=effects_lotic[1:5,]$vi,
+  method = "REML",
+  test = "knha",
+  data=effects_lotic[1:5,])
+rma_lotic_five
 
 plyr::count(effects_lotic$publicationyear)
 lotic_labels <- c(1999,
@@ -356,7 +378,7 @@ estuarine_labels <- c(
                    strrep("",1),
                    2013,
                    2014,
-                   strrep("",1:5),
+                   strrep("",1:6),
                    2015,
                    strrep("",1),
                    2016,
@@ -369,13 +391,22 @@ cma_estuarine <- viz_forest(x = rma_estuarine,
                          xlab = "Response Ratio",
                          #variant = "thick",
                          type = "cumulative") +
-  ggtitle("Estuarine (N = 34)") +
+  ggtitle("Estuarine (N = 35)") +
   ylab("publication year") +
   theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
         axis.title = element_text(size = 14, colour = "black"),
         axis.text = element_text(size = 14, colour = "black"))
 cma_estuarine
 cma_estuarine$data
+
+effects_estuarine
+rma_estuary_five <- rma(
+  yi=effects_estuarine[1:5,]$yi, 
+  vi=effects_estuarine[1:5,]$vi,
+  method = "REML",
+  test = "knha",
+  data=effects_estuarine[1:5,])
+rma_estuary_five
 
 # CMA lentic
 effects_lentic <- filter(ordered_by_year, ecosystemforheatmap == "lentic")
@@ -434,6 +465,7 @@ rma_coastal <- rma(yi=effects_coastal$yi,
                   test = "knha",
                   data=effects_coastal)
 rma_coastal
+1-exp(-0.3914)*((sigma(rma_coastal)^2)/2)
 
 plyr::count(effects_coastal$publicationyear)
 coastal_labels <- c(
@@ -464,7 +496,7 @@ cma_coastal <- viz_forest(x = rma_coastal,
         axis.text = element_text(size = 14, colour = "black"))
 cma_coastal
 
-# CMA interidal
+# CMA rocky interidal
 effects_intertidal <- filter(ordered_by_year, ecosystemforheatmap == "intertidal")
 effects_intertidal
 fsn(yi,vi,data = effects_intertidal)
@@ -502,6 +534,44 @@ cma_intertidal <- viz_forest(x = rma_intertidal,
         axis.title = element_text(size = 14, colour = "black"),
         axis.text = element_text(size = 14, colour = "black"))
 cma_intertidal
+
+# CMA rocky interidal
+effects_rocky_intertidal <- filter(ordered_by_year, ecosystemforheatmap == "rocky intertidal")
+effects_rocky_intertidal
+fsn(yi,vi,data = effects_rocky_intertidal)
+
+rma_rocky_intertidal <- rma(yi=effects_rocky_intertidal$yi, 
+                      vi=effects_rocky_intertidal$vi,
+                      method = "REML",
+                      test = "knha",
+                      data=effects_rocky_intertidal)
+rma_rocky_intertidal
+
+plyr::count(effects_rocky_intertidal$publicationyear)
+rocky_intertidal_labels <- c(
+  2004,
+  2005,
+  2009,
+  2012,
+  2013,
+  2014,
+  strrep("",1:2),
+  2016,
+  strrep("",1))
+rocky_intertidal_labels
+cma_rocky_intertidal <- viz_forest(x = rma_rocky_intertidal, 
+                             #study_labels = effects_intertidal[, "publicationyear"], 
+                             study_labels = rocky_intertidal_labels,
+                             method = "REML",
+                             xlab = "Response Ratio",
+                             #variant = "thick",
+                             type = "cumulative") +
+  ggtitle("Rocky intertidal (N = 10)") +
+  ylab("publication year") +
+  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
+        axis.title = element_text(size = 14, colour = "black"),
+        axis.text = element_text(size = 14, colour = "black"))
+cma_rocky_intertidal
 
 # CMA urban
 effects_urban <- filter(ordered_by_year, ecosystemforheatmap == "urban")
@@ -577,6 +647,7 @@ cma_shrubland <- viz_forest(x = rma_shrubland,
 cma_shrubland
 cma_shrubland$data
 # Combine all CMAs with more than 10 studies
-grid.arrange(cma_forest,cma_lotic,cma_grassland,cma_island,cma_estuarine,cma_lentic,cma_coastal,cma_intertidal,cma_urban,cma_shrubland,ncol=5)
+grid.arrange(cma_forest,cma_lotic,cma_grassland,cma_island,cma_estuarine,cma_lentic,cma_coastal,cma_urban,cma_rocky_intertidal,cma_shrubland,ncol=5)
 
 dev.off()
+

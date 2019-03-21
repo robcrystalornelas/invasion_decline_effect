@@ -202,7 +202,7 @@ for(i in 1:length(effects_estuarine$code))
 }
 effects_estuarine
 effects_estuarine$failsaferatio
-effects_estuarine$order <- seq(1:34)
+effects_estuarine$order <- seq(1:35)
 
 # Algae graph
 gg_estuarine <- ggplot(effects_estuarine, aes(x = failsaferatio, y = order)) + geom_point(aes(colour = failsaferatio > 1))
@@ -215,7 +215,7 @@ gg_estuarine <- gg_estuarine + geom_vline(xintercept = 1, colour = "red", size =
 gg_estuarine
 gg_estuarine <- gg_estuarine + xlab("Failsafe ratio") +
   ylab("publication year") +
-  ggtitle("Estuarine (N = 34)")
+  ggtitle("Estuarine (N = 35)")
 gg_estuarine
 gg_estuarine <- gg_estuarine + theme_bw()
 gg_estuarine <- gg_estuarine + theme(
@@ -309,7 +309,7 @@ gg_coastal <- gg_coastal + theme(
 gg_coastal
 
 ################
-effects_intertidal <- filter(ordered_by_year, ecosystemforheatmap == "intertidal")
+effects_intertidal <- filter(ordered_by_year, ecosystemforheatmap == "rocky intertidal")
 
 effects_intertidal$fsr <- rep(NA, length(effects_intertidal$code))
 effects_intertidal
@@ -323,7 +323,7 @@ for(i in 1:length(effects_intertidal$code))
 }
 effects_intertidal
 effects_intertidal$failsaferatio
-effects_intertidal$order <- seq(1:14)
+effects_intertidal$order <- seq(1:10)
 
 # Algae graph
 gg_intertidal <- ggplot(effects_intertidal, aes(x = failsaferatio, y = order)) + geom_point(aes(colour = failsaferatio > 1))
@@ -336,7 +336,7 @@ gg_intertidal <- gg_intertidal + geom_vline(xintercept = 1, colour = "red", size
 gg_intertidal
 gg_intertidal <- gg_intertidal + xlab("Failsafe ratio") +
   ylab("publication year") +
-  ggtitle("Intertidal (N = 14)")
+  ggtitle("Rocky intertidal (N = 10)")
 gg_intertidal
 gg_intertidal <- gg_intertidal + theme_bw()
 gg_intertidal <- gg_intertidal + theme(
@@ -428,4 +428,4 @@ gg_shrub <- gg_shrub + theme(
   axis.text = element_text(size = 14, colour = "black"))
 gg_shrub
 
-grid.arrange(gg_forest,gg_lotic,gg_grass,gg_island,gg_estuarine,gg_lentic,gg_coastal,gg_intertidal,gg_urban,gg_shrub,ncol=5)
+grid.arrange(gg_forest,gg_lotic,gg_grass,gg_island,gg_estuarine,gg_lentic,gg_coastal,gg_urban,gg_intertidal,gg_shrub,ncol=5)
