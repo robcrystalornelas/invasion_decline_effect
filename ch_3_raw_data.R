@@ -5,7 +5,7 @@ library(mice)
 
 ## READ IN DATA ####
 ## Imputation for missing values, adds approx 15 case studies ####
-raw_data_with_na <- read.csv("~/Desktop/CH3_impacts_meta_analysis/diversity_cases_working_file_v8.csv", header=TRUE)
+raw_data_with_na <- read.csv("~/Desktop/CH3_impacts_meta_analysis/diversity_cases_working_file_v9.csv", header=TRUE)
 
 head(raw_data_with_na)
 tail(raw_data_with_na)

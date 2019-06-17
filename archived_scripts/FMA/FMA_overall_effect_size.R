@@ -12,7 +12,7 @@ tail(raw_data_imputed)
 ## Analyze data ####
 # Calculate effect size
 head(raw_data_imputed)
-effect_sizes_richness <- escalc("ROM", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
+effect_sizes_richness <- escalc("SMD", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
                                 m1i = raw_data_imputed$mean_invaded,       
                                 n1i = raw_data_imputed$sample_size_invaded, # Then, follow with all of the columns needed to compute SMD
                                 sd1i = raw_data_imputed$SD_invaded, 

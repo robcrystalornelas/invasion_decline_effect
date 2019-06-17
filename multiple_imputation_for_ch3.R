@@ -33,10 +33,11 @@ predM[, c("code")] = 0
 
 # Skip any variables for imputation, this variable will be used for prediction
 meth[c("mean_control","mean_invaded","sample_size_control","sample_size_invaded")]=""
-
+library(mice)
+?mice
 # What are we going to impute, gotta pick different methods for ordinal, factors or continuous
 meth[c("SD_control","SD_invaded")]="norm" 
-
+?mice
 # Now it's time to run the multiple imputation
 set.seed(103)
 imputed_sds = mice(imputation_subset_with_na, method=meth, predictorMatrix=predM, m=5)

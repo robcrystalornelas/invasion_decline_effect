@@ -22,24 +22,26 @@ counted_cases_per_year <- cases_and_publication_year %>%
   add_column("group" = rep("cases"))
 counted_cases_per_year  
 
-# count up species per year
-# count up how many species were studied each year
-count_ecosystems_by_year <- dplyr::select(raw_data_imputed, code, publicationyear, invasivespecies,ecosystemforheatmap)
-counted_ecosystems_for_cases <- count_ecosystems_by_year %>%
+# count up trophic positions per year
+# count up how many trophic levels were studied each year
+count_trophic_by_year <- dplyr::select(raw_data_imputed, code, publicationyear, invasivespecies,invasive_trophic_position)
+count_trophic_by_year_for_cases <- count_trophic_by_year %>%
   group_by(publicationyear) %>%
-  summarise(n_distinct(ecosystemforheatmap)) %>%
-  add_column("group" = rep("ecosystem"))
-counted_ecosystems_by_year <- rename(counted_ecosystems_for_cases, n = `n_distinct(ecosystemforheatmap)`)
-counted_ecosystems_by_year
-counted_ecosystems_by_year <- mutate(counted_ecosystems_by_year, div_by_ten = n/10)
-counted_ecosystems_by_year
+  summarise(n_distinct(invasive_trophic_position)) %>%
+  add_column("group" = rep("invasive_trophic_position"))
+count_trophic_by_year_for_cases
+
+counted_trophic_by_year <- rename(count_trophic_by_year_for_cases, n = `n_distinct(invasive_trophic_position)`)
+counted_trophic_by_year
+counted_trophic_by_year <- mutate(counted_trophic_by_year, div_by_six = n/6)
+counted_trophic_by_year
 
 # Join
-joined_eco_and_cases <- left_join(counted_cases_per_year,counted_ecosystems_by_year, by = "publicationyear")
-joined_eco_and_cases
+joined_trophic_and_cases <- left_join(counted_cases_per_year,counted_trophic_by_year, by = "publicationyear")
+joined_trophic_and_cases
 
-eco_divided_by_cases <- mutate(joined_eco_and_cases, eco_div_by_cases = n.y / n.x)
-eco_divided_by_cases
+trophic_divided_by_cases <- mutate(joined_trophic_and_cases, trophic_div_by_cases = n.y / n.x)
+trophic_divided_by_cases
 
 # summarize effect sizes by year
 effect_sizes_richness_imputed <- escalc("ROM", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
@@ -60,18 +62,18 @@ average_effect_by_year <- ordered_by_year %>%
 average_effect_by_year
 
 # Now, add this new effect size data frame to species number data frame
-eco_and_effect_size_by_year <- right_join(eco_divided_by_cases, average_effect_by_year)
+trophic_and_effect_size_by_year <- right_join(trophic_divided_by_cases, average_effect_by_year)
 
 # Run a couple of models
-eco_and_effect_size_by_year
-lm_effect_and_eco <- lm(mean ~ eco_div_by_cases, data=eco_and_effect_size_by_year)  # build linear regression model on full data
-summary(lm_effect_and_eco)
+trophic_and_effect_size_by_year
+lm_trophic_and_year <- lm(mean ~ trophic_div_by_cases, data=trophic_and_effect_size_by_year)  # build linear regression model on full data
+summary(lm_trophic_and_year)
 
-glm_effect_and_eco <- glm(mean ~ eco_div_by_cases, data = eco_and_effect_size_by_year, family=quasibinomial(link="logit"))
-summary(glm_effect_and_eco)
+glm_trophic_and_year <- glm(mean ~ trophic_div_by_cases, data = trophic_and_effect_size_by_year, family=quasibinomial(link="logit"))
+summary(glm_trophic_and_year)
 
 #
-gg_impact_factor <- ggplot(eco_and_effect_size_by_year, aes(x=eco_div_by_cases, y=mean)) + 
+gg_impact_factor <- ggplot(lm_trophic_and_year, aes(x=eco_div_by_cases, y=mean)) + 
   # geom_point(shape=1) + 
   geom_smooth(method=lm) +
   geom_jitter(shape = 1)

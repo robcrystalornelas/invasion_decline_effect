@@ -7,26 +7,33 @@ library(ggplot2)
 library(ggthemes)
 library(metaviz)
 library(metafor)
-library(gridExtra)
+library(cowplot)
 
 # Calculate effect size
-effect_sizes_richness_imputed <- escalc("ROM", # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
-                                m1i = raw_data_imputed$mean_invaded,       
-                                n1i = raw_data_imputed$sample_size_invaded, # Then, follow with all of the columns needed to compute SMD
-                                sd1i = raw_data_imputed$SD_invaded, 
-                                m2i = raw_data_imputed$mean_control,
-                                n2i = raw_data_imputed$sample_size_control, 
-                                sd2i = raw_data_imputed$SD_control,
-                                data = raw_data_imputed)
+effect_sizes_richness_imputed <-
+  escalc(
+    "ROM",
+    # Specify the outcome that we are measuing, RD, RR, OR, SMD etc.
+    m1i = raw_data_imputed$mean_invaded,
+    n1i = raw_data_imputed$sample_size_invaded,
+    # Then, follow with all of the columns needed to compute SMD
+    sd1i = raw_data_imputed$SD_invaded,
+    m2i = raw_data_imputed$mean_control,
+    n2i = raw_data_imputed$sample_size_control,
+    sd2i = raw_data_imputed$SD_control,
+    data = raw_data_imputed
+  )
 
-ordered_by_year <- arrange(effect_sizes_richness_imputed, publicationyear)
+ordered_by_year <-
+  arrange(effect_sizes_richness_imputed, publicationyear)
 head(ordered_by_year)
 levels(ordered_by_year$invasivespeciestaxa)
 
 # Only do CMAs on taxa with more than 10 cases ####
 plyr::count(ordered_by_year$invasivespeciestaxa)
 # Algae and seaweed
-effects_algae <- filter(ordered_by_year, invasivespeciestaxa == "algae and seaweed")
+effects_algae <-
+  filter(ordered_by_year, invasivespeciestaxa == "algae and seaweed")
 effects_algae
 
 # Get y-axis labels
@@ -68,16 +75,25 @@ rma_algae
 fsn(yi, vi, data=effects_algae)
 counted_all_algae <-plyr::count(effects_algae)
 counted_all_algae
-cma_algae <- viz_forest(x = rma_algae, 
-                        #study_labels = effects_algae[, "publicationyear"],
-                        study_labels = algae_labels,
-                        method = "REML",
-                        xlab = "Response Ratio",
-                        type = "cumulative") +
-                        ggtitle("Algae (N = 22)") +
-  theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
-        axis.title = element_text(size = 14, colour = "black"),
-        axis.text = element_text(size = 14, colour = "black"))
+cma_algae <- viz_forest(
+  x = rma_algae,
+  #study_labels = effects_algae[, "publicationyear"],
+  study_labels = algae_labels,
+  method = "REML",
+  xlab = "Response Ratio",
+  summary_col = "Oranges",
+  type = "cumulative"
+) +
+  ggtitle("Algae (N = 22)") +
+  theme(
+    plot.title = element_text(
+      hjust = 0.5,
+      size = 14,
+      colour = "black"
+    ),
+    axis.title = element_text(size = 14, colour = "black"),
+    axis.text = element_text(size = 14, colour = "black")
+  )
 cma_algae
   
 # aquatic plants
@@ -98,6 +114,7 @@ cma_aquatic_plants <- viz_forest(x = rma_aquatic_plants,
                         study_labels = aquatic_labels,
                         method = "REML",
                         xlab = "Response Ratio",
+                        summary_col = "Oranges",
                         type = "cumulative") +
   ggtitle("Aquatic plants (N = 8)") +
   theme(plot.title = element_text(hjust=0.5, size = 14, colour = "black"),
@@ -142,6 +159,7 @@ cma_crust <- viz_forest(x = rma_crust,
                         #study_labels = effects_crust[, "publicationyear"], 
                         study_labels = crust_labels,
                         xlab = "Response Ratio",
+                        summary_col = "Oranges",
                         method = "REML",
                         type = "cumulative") +
                         ggtitle("Crustacean (N = 23)") +
@@ -188,6 +206,7 @@ cma_fish <- viz_forest(x = rma_fish,
                         #study_labels = effects_fish[, "publicationyear"], 
                        study_labels = fish_labels,
                         xlab = "Response Ratio",
+                       summary_col = "Oranges",
                         method = "REML",
                         type = "cumulative") +
                         ggtitle("Fish (N = 19)") +
@@ -262,6 +281,7 @@ cma_grass <- viz_forest(x = rma_grass,
                        #study_labels = effects_grass[, "publicationyear"], 
                        study_labels = grasses_legible,
                        xlab = "Response Ratio",
+                       summary_col = "Oranges",
                        method = "REML",
                        type = "cumulative") +
                       ggtitle("Grasses (N = 38)") +
@@ -339,6 +359,7 @@ cma_herb <- viz_forest(x = rma_herb,
                       #study_labels = effects_herb[, "publicationyear"], 
                       study_labels = herb_legible,
                        xlab = "Response Ratio",
+                      summary_col = "Oranges",
                        method = "REML",
                         type = "cumulative") +
                         ggtitle("Herbaceous Plants (N = 79)") +
@@ -397,6 +418,7 @@ cma_insect <- viz_forest(x = rma_insect,
                        #study_labels = effects_insect[, "publicationyear"], 
                        study_labels = insect_labels,
                        xlab = "Response Ratio",
+                       summary_col = "Oranges",
                        method = "REML",
                        type = "cumulative") +
                       ggtitle("Insects (N = 27)") +
@@ -437,6 +459,7 @@ cma_mammal <- viz_forest(x = rma_mammal,
                          #study_labels = effects_mammal[, "publicationyear"], 
                          study_labels = mammal_labels,
                          xlab = "Respone Ratio",
+                         summary_col = "Oranges",
                          method = "REML",
                          type = "cumulative") +
                         ggtitle("Mammals (N = 16)") +
@@ -468,6 +491,7 @@ cma_molluscs <- viz_forest(x = rma_molluscs,
                            #study_labels = effects_molluscs[, "publicationyear"], 
                            study_labels = moll_labels,
                            xlab = "Response Ratio",
+                           summary_col = "Oranges",
                            method = "REML",
                            type = "cumulative") +
                           ggtitle("Mollusks (N = 7)") +
@@ -494,6 +518,7 @@ rma_tree_first_five <- rma(yi=effects_tree[1:5,]$yi,
                            method = "REML",
                            test = "knha",
                            data=effects_tree[1:5,])
+rma_tree_first_five
 rma_tree_first_five$b
 1-exp(-.3885)
 
@@ -568,6 +593,7 @@ cma_tree <- viz_forest(x = rma_tree,
                       #study_labels = effects_tree[, c("publicationyear")], 
                       study_labels = tree_legible,
                       xlab = "Response Ratio",
+                      summary_col = "Oranges",
                       method = "REML",
                       type = "cumulative") +
                       ggtitle("Trees (N = 88)") +
@@ -577,6 +603,7 @@ cma_tree <- viz_forest(x = rma_tree,
 cma_tree
 
 # Combine all CMAs with more than 10 studies
-grid.arrange(cma_tree,cma_herb,cma_grass,cma_insect,cma_crust,cma_algae,cma_fish,cma_mammal,cma_aquatic_plants,cma_molluscs,ncol=5)
-
+# plot_grid(cma_tree,cma_herb,cma_grass,cma_insect,cma_crust,cma_algae,cma_fish,cma_mammal,cma_aquatic_plants,cma_molluscs,ncol=5)
+plot_grid(cma_tree,cma_insect,cma_algae, labels = c('A', 'B','C'), ncol = 3)
 dev.off()
+
