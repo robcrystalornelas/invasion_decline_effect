@@ -3,6 +3,7 @@ library(metafor)
 library(metaviz)
 library(ggplot2)
 library(lme4)
+library(lmerTest)
 
 # Read in data
 source("~/Desktop/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
@@ -75,5 +76,7 @@ AIC(glm_publication_year_only)
 AIC(glm_with_pub_trophic_interaction)
 AIC(glm_with_pub_island_interaction)
 AIC(glm_with_pub_if_interaction)
+
+
 
 
