@@ -6,7 +6,6 @@ library(ggplot2)
 library(ggthemes)
 library(metaviz)
 library(metafor)
-library(gridExtra)
 
 head(raw_data_imputed)
 length(unique(raw_data_imputed$code))

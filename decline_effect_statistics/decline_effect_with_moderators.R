@@ -7,6 +7,7 @@ library(metaviz)
 library(ggplot2)
 library(lme4)
 library(lmerTest) # lme4 doesn't give p-values, but this package adds them
+library(cowplot)
 
 # Read in data
 source("~/Desktop/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
@@ -60,14 +61,14 @@ AIC(model3)
 AIC(model4)
 
 # Figure for trophic position
-ggplot(data = effect_sizes_richness_imputed, 
+trophic_position_plot <- ggplot(data = effect_sizes_richness_imputed, 
        aes(
          x = publicationyear,
          y = yi,
          col = as.factor(invasive_trophic_position)
        )) +
   viridis::scale_color_viridis(discrete = TRUE) +
-  geom_point(size = .7,
+  geom_point(size = .8,
              alpha = .8,
              position = "jitter") +
   geom_smooth(
@@ -76,18 +77,27 @@ ggplot(data = effect_sizes_richness_imputed,
     size = 1,
     alpha = .8
   ) +
-  theme_minimal() +
-  labs(col = "Trophic position")
+  theme_cowplot() +
+  ylab("ln(Response ratio)") +
+  xlab("Publication year") +
+  theme(axis.title = element_text(size = 15),
+        axis.text = element_text(size = 14),
+        legend.title=element_text(size=14),
+        legend.text=element_text(size=13)) + 
+  labs(col = "Trophic position") +
+  geom_hline(yintercept=0, linetype="dashed", 
+             color = "black", size=.3)
+trophic_position_plot
 
 # Figure for island vs. continent
-ggplot(data = effect_sizes_richness_imputed, 
+study_location_plot <- ggplot(data = effect_sizes_richness_imputed, 
        aes(
          x = publicationyear,
          y = yi,
          col = as.factor(island_or_continent)
        )) +
   viridis::scale_color_viridis(discrete = TRUE) +
-  geom_point(size = .7,
+  geom_point(size = .8,
              alpha = .8,
              position = "jitter") +
   geom_smooth(
@@ -96,6 +106,16 @@ ggplot(data = effect_sizes_richness_imputed,
     size = 1,
     alpha = .8
   ) +
-  theme_minimal() +
-  labs(col = "Study location")
+  theme_cowplot() +
+  ylab("ln(Response ratio)") +
+  xlab("Publication year") +
+  theme(axis.title = element_text(size = 15),
+        axis.text = element_text(size = 14),
+        legend.title=element_text(size=14),
+        legend.text=element_text(size=13)) + 
+  labs(col = "Study location") +
+  geom_hline(yintercept=0, linetype="dashed", 
+             color = "black", size=.3)
+study_location_plot
 
+plot_grid(trophic_position_plot,study_location_plot, labels = "AUTO", align = "h")
