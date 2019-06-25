@@ -31,3 +31,23 @@ count_trophic_by_year_for_cases <- count_trophic_by_year %>%
   add_column("group" = rep("invasive_trophic_position"))
 count_trophic_by_year_for_cases
 chisq.test(count_trophic_by_year_for_cases$`n_distinct(invasive_trophic_position)`)
+
+# count up taxa per year
+# count up how many taxa were studied per year
+head(raw_data_imputed)
+count_taxa_by_year <- dplyr::select(raw_data_imputed, code, publicationyear, invasivespecies,invasivespeciestaxa)
+count_taxa_by_year_for_cases <- count_taxa_by_year %>%
+  group_by(publicationyear) %>%
+  summarise(n_distinct(invasivespeciestaxa)) %>%
+  add_column("group" = rep("invasivespeciestaxa"))
+count_taxa_by_year_for_cases
+chisq.test(count_taxa_by_year_for_cases$`n_distinct(invasivespeciestaxa)`)
+
+
+count_species_by_year <- dplyr::select(raw_data_imputed, code, publicationyear, invasivespecies)
+count_species_by_year_for_cases <- count_species_by_year %>%
+  group_by(publicationyear) %>%
+  summarise(n_distinct(invasivespecies)) %>%
+  add_column("group" = rep("invasivespecies"))
+count_species_by_year_for_cases
+chisq.test(count_species_by_year_for_cases$`n_distinct(invasivespecies)`)

@@ -45,20 +45,42 @@ summary(interceptonlymodel) # This gives us parameter estimates
 model1 <- lmer(yi~1 + publicationyear + (1|code), data = effect_sizes_richness_imputed)
 summary(model1)
 
-# all predictors: year, trophic, islandorcontinent
-model2 <- lmer(yi~1 + publicationyear +invasive_trophic_position + island_or_continent + (1|code), data = effect_sizes_richness_imputed)
-summary(model2)
+# all predictors: year, trophic, islandorcontinent, impact factor
+model5 <- lmer(yi~1 + publicationyear + invasive_trophic_position + island_or_continent + impactfactor + (1|code), data = effect_sizes_richness_imputed)
+summary(model5)
 
-# predictors: year, trophic
-model3 <- lmer(yi~1 + publicationyear +invasive_trophic_position + (1|code), data = effect_sizes_richness_imputed)
+# Interaction between publication year and trophic position
+# the interpretation of this model is that we have publication year as a main effect, and then we look
+# at the interaction between publication within trophic positions
+model7 <- lmer(yi~ 1 + publicationyear + invasive_trophic_position:publicationyear + (1|code), data = effect_sizes_richness_imputed)
+summary(model7)
 
-# predictors: year, island
-model4 <- lmer(yi~1 + publicationyear + island_or_continent + (1|code), data = effect_sizes_richness_imputed)
+model8 <- lmer(yi~ 1 + publicationyear + island_or_continent:publicationyear + (1|code), data = effect_sizes_richness_imputed)
+summary(model8)
 
+# Interation between pub year and trophic
 AIC(model1)
 AIC(model2)
 AIC(model3)
 AIC(model4)
+AIC(model5)
+AIC(model6)
+AIC(model7)
+AIC(model8)
+
+## Example orange data
+nlmer(
+  circumference ~ SSlogis(age, Asym, xmid, scal) ~ Asym |
+    Tree,
+  Orange,
+  start = c(Asym = 200,xmid = 770, scal = 120)
+)
+Orange
+?nlmer
+### Try out some non-linear mixed-effects models
+nlmer(yi ~ SSlogis(sample_size_control) ~ publicationyear + code,
+      data = effect_sizes_richness_imputed)
+head(effect_sizes_richness_imputed)
 
 # Figure for trophic position
 trophic_position_plot <- ggplot(data = effect_sizes_richness_imputed, 
@@ -118,4 +140,5 @@ study_location_plot <- ggplot(data = effect_sizes_richness_imputed,
              color = "black", size=.3)
 study_location_plot
 
-plot_grid(trophic_position_plot,study_location_plot, labels = "AUTO", align = "h")
+plot_grid(study_location_plot, trophic_position_plot, labels = "AUTO", align = "h")
+

@@ -113,3 +113,4 @@ suff_full <- suff_full + theme(
   axis.text = element_text(size = 14)
 )
 suff_full
+

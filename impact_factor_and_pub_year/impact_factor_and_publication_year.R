@@ -21,13 +21,16 @@ summary(linear_model_impact_factor)
 
 # basic linear regression plot
 gg_impact_factor <- ggplot(impact_factor_model, aes(x=publicationyear, y=impactfactor)) + 
-  # geom_point(shape=1) + 
   geom_smooth(method=lm) +
   geom_jitter(shape = 1)
 gg_impact_factor
 gg_impact_factor <- gg_impact_factor + scale_x_continuous(name = "Publication Year") +
-  scale_y_continuous(name = "impact factor")
-gg_impact_factor <- gg_impact_factor + theme_bw() + theme(text = element_text(size = 20))
+   scale_y_continuous(name = "Impact factor")
+gg_impact_facotr <- gg_impact_factor + theme_cowplot() +
+  theme(axis.title = element_text(size = 15),
+        axis.text = element_text(size = 14)) +
+  geom_hline(yintercept=0, linetype="dashed", 
+             color = "black", size=.3)
 gg_impact_factor
 
 gg_impact_factor

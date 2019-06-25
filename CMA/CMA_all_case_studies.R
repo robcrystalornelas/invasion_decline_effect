@@ -41,7 +41,7 @@ random_effects_model_ordered <- rma(
   data = ordered_by_year
 )
 random_effects_model_ordered
-1 - exp(-.2316)
+1 - exp(-.2312)
 
 # Make study labels
 counted_all_pubs <- plyr::count(ordered_by_year$publicationyear)

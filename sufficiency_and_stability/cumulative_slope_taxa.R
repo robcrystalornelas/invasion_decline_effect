@@ -601,7 +601,7 @@ which(abs(effects_insect$cumulative_slope) < .005)
 all_insect <- lm(x ~ order, data = cma_insect$data)
 summary(all_insect)
 
-# Stable plot Alge
+# Stable plot insect
 effects_insect$order <- seq(1:27)
 counted_instect <- plyr::count(effects_insect$publicationyear)
 stable_insect <-

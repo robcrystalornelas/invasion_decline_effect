@@ -377,10 +377,7 @@ rma_insect <- rma(yi=effects_insect$yi,
                 test = "knha",
                 data=effects_insect)
 rma_insect
-1-exp(-0.5216)
-1-(exp(-0.5216)*((sigma(rma_insect)^2)/2))
-1.8*.59
-1-(exp(-0.2086)*((sigma(rma_tree)^2)/2))
+1-exp(-0.4675)
 
 sigma(rma_tree)
 sigma(rma_insect)
@@ -510,8 +507,8 @@ rma_tree <- rma(yi=effects_tree$yi,
                   test = "knha",
                   data=effects_tree)
 rma_tree
-1-(exp(-0.2086)*((sigma(rma_tree)^2)/2))
-1-exp(-.2086)
+1-(exp(-0.2111)*((sigma(rma_tree)^2)/2))
+1-exp(-.2111)
 # tree first five
 rma_tree_first_five <- rma(yi=effects_tree[1:5,]$yi, 
                            vi=effects_tree[1:5,]$vi,

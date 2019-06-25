@@ -24,11 +24,10 @@ effect_sizes_richness_imputed <- escalc("ROM", # Specify the outcome that we are
 
 #### using the lme4 tutorials combined with the iacarella method
 head(effect_sizes_richness_imputed)
-min(effect_sizes_richness_imputed$yi)
-View(effect_sizes_richness_imputed$yi)
+
 # Add in the FIXED EFFECTS predictor of year
 model1 <- lmer(yi~1 + publicationyear + (1|code), data = effect_sizes_richness_imputed)
-effect_sizes_richness_imputed[97,]
+summary(model1)
 
 decline_overall_plot <- ggplot(data = effect_sizes_richness_imputed, 
                               aes(
