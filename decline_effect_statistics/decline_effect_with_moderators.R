@@ -38,49 +38,61 @@ interceptonlymodel <- lmer(yi~1 + (1|code), data=effect_sizes_richness_imputed) 
 # No other independent variable since is the intercept only model
 # (1|code) assigns random error term to studies by their unique code
 summary(interceptonlymodel) # This gives us parameter estimates
-# 0.2667 is the residual variance on the "study" level
+# 0.2183 is the residual variance on the "study" level
 
 # OK, so now let's add in a first level predictor.
 # Add in the FIXED EFFECTS predictor of year
 model1 <- lmer(yi~1 + publicationyear + (1|code), data = effect_sizes_richness_imputed)
 summary(model1)
 
-# all predictors: year, trophic, islandorcontinent, impact factor
-model5 <- lmer(yi~1 + publicationyear + invasive_trophic_position + island_or_continent + impactfactor + (1|code), data = effect_sizes_richness_imputed)
+# trophic and publication year
+model2 <- lmer(yi~ 1 + invasive_trophic_position*publicationyear + (1|code), data = effect_sizes_richness_imputed)
+summary(model2)
+
+# continent and publication year
+model3 <- lmer(yi~ 1 + island_or_continent*publicationyear + (1|code), data = effect_sizes_richness_imputed)
+summary(model3)
+
+# SCImago Journal rnak and publication year
+model4 <- lmer(yi~ 1 + impactfactor*publicationyear + (1|code), data = effect_sizes_richness_imputed)
+summary(model4)
+
+# All predictors and interactions
+model5 <- lmer(yi~1 + publicationyear*invasive_trophic_position*island_or_continent*impactfactor + (1|code), data = effect_sizes_richness_imputed)
 summary(model5)
+##
 
-# Interaction between publication year and trophic position
-# the interpretation of this model is that we have publication year as a main effect, and then we look
-# at the interaction between publication within trophic positions
-model7 <- lmer(yi~ 1 + publicationyear + invasive_trophic_position:publicationyear + (1|code), data = effect_sizes_richness_imputed)
-summary(model7)
+# Get subset of columns for CMA
+impact_factor_model <- dplyr::select(raw_data_imputed, code, publicationyear,impactfactor)
+head(impact_factor_model)
 
-model8 <- lmer(yi~ 1 + publicationyear + island_or_continent:publicationyear + (1|code), data = effect_sizes_richness_imputed)
-summary(model8)
+# make model
+linear_model_impact_factor <- lmer(impactfactor ~ publicationyear + (1|code), data=impact_factor_model)  # build linear regression model on full data
+summary(linear_model_impact_factor)
 
-# Interation between pub year and trophic
-AIC(model1)
-AIC(model2)
-AIC(model3)
-AIC(model4)
-AIC(model5)
-AIC(model6)
-AIC(model7)
-AIC(model8)
-
-## Example orange data
-nlmer(
-  circumference ~ SSlogis(age, Asym, xmid, scal) ~ Asym |
-    Tree,
-  Orange,
-  start = c(Asym = 200,xmid = 770, scal = 120)
-)
-Orange
-?nlmer
-### Try out some non-linear mixed-effects models
-nlmer(yi ~ SSlogis(sample_size_control) ~ publicationyear + code,
-      data = effect_sizes_richness_imputed)
-head(effect_sizes_richness_imputed)
+#### Creating figure for linear model and journal rank
+impact_factor_plot <- ggplot(data = impact_factor_model,
+                             aes(x = publicationyear,
+                                 y = impactfactor)) +
+  geom_point(size = .8,
+             alpha = .8,
+             position = "jitter") +
+  geom_smooth(
+    method = lm,
+    se = FALSE,
+    size = 1,
+    alpha = .8
+  ) +
+  theme_cowplot() +
+  ylab("SCImago Journal Rank") +
+  xlab("Publication year") +
+  theme(
+    axis.title = element_text(size = 15),
+    axis.text = element_text(size = 14),
+    legend.title = element_text(size = 14),
+    legend.text = element_text(size = 13)
+  )
+impact_factor_plot
 
 # Figure for trophic position
 trophic_position_plot <- ggplot(data = effect_sizes_richness_imputed, 
@@ -140,5 +152,5 @@ study_location_plot <- ggplot(data = effect_sizes_richness_imputed,
              color = "black", size=.3)
 study_location_plot
 
-plot_grid(study_location_plot, trophic_position_plot, labels = "AUTO", align = "h")
+plot_grid(study_location_plot, trophic_position_plot, impact_factor_plot, labels = "AUTO", align = "v", ncol =2)
 
