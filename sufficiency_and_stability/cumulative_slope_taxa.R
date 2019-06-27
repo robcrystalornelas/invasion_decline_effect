@@ -915,21 +915,19 @@ stable_tree <- stable_tree + theme(
   axis.text = element_text(size = 14, colour = "black")
 )
 stable_tree
-# 
-# plot_grid(
-#   stable_tree,
-#   stable_herb,
-#   stable_grass,
-#   stable_insect,
-#   stable_crust,
-#   stable_algae,
-#   stable_fish,
-#   stable_mammal,
-#   stable_aquatic,
-#   stable_mollusks,
-#   ncol = 5
-# )
+
+plot_grid(
+  stable_herb,
+  stable_grass,
+  stable_crust,
+  stable_fish,
+  stable_mammal,
+  stable_aquatic,
+  ncol = 3
+)
+
 plot_grid(stable_tree,stable_insect,stable_algae, labels = c('A', 'B','C'), ncol = 3)
 dev.off()
 
 dev.off()
+

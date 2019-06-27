@@ -50,7 +50,8 @@ model2 <- lmer(yi~ 1 + invasive_trophic_position*publicationyear + (1|code), dat
 summary(model2)
 
 # continent and publication year
-model3 <- lmer(yi~ 1 + island_or_continent*publicationyear + (1|code), data = effect_sizes_richness_imputed)
+effect_sizes_richness_imputed_continent$island_or_continent <- relevel(effect_sizes_richness_imputed_continent$island_or_continent, ref = "island")
+model3 <- lmer(yi~ 1 + island_or_continent*publicationyear + (1|code), data = effect_sizes_richness_imputed_continent)
 summary(model3)
 
 # SCImago Journal rnak and publication year
@@ -60,7 +61,6 @@ summary(model4)
 # All predictors and interactions
 model5 <- lmer(yi~1 + publicationyear*invasive_trophic_position*island_or_continent*impactfactor + (1|code), data = effect_sizes_richness_imputed)
 summary(model5)
-##
 
 # Get subset of columns for CMA
 impact_factor_model <- dplyr::select(raw_data_imputed, code, publicationyear,impactfactor)

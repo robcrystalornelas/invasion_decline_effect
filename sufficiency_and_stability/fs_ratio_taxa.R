@@ -652,19 +652,16 @@ gg_tree
 
 herb_legible
 ### Make full plot
-# plot_grid(
-#   gg_tree,
-#   gg_herb,
-#   gg_grass,
-#   gg_insect,
-#   gg_crust,
-#   gg_algae,
-#   gg_fish,
-#   gg_mammal,
-#   gg_aquatic,
-#   gg_moll,
-#   ncol = 5
-# )
+plot_grid(
+  gg_herb,
+  gg_grass,
+  gg_crust,
+  gg_fish,
+  gg_mammal,
+  gg_aquatic,
+  ncol = 3
+)
 
 plot_grid(gg_tree,gg_insect,gg_algae, labels = c('A', 'B','C'), ncol = 3)
 dev.off()
+

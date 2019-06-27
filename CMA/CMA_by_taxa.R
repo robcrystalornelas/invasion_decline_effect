@@ -600,7 +600,6 @@ cma_tree <- viz_forest(x = rma_tree,
 cma_tree
 
 # Combine all CMAs with more than 10 studies
-# plot_grid(cma_tree,cma_herb,cma_grass,cma_insect,cma_crust,cma_algae,cma_fish,cma_mammal,cma_aquatic_plants,cma_molluscs,ncol=5)
+plot_grid(cma_herb,cma_grass,cma_crust,cma_fish,cma_mammal,cma_aquatic_plants,ncol=3)
 plot_grid(cma_tree,cma_insect,cma_algae, labels = c('A', 'B','C'), ncol = 3)
 dev.off()
-
