@@ -149,6 +149,8 @@ forest_plot_CMA
 dev.off()
 dev.off()
 
+ggplotly(forest_plot_CMA)
+
 
 
 # data for first 5 effects

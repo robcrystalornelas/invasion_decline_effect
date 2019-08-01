@@ -12,24 +12,26 @@ library(lme4)
 
 # Get subset of columns for CMA
 impact_factor_model <- select(raw_data_imputed, code, publicationyear,impactfactor)
-head(impact_factor_model)
-
-# make model
-linear_model_impact_factor <- lmer(impactfactor ~ publicationyear + (1|code), data=impact_factor_model)  # build linear regression model on full data
+dim(impact_factor_model)
+distinct_articles <- distinct(impact_factor_model)
+dim(distinct_articles)
+View(distinct_articles)
+# make model for impact factor
+linear_model_impact_factor <- lmer(impactfactor ~ publicationyear + (1|code), data=distinct_articles)  # build linear regression model on full data
 summary(linear_model_impact_factor)
 
 #### Creating figure for linear model and journal rank
-impact_factor_plot <- ggplot(data = impact_factor_model,
+impact_factor_plot <- ggplot(data = distinct_articles,
                              aes(x = publicationyear,
                                  y = impactfactor)) +
-  geom_point(size = .8,
-             alpha = .8,
+  geom_point(size = 2,
+             alpha = .4,
              position = "jitter") +
   geom_smooth(
     method = lm,
-    se = FALSE,
+    se = TRUE,
     size = 1,
-    alpha = .8
+    alpha = .5
   ) +
   theme_cowplot() +
   ylab("SCImago Journal Rank") +

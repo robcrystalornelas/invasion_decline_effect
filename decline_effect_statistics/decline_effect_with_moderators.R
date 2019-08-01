@@ -70,18 +70,44 @@ head(impact_factor_model)
 linear_model_impact_factor <- lmer(impactfactor ~ publicationyear + (1|code), data=impact_factor_model)  # build linear regression model on full data
 summary(linear_model_impact_factor)
 
+## Time since invasion as a moderator
+time_since_invasion_data <- na.omit(effect_sizes_richness_imputed$time_since_invasion)
+
+time_since_invasion_complete <- effect_sizes_richness_imputed[!is.na(effect_sizes_richness_imputed$time_since_invasion),]
+dim(time_since_invasion_complete)
+
+# Get median time since invasion within dataset
+median(time_since_invasion_complete$time_since_invasion)
+
+# Bin data into either short time since invasion or long
+time_since_invasion_complete$time_since_invasion_binned <- rep("NA")
+time_since_invasion_complete$time_since_invasion_binned
+time_since_invasion_complete$time_since_invasion_binned[time_since_invasion_complete$time_since_invasion<= 63] <- "short"
+time_since_invasion_complete$time_since_invasion_binned[time_since_invasion_complete$time_since_invasion>63] <- "long"
+time_since_invasion_complete$time_since_invasion_binned
+
+time_since_invasion_complete$time_since_invasion_binned_at_ten <- rep("NA")
+time_since_invasion_complete$time_since_invasion_binned_at_ten
+time_since_invasion_complete$time_since_invasion_binned_at_ten[time_since_invasion_complete$time_since_invasion_binned_at_ten <= 20] <- "short"
+time_since_invasion_complete$time_since_invasion_binned_at_ten[time_since_invasion_complete$time_since_invasion_binned_at_ten > 20] <- "long"
+time_since_invasion_complete$time_since_invasion_binned_at_ten
+View(time_since_invasion_complete)
+
+linear_model_time_since_invasion <- lmer(yi ~ 1 + time_since_invasion_binned*publicationyear + (1|code), data = time_since_invasion_complete)  # build linear regression model on full data
+summary(linear_model_time_since_invasion)
+
 #### Creating figure for linear model and journal rank
-impact_factor_plot <- ggplot(data = impact_factor_model,
+impact_factor_plot <- ggplot(data = distinct_articles,
                              aes(x = publicationyear,
                                  y = impactfactor)) +
-  geom_point(size = .8,
-             alpha = .8,
+  geom_point(size = 2,
+             alpha = .4,
              position = "jitter") +
   geom_smooth(
     method = lm,
-    se = FALSE,
+    se = TRUE,
     size = 1,
-    alpha = .8
+    alpha = .5
   ) +
   theme_cowplot() +
   ylab("SCImago Journal Rank") +
@@ -102,7 +128,7 @@ trophic_position_plot <- ggplot(data = effect_sizes_richness_imputed,
          col = as.factor(invasive_trophic_position)
        )) +
   viridis::scale_color_viridis(discrete = TRUE) +
-  geom_point(size = .8,
+  geom_point(size = 1,
              alpha = .8,
              position = "jitter") +
   geom_smooth(
@@ -130,9 +156,9 @@ study_location_plot <- ggplot(data = effect_sizes_richness_imputed,
          y = yi,
          col = as.factor(island_or_continent)
        )) +
-  viridis::scale_color_viridis(discrete = TRUE) +
-  geom_point(size = .8,
-             alpha = .8,
+  viridis::scale_color_viridis(discrete = TRUE, option = "D") +
+  geom_point(size = 1,
+             alpha = .7,
              position = "jitter") +
   geom_smooth(
     method = lm,
@@ -151,6 +177,36 @@ study_location_plot <- ggplot(data = effect_sizes_richness_imputed,
   geom_hline(yintercept=0, linetype="dashed", 
              color = "black", size=.3)
 study_location_plot
+
+# Figure for short vs. long
+invasion_history_plot <- ggplot(data = time_since_invasion_complete, 
+                              aes(
+                                x = publicationyear,
+                                y = yi,
+                                col = as.factor(time_since_invasion_binned)
+                              )) +
+  viridis::scale_color_viridis(discrete = TRUE, option = "A") +
+  geom_point(size = 1,
+             alpha = .7,
+             position = "jitter") +
+  geom_smooth(
+    method = lm,
+    se = FALSE,
+    size = 1,
+    alpha = .8
+  ) +
+  theme_cowplot() +
+  ylab("ln(Response ratio)") +
+  xlab("Publication year") +
+  theme(axis.title = element_text(size = 15),
+        axis.text = element_text(size = 14),
+        legend.title=element_text(size=14),
+        legend.text=element_text(size=13)) + 
+  labs(col = "Invasion history") +
+  geom_hline(yintercept=0, linetype="dashed", 
+             color = "black", size=.3)
+invasion_history_plot
+
 
 plot_grid(study_location_plot, trophic_position_plot, impact_factor_plot, labels = "AUTO", align = "v", ncol =2)
 
