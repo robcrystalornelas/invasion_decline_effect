@@ -665,3 +665,4 @@ plot_grid(
 plot_grid(gg_tree,gg_insect,gg_algae, labels = c('A', 'B','C'), ncol = 3)
 dev.off()
 
+plot_grid(gg_tree,gg_insect,gg_algae,stable_tree,stable_insect,stable_algae, labels = c("A","B","C","D","E","F"), ncol = 3)
