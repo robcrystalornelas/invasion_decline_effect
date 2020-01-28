@@ -1,7 +1,7 @@
 ## READ IN DATA ####
 source("~/Desktop/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
-Sys.setenv("plotly_username"="robcrystalornelas")
-Sys.setenv("plotly_api_key"="AiIK4b0kMDsNGeV0KDAn")
+# Sys.setenv("plotly_username"="robcrystalornelas")
+# Sys.setenv("plotly_api_key"="AiIK4b0kMDsNGeV0KDAn")
 
 ## LOAD PACKAGES ####
 library(ggplot2)
@@ -24,14 +24,21 @@ counted_articles <- distinct_code_and_publication_year %>%
   add_column("group" = rep("articles"))
 counted_articles  
 
-gg <- ggplot(distinct_code_and_publication_year, aes(publicationyear)) + 
-  geom_histogram(binwidth = binsize, fill = "deepskyblue3", colour = "white")
+gg <-
+  ggplot(distinct_code_and_publication_year, aes(publicationyear)) +
+  geom_histogram(binwidth = binsize,
+                 fill = "deepskyblue3",
+                 colour = "white")
 gg <- gg + theme_tufte()
 gg <- gg + ylab("Frequency")
 gg <- gg + xlab("Publication Year")
-gg <- gg + theme(axis.text.x = element_text(size=30), # Size 30 works best for presentations
-      axis.text.y = element_text(size=30),
-      axis.title = element_text(size=30))
+gg <-
+  gg + theme(
+    axis.text.x = element_text(size = 30),
+    # Size 30 works best for presentations
+    axis.text.y = element_text(size = 30),
+    axis.title = element_text(size = 30)
+  )
 gg
 pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/barplot_publications_by_year.pdf")
 gg

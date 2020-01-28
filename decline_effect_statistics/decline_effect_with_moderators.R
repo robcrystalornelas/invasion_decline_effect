@@ -6,11 +6,12 @@ library(metafor)
 library(metaviz)
 library(ggplot2)
 library(lme4)
-library(lmerTest) # lme4 doesn't give p-values, but this package adds them
 library(cowplot)
+library(viridis)
+library(stargazer)
 
 # Read in data
-source("~/Desktop/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
+source("~/Desktop/research/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
 
 ## Check the data we are using
 dim(raw_data_imputed)
@@ -41,8 +42,15 @@ summary(interceptonlymodel) # This gives us parameter estimates
 # 0.2183 is the residual variance on the "study" level
 
 # Model 1 is for full decline effect, with no moderators
-model1 <- lmer(yi~1 + publicationyear + (1|code), data = effect_sizes_richness_imputed)
-summary(model1)
+full_decline_effect <- lmer(yi~1 + publicationyear + (1|code), data = effect_sizes_richness_imputed)
+summary(full_decline_effect)
+
+stargazer(full_decline_effect, type = "html",
+          digits = 3,
+          star.cutoffs = c(0.05, 0.01, 0.001),
+          digit.separator = "",
+          dep.var.labels   = "ln(Response Ratio)",
+          out = "~/Desktop/research/CH3_impacts_meta_analysis/figures/decline_effect_no_moderators.html")
 
 # Model 2 is for interaction of study location and publication year
 effect_sizes_richness_imputed$island_or_continent <- relevel(effect_sizes_richness_imputed$island_or_continent, ref = "island")
@@ -76,7 +84,7 @@ effect_sizes_select_taxa <-
   ) %>%
   droplevels()
 linear_model_select_taxa <- lmer(yi ~ 1 + invasivespeciestaxa*publicationyear + (1|code), data = effect_sizes_select_taxa)
-summary(linear_model_taxa)
+summary(linear_model_select_taxa)
 
 effect_sizes_richness_imputed
 effect_sizes_select_taxa_smaller <-
@@ -96,26 +104,51 @@ time_since_invasion_data <- na.omit(effect_sizes_richness_imputed$time_since_inv
 time_since_invasion_complete <- effect_sizes_richness_imputed[!is.na(effect_sizes_richness_imputed$time_since_invasion),]
 dim(time_since_invasion_complete)
 
-
+max(time_since_invasion_complete$time_since_invasion)
 # Get median time since invasion within dataset
 median(time_since_invasion_complete$time_since_invasion)
 
-# Bin data into either short time since invasion or long
+# Bin data into time since invasion categories
 time_since_invasion_complete$time_since_invasion_binned <- rep("NA")
 time_since_invasion_complete$time_since_invasion_binned
 time_since_invasion_complete$time_since_invasion_binned[time_since_invasion_complete$time_since_invasion<= 63] <- "short"
-time_since_invasion_complete$time_since_invasion_binned[time_since_invasion_complete$time_since_invasion>63] <- "long"
+time_since_invasion_complete$time_since_invasion_binned[time_since_invasion_complete$time_since_invasion>63.1] <- "long"
 time_since_invasion_complete$time_since_invasion_binned
 
 linear_model_time_since_invasion <- lmer(yi ~ 1 + time_since_invasion_binned*publicationyear + (1|code), data = time_since_invasion_complete)  # build linear regression model on full data
 summary(linear_model_time_since_invasion)
+
+linear_model_time_since_invasion_continuous <- lmer(yi ~ 1 + time_since_invasion*publicationyear + (1|code), data = time_since_invasion_complete)  # build linear regression model on full data
+summary(linear_model_time_since_invasion_continuous)
+
+stargazer(linear_model_time_since_invasion_continuous, type = "html",
+          digits = 3,
+          star.cutoffs = c(0.05, 0.01, 0.001),
+          digit.separator = "",
+          covariate.labels = c("Time since invasion", "Publication year", "Time since invasion * publication year"),
+          dep.var.labels   = "ln(Response Ratio)",
+          out = "~/Desktop/research/CH3_impacts_meta_analysis/figures/time_since_invasion_mixed_model.html")
+
+### Stargazer plot for all models
+stargazer(full_decline_effect,
+          model2,
+          model3,
+          model4,
+          
+          type = "html",
+          digits = 3,
+          star.cutoffs = c(0.05, 0.01, 0.001),
+          digit.separator = "",
+          dep.var.labels   = "ln(Response Ratio)",
+          out = "~/Desktop/research/CH3_impacts_meta_analysis/figures/all_models_grouped.html")
+
 
 #### Creating figure for linear model and journal rank
 impact_factor_plot <- ggplot(data = distinct_articles,
                              aes(x = publicationyear,
                                  y = impactfactor)) +
   geom_point(
-    size = 1.5,
+    size = 3,
     alpha = .8,
     position = "jitter",
     color = "#238A8DFF"
@@ -147,7 +180,7 @@ trophic_position_plot <-
            col = as.factor(invasive_trophic_position)
          )) +
   viridis::scale_color_viridis(discrete = TRUE) +
-  geom_point(size = 1,
+  geom_point(size = 3,
              alpha = .8,
              position = "jitter") +
   geom_smooth(
@@ -182,7 +215,7 @@ study_location_plot <- ggplot(data = effect_sizes_richness_imputed,
                                 col = as.factor(island_or_continent)
                               )) +
   viridis::scale_color_viridis(discrete = TRUE, option = "D") +
-  geom_point(size = 1,
+  geom_point(size = 3,
              alpha = .7,
              position = "jitter") +
   geom_smooth(
@@ -210,41 +243,78 @@ study_location_plot <- ggplot(data = effect_sizes_richness_imputed,
 study_location_plot
 
 # Figure for short vs. long
-invasion_history_plot <-
+# invasion_history_plot <-
+#   ggplot(data = time_since_invasion_complete,
+#          aes(
+#            x = publicationyear,
+#            y = yi,
+#            col = as.factor(time_since_invasion_binned)
+#          )) +
+#   geom_point(size = 1,
+#              alpha = .7,
+#              position = "jitter") +
+#   geom_smooth(
+#     method = lm,
+#     se = FALSE,
+#     size = 1,
+#     alpha = .8
+#   ) +
+#   theme_cowplot() +
+#   ylab("ln(Response ratio)") +
+#   xlab("Publication year") +
+#   scale_discrete_manual(aesthetics = "colour",
+#                         values = c("#73D055FF", "#39568CFF")) +
+#   theme(
+#     axis.title = element_text(size = 15),
+#     axis.text = element_text(size = 14),
+#     legend.title = element_text(size = 14),
+#     legend.text = element_text(size = 13)
+#   ) +
+#   labs(col = "Invasion history") +
+#   geom_hline(
+#     yintercept = 0,
+#     linetype = "dashed",
+#     color = "black",
+#     size = .3
+#   )
+# invasion_history_plot
+
+## Figure time since invasion
+invasion_history_plot_continuous <-
   ggplot(data = time_since_invasion_complete,
          aes(
            x = publicationyear,
            y = yi,
-           col = as.factor(time_since_invasion_binned)
+           color = time_since_invasion
          )) +
-  geom_point(size = 1,
+  geom_point(size = 3,
              alpha = .7,
              position = "jitter") +
   geom_smooth(
     method = lm,
     se = FALSE,
     size = 1,
-    alpha = .8
+    alpha = .8,
+    col = "black"
   ) +
   theme_cowplot() +
   ylab("ln(Response ratio)") +
   xlab("Publication year") +
-  scale_discrete_manual(aesthetics = "colour",
-                        values = c("#73D055FF", "#39568CFF")) +
+  scale_color_viridis() +
   theme(
     axis.title = element_text(size = 15),
     axis.text = element_text(size = 14),
     legend.title = element_text(size = 14),
     legend.text = element_text(size = 13)
   ) +
-  labs(col = "Invasion history") +
+  labs(col = "Invasion history \n      (years)") +
   geom_hline(
     yintercept = 0,
     linetype = "dashed",
     color = "black",
     size = .3
   )
-invasion_history_plot
+invasion_history_plot_continuous
 
 ### plot for invasive species taxa
 invasive_species_taxa_plot <-
@@ -282,6 +352,4 @@ invasive_species_taxa_plot <-
   )
 invasive_species_taxa_plot
 
-plot_grid(impact_factor_plot, trophic_position_plot, study_location_plot, invasion_history_plot, labels = "AUTO",ncol =2)
-
-View(effect_sizes_richness_imputed)
+plot_grid(impact_factor_plot, trophic_position_plot, study_location_plot, invasion_history_plot_continuous, labels = "AUTO",ncol =2)
