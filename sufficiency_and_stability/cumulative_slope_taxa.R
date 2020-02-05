@@ -1,5 +1,5 @@
 ## READ IN DATA ####
-source("~/Desktop/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
+source("~/Desktop/research/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
 
 ## LOAD PACKAGES ####
 library(dplyr)
@@ -42,7 +42,7 @@ rma_algae <- rma(
 cma_algae <- viz_forest(
   x = rma_algae,
   method = "REML",
-  xlab = "Response Ratio",
+  xlab = "ln(Response Ratio)",
   # variant = "thick",
   type = "cumulative"
 )
@@ -136,7 +136,7 @@ rma_aquatic <- rma(
 cma_aquatic <- viz_forest(
   x = rma_aquatic,
   method = "REML",
-  xlab = "Response Ratio",
+  xlab = "ln(Response Ratio)",
   # variant = "thick",
   type = "cumulative"
 )
@@ -224,7 +224,7 @@ rma_crust <- rma(
 cma_crust <- viz_forest(
   x = rma_crust,
   method = "REML",
-  xlab = "Response Ratio",
+  xlab = "ln(Response Ratio)",
   # variant = "thick",
   type = "cumulative"
 )
@@ -271,7 +271,9 @@ stable_crust <-
     linetype = 2
   )
 stable_crust <-
-  stable_crust + geom_vline(
+  stable_crust + 
+  xlim(-.01, 0.09) +
+  geom_vline(
     xintercept = -0.005,
     colour = "red",
     size = .5,
@@ -310,7 +312,7 @@ rma_fish <- rma(
 cma_fish <- viz_forest(
   x = rma_fish,
   method = "REML",
-  xlab = "Response Ratio",
+  xlab = "ln(Response Ratio)",
   # variant = "thick",
   type = "cumulative"
 )
@@ -396,7 +398,7 @@ rma_grass <- rma(
 cma_grass <- viz_forest(
   x = rma_grass,
   method = "REML",
-  xlab = "Response Ratio",
+  xlab = "ln(Response Ratio)",
   # variant = "thick",
   type = "cumulative"
 )
@@ -491,7 +493,7 @@ rma_herb <- rma(
 cma_herb <- viz_forest(
   x = rma_herb,
   method = "REML",
-  xlab = "Response Ratio",
+  xlab = "ln(Response Ratio)",
   # variant = "thick",
   type = "cumulative"
 )
@@ -577,7 +579,7 @@ rma_insect <- rma(
 cma_insect <- viz_forest(
   x = rma_insect,
   method = "REML",
-  xlab = "Response Ratio",
+  xlab = "ln(Response Ratio)",
   # variant = "thick",
   type = "cumulative"
 )
@@ -665,7 +667,7 @@ rma_mammal <- rma(
 cma_mammal <- viz_forest(
   x = rma_mammal,
   method = "REML",
-  xlab = "Response Ratio",
+  xlab = "ln(Response Ratio)",
   # variant = "thick",
   type = "cumulative"
 )
@@ -751,7 +753,7 @@ rma_molluscs <- rma(
 cma_molluscs <- viz_forest(
   x = rma_molluscs,
   method = "REML",
-  xlab = "Response Ratio",
+  xlab = "ln(Response Ratio)",
   # variant = "thick",
   type = "cumulative"
 )
@@ -838,7 +840,7 @@ rma_tree <- rma(
 cma_tree <- viz_forest(
   x = rma_tree,
   method = "REML",
-  xlab = "Response Ratio",
+  xlab = "ln(Response Ratio)",
   # variant = "thick",
   type = "cumulative"
 )
@@ -931,3 +933,4 @@ dev.off()
 
 dev.off()
 
+plot_grid(gg_tree,gg_insect,gg_algae,stable_tree,stable_insect,stable_algae, labels = c("A","B","C","D","E","F"), ncol = 3)

@@ -44,6 +44,7 @@ summary(interceptonlymodel) # This gives us parameter estimates
 # Model 1 is for full decline effect, with no moderators
 full_decline_effect <- lmer(yi~1 + publicationyear + (1|code), data = effect_sizes_richness_imputed)
 summary(full_decline_effect)
+confint(full_decline_effect)
 
 stargazer(full_decline_effect, type = "html",
           digits = 3,
@@ -56,10 +57,12 @@ stargazer(full_decline_effect, type = "html",
 effect_sizes_richness_imputed$island_or_continent <- relevel(effect_sizes_richness_imputed$island_or_continent, ref = "island")
 model2 <- lmer(yi~ 1 + island_or_continent*publicationyear + (1|code), data = effect_sizes_richness_imputed)
 summary(model2)
+confint(model2)
 
 # Model 3 is interaction between trophic and publication year
 model3 <- lmer(yi~ 1 + invasive_trophic_position*publicationyear + (1|code), data = effect_sizes_richness_imputed)
 summary(model3)
+confint(model3)
 
 # Model 4 is interaction of SCImago Journal rank with publication year
 impact_factor_model <- select(raw_data_imputed, code, publicationyear,impactfactor)
@@ -68,6 +71,7 @@ distinct_articles <- distinct(impact_factor_model)
 distinct_articles
 model4 <- lmer(impactfactor ~ publicationyear + (1|code), data = distinct_articles)
 summary(model4)
+confint(model4)
 
 # Model 5 is interaction of taxa with publication year
 effect_sizes_select_taxa <-
@@ -118,8 +122,9 @@ time_since_invasion_complete$time_since_invasion_binned
 linear_model_time_since_invasion <- lmer(yi ~ 1 + time_since_invasion_binned*publicationyear + (1|code), data = time_since_invasion_complete)  # build linear regression model on full data
 summary(linear_model_time_since_invasion)
 
-linear_model_time_since_invasion_continuous <- lmer(yi ~ 1 + time_since_invasion*publicationyear + (1|code), data = time_since_invasion_complete)  # build linear regression model on full data
+linear_model_time_since_invasion_continuous <- lmer(yi ~ 1 + publicationyear*time_since_invasion + (1|code), data = time_since_invasion_complete)  # build linear regression model on full data
 summary(linear_model_time_since_invasion_continuous)
+confint(linear_model_time_since_invasion_continuous)
 
 stargazer(linear_model_time_since_invasion_continuous, type = "html",
           digits = 3,

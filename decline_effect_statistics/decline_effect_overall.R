@@ -25,6 +25,9 @@ head(effect_sizes_richness_imputed)
 
 # Add in the FIXED EFFECTS predictor of year
 model1 <- lmer(yi~1 + publicationyear + (1|code), data = effect_sizes_richness_imputed)
+model_code_and_species <- lmer(yi~1 + publicationyear + (1|code) + (1|invasivespecies), data = effect_sizes_richness_imputed)
+AIC(model1)
+AIC(model_code_and_species)
 summary(model1)
 View(effect_sizes_richness_imputed)
 decline_overall_plot <- ggplot(data = effect_sizes_richness_imputed, 

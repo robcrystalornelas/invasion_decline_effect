@@ -1,5 +1,5 @@
 ## READ IN DATA ####
-source("~/Desktop/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
+source("~/Desktop/research/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
 
 ## LOAD PACKAGES ####
 library(dplyr)
@@ -127,7 +127,7 @@ overall_CMA_study_labels_legible <- c(
 forest_plot_CMA <- viz_forest(
   x = random_effects_model_ordered,
   method = "REML",
-  xlab = "Response Ratio",
+  xlab = "ln(Response Ratio)",
   # make a label along x-axis for effect size
   col = "Reds",
   study_labels = overall_CMA_study_labels_legible,
@@ -144,7 +144,6 @@ forest_plot_CMA
 #     axis.text = element_text(size = 14)
 #   )
 
-pdf(file = "~/Desktop/CH3_impacts_meta_analysis/figures/CMA_all_case_studies.pdf")
 forest_plot_CMA
 dev.off()
 dev.off()
@@ -174,4 +173,11 @@ random_effects_model_ordered_first_five
 ) ^ 2) / 2)
 
 ### Combining all 3 summary plots
-plot_grid(forest_plot_CMA,suff_full,stabilization_full,ncol = 3, labels = c("A","B","C"), align = 'h')
+plot_grid(
+  forest_plot_CMA,
+  suff_full,
+  stabilization_full,
+  ncol = 3,
+  labels = c("A", "B", "C"),
+  align = 'h'
+)

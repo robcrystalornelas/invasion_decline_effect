@@ -1,5 +1,5 @@
 ## READ IN DATA ####
-source("~/Desktop/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
+source("~/Desktop/research/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
 
 ## LOAD PACKAGES ####
 library(dplyr)
@@ -80,7 +80,7 @@ cma_algae <- viz_forest(
   #study_labels = effects_algae[, "publicationyear"],
   study_labels = algae_labels,
   method = "REML",
-  xlab = "Response Ratio",
+  xlab = "ln(Response Ratio)",
   summary_col = "Oranges",
   type = "cumulative"
 ) +
@@ -113,7 +113,7 @@ cma_aquatic_plants <- viz_forest(x = rma_aquatic_plants,
                         #study_labels = effects_aquatic_plants[, "publicationyear"], 
                         study_labels = aquatic_labels,
                         method = "REML",
-                        xlab = "Response Ratio",
+                        xlab = "ln(Response Ratio)",
                         summary_col = "Oranges",
                         type = "cumulative") +
   ggtitle("Aquatic plants (N = 8)") +
@@ -158,7 +158,7 @@ crust_labels <- c(2003,
 cma_crust <- viz_forest(x = rma_crust, 
                         #study_labels = effects_crust[, "publicationyear"], 
                         study_labels = crust_labels,
-                        xlab = "Response Ratio",
+                        xlab = "ln(Response Ratio)",
                         summary_col = "Oranges",
                         method = "REML",
                         type = "cumulative") +
@@ -205,7 +205,7 @@ fish_labels <- c(1999,
 cma_fish <- viz_forest(x = rma_fish, 
                         #study_labels = effects_fish[, "publicationyear"], 
                        study_labels = fish_labels,
-                        xlab = "Response Ratio",
+                        xlab = "ln(Response Ratio)",
                        summary_col = "Oranges",
                         method = "REML",
                         type = "cumulative") +
@@ -280,7 +280,7 @@ grasses_legible <- c(1999,
 cma_grass <- viz_forest(x = rma_grass, 
                        #study_labels = effects_grass[, "publicationyear"], 
                        study_labels = grasses_legible,
-                       xlab = "Response Ratio",
+                       xlab = "ln(Response Ratio)",
                        summary_col = "Oranges",
                        method = "REML",
                        type = "cumulative") +
@@ -358,7 +358,7 @@ herb_legible <- c(2001,
 cma_herb <- viz_forest(x = rma_herb, 
                       #study_labels = effects_herb[, "publicationyear"], 
                       study_labels = herb_legible,
-                       xlab = "Response Ratio",
+                       xlab = "ln(Response Ratio)",
                       summary_col = "Oranges",
                        method = "REML",
                         type = "cumulative") +
@@ -414,7 +414,7 @@ insect_labels <- c(1999,
 cma_insect <- viz_forest(x = rma_insect, 
                        #study_labels = effects_insect[, "publicationyear"], 
                        study_labels = insect_labels,
-                       xlab = "Response Ratio",
+                       xlab = "ln(Response Ratio)",
                        summary_col = "Oranges",
                        method = "REML",
                        type = "cumulative") +
@@ -455,7 +455,7 @@ mammal_labels <- c(2004,
 cma_mammal <- viz_forest(x = rma_mammal, 
                          #study_labels = effects_mammal[, "publicationyear"], 
                          study_labels = mammal_labels,
-                         xlab = "Respone Ratio",
+                         xlab = "ln(Response Ratio)",
                          summary_col = "Oranges",
                          method = "REML",
                          type = "cumulative") +
@@ -487,7 +487,7 @@ moll_labels <- c(2008,
 cma_molluscs <- viz_forest(x = rma_molluscs, 
                            #study_labels = effects_molluscs[, "publicationyear"], 
                            study_labels = moll_labels,
-                           xlab = "Response Ratio",
+                           xlab = "ln(Response Ratio)",
                            summary_col = "Oranges",
                            method = "REML",
                            type = "cumulative") +
@@ -589,7 +589,7 @@ tree_legible <- c(2000,
 cma_tree <- viz_forest(x = rma_tree,
                       #study_labels = effects_tree[, c("publicationyear")], 
                       study_labels = tree_legible,
-                      xlab = "Response Ratio",
+                      xlab = "ln(Response Ratio)",
                       summary_col = "Oranges",
                       method = "REML",
                       type = "cumulative") +
@@ -601,6 +601,7 @@ cma_tree
 
 # Combine all CMAs with more than 10 studies
 plot_grid(cma_herb,cma_grass,cma_crust,cma_fish,cma_mammal,cma_aquatic_plants,ncol=3)
+
 plot_grid(cma_tree,cma_insect,cma_algae, labels = c('A', 'B','C'), ncol = 3)
 dev.off()
 
