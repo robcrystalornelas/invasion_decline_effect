@@ -1,15 +1,13 @@
 ## READ IN DATA ####
-source("~/Desktop/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
-# Sys.setenv("plotly_username"="robcrystalornelas")
-# Sys.setenv("plotly_api_key"="AiIK4b0kMDsNGeV0KDAn")
+source("~/Desktop/research/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
 
 ## LOAD PACKAGES ####
 library(ggplot2)
 library(dplyr)
+library(cowplot)
 library(ggthemes)
 library(arrange)
 library(tidyverse)
-library(plotly)
 
 ## MAKE FIGURES ####
 # Barplot for number of publications by year for ARTICLES
@@ -29,9 +27,10 @@ gg <-
   geom_histogram(binwidth = binsize,
                  fill = "deepskyblue3",
                  colour = "white")
-gg <- gg + theme_tufte()
+gg <- gg + theme_cowplot()
 gg <- gg + ylab("Frequency")
 gg <- gg + xlab("Publication Year")
+gg <- gg + scale_y_continuous(expand = c(0,0))
 gg <-
   gg + theme(
     axis.text.x = element_text(size = 30),
@@ -43,30 +42,7 @@ gg
 pdf(file="~/Desktop/CH3_impacts_meta_analysis/figures/barplot_publications_by_year.pdf")
 gg
 dev.off()
-dev.off()
-ggplotly(gg)
 
-# Make figure with plotly
-counted_articles
-p2 <- plot_ly(
-  counted_articles,
-  x = ~ publicationyear,
-  y = ~ n,
-  type = "bar",
-  textfont = list(size = 30)
-) %>%
-  layout(
-    xaxis = list(title = "Publication year", size = 50),
-    yaxis = list(title = "Number of publications")
-  )
-p2
-api_create(p2, filename = "sample_histogram_upload")
-
-code_and_publication_year %>%
-  plot_ly(x = ~publicationyear) %>%
-  add_histogram() %>%
-    group_by(publicationyear) %>%
-    summarise(n = n())
 
 # How many unique species are studied per year?
 head(raw_data_imputed)

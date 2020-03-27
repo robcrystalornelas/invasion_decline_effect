@@ -6,6 +6,7 @@ library(metafor)
 library(metaviz)
 library(ggplot2)
 library(lme4)
+library(lmerTest)
 library(cowplot)
 library(viridis)
 library(stargazer)
@@ -202,6 +203,43 @@ trophic_position_plot <-
     axis.text = element_text(size = 14),
     legend.title = element_text(size = 14),
     legend.text = element_text(size = 13)
+  ) +
+  labs(col = "Trophic position") +
+  geom_hline(
+    yintercept = 0,
+    linetype = "dashed",
+    color = "black",
+    size = .3
+  )
+trophic_position_plot
+
+## TROPHIC FOR PRESENTATION 
+# Figure for trophic position
+trophic_position_plot <-
+  ggplot(data = effect_sizes_richness_imputed,
+         aes(
+           x = publicationyear,
+           y = yi,
+           col = as.factor(invasive_trophic_position)
+         )) +
+  viridis::scale_color_viridis(discrete = TRUE) +
+  geom_point(size = 3,
+             alpha = .8,
+             position = "jitter") +
+  geom_smooth(
+    method = lm,
+    se = FALSE,
+    size = 1,
+    alpha = .8
+  ) +
+  theme_cowplot() +
+  ylab("ln(Response ratio)") +
+  xlab("Publication year") +
+  theme(
+    axis.title = element_text(size = 30),
+    axis.text = element_text(size = 30),
+    legend.title = element_text(size = 30),
+    legend.text = element_text(size = 30)
   ) +
   labs(col = "Trophic position") +
   geom_hline(

@@ -101,8 +101,7 @@ suff_full <-
     size = .5,
     linetype = 2
   )
-suff_full <- suff_full + xlab("Failsafe ratio") +
-  ylab("Publication order")
+suff_full <- suff_full + xlab("Failsafe ratio") + ylab("")
 suff_full <- suff_full + theme_bw()
 suff_full <- suff_full + theme(
   panel.grid.major.y = element_blank(),

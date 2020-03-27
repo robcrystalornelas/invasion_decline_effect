@@ -112,7 +112,7 @@ stabilization_full <-
     linetype = 2
   )
 stabilization_full <- stabilization_full + xlab("Cumulative slopes") +
-  ylab("Publication year")
+  ylab("")
 stabilization_full <- stabilization_full + theme_bw()
 stabilization_full <- stabilization_full + theme(
   panel.grid.major.y = element_blank(),
@@ -123,3 +123,4 @@ stabilization_full <- stabilization_full + theme(
   axis.text = element_text(size = 14)
 )
 stabilization_full
+

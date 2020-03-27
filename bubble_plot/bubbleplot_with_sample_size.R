@@ -1,5 +1,5 @@
 ## READ IN DATA ####
-source("~/Desktop/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
+source("~/Desktop/research/CH3_impacts_meta_analysis/scripts/ch_3_raw_data.R")
 
 ## LOAD PACKAGES ####
 library(dplyr)
@@ -7,7 +7,6 @@ library(ggplot2)
 library(ggthemes)
 library(metaviz)
 library(lme4)
-library(lmerTest) # lme4 doesn't give p-values, but this package adds them
 library(metafor)
 library(cowplot)
 
@@ -45,4 +44,34 @@ sample_size_bubble_plot <- ggplot(
   theme_cowplot() +
   theme(text = element_text(size = 20),
         legend.position = "none")
+sample_size_bubble_plot
+
+# Bubble plot for presentation
+sample_size_bubble_plot <- ggplot(
+  effect_sizes_richness_imputed,
+  aes(x = publicationyear, y = yi, size = total_sample_size)
+) +
+  geom_point(alpha = 0.4,
+             position = "jitter",
+             color = "#238A8DFF") +
+  scale_colour_continuous(guide = FALSE) +
+  xlab("Publication year") +
+  ylab("ln(Response ratio)") +
+  geom_smooth(method = "lm", se = FALSE,
+              color = "#453781FF", cex = 2) +
+  geom_hline(
+    yintercept = 0,
+    col = "black",
+    linetype = "dashed",
+    alpha = .5
+  ) +
+  theme_cowplot() +
+  theme(
+    axis.title = element_text(size = 30),
+    axis.text = element_text(size = 30),
+    legend.title = element_text(size = 30),
+    legend.text = element_text(size = 30),
+    legend.position = "none"
+  )
+
 sample_size_bubble_plot
